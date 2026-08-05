@@ -1,0 +1,176 @@
+{
+  "source": "script.md",
+  "title": "script.md — \"₹100 a Day → ₹1 CRORE\" (30s Short)",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "durationInSeconds": 30.95,
+  "caption": "₹100 a day is the cheapest habit that ever made me money.",
+  "beats": [
+    {
+      "n": 1,
+      "name": "THE SLAP",
+      "start": 0.0,
+      "end": 2.43,
+      "vo": "One coin. 30 years. One crore.",
+      "visual": "Coin drops into empty jar. Rupee symbol blazes on the wall.",
+      "motion": "Coin drop + clink. Text slams in with scale pop + shake.",
+      "module": "coinDrop"
+    },
+    {
+      "n": 2,
+      "name": "THE CONTEXT",
+      "start": 2.43,
+      "end": 5.99,
+      "vo": "See, ₹100 a day is only ₹3,000 a month.",
+      "visual": "30 coins stack beside the jar. Calendar ticks off day by day.",
+      "motion": "Coins drop one by one, stacking. Calendar squares pop as they tick.",
+      "module": "coinStack"
+    },
+    {
+      "n": 3,
+      "name": "THE INSIGHT",
+      "start": 5.99,
+      "end": 11.29,
+      "vo": "And parked in a bank account, that's nothing. But invested? That ₹3,000 starts working.",
+      "visual": "Coins fly from the jar into a green rising chart. Line draws upward.",
+      "motion": "Coin arcs with sparkle trails. Chart line draws left→right with a glow head.",
+      "module": "investChart"
+    },
+    {
+      "n": 4,
+      "name": "10 YEARS",
+      "start": 11.29,
+      "end": 14.66,
+      "vo": "At 12% a year, 10 years becomes ₹7 lakh.",
+      "visual": "Jar fills and overflows. Gold badge appears with a stamp.",
+      "motion": "Jar fills in 2s. Badge stamps with ring ripple. Count-up digits roll.",
+      "module": "jarFill"
+    },
+    {
+      "n": 5,
+      "name": "20 YEARS",
+      "start": 14.66,
+      "end": 19.4,
+      "vo": "20 years? ₹30 lakh. Still no salary raise. Just the same coin, every day.",
+      "visual": "Coins become a mountain taller than the character. Chart hits ceiling.",
+      "motion": "Mountain grows from the pile with a coin-rain effect. Character jumps on beat.",
+      "module": "mountain"
+    },
+    {
+      "n": 6,
+      "name": "THE PAYOFF",
+      "start": 19.4,
+      "end": 23.72,
+      "vo": "30 years? One crore. The coin did the work. You just didn't spend it.",
+      "visual": "Mountain towers to the ceiling. Character climbs it, stands on top, raises the same coin.",
+      "motion": "Deep boom + gold flash. Badge pulses huge. Firework sparkles. Hold S6-I4 longest.",
+      "module": "payoff"
+    },
+    {
+      "n": 7,
+      "name": "THE CALLBACK + CTA",
+      "start": 23.72,
+      "end": 30.95,
+      "vo": "So no, ₹100 won't change your life today. But 30 years of it? One crore. Follow for more money lessons in 30 seconds.",
+      "visual": "Mountain calms back to a full jar. Character looks at the viewer, thumbs up.",
+      "motion": "Slow zoom out. Lines fade in one at a time. Follow button pops with a bounce.",
+      "module": "outro"
+    }
+  ],
+  "texts": [
+    {
+      "at": 0.0,
+      "text": "ONE COIN. 30 YEARS. ₹1 CRORE.",
+      "anim": "slam"
+    },
+    {
+      "at": 2.43,
+      "text": "₹3,000 / MONTH",
+      "anim": "wipe"
+    },
+    {
+      "at": 5.99,
+      "text": "DON'T SAVE IT. INVEST IT.",
+      "anim": "type"
+    },
+    {
+      "at": 11.29,
+      "text": "10 YEARS → ₹7,00,000",
+      "anim": "count"
+    },
+    {
+      "at": 14.66,
+      "text": "20 YEARS → ₹30,00,000",
+      "anim": "count"
+    },
+    {
+      "at": 19.4,
+      "text": "30 YEARS → ₹1,00,00,000",
+      "anim": "slam"
+    },
+    {
+      "at": 23.72,
+      "text": "₹100 WON'T CHANGE TODAY. IT WILL CHANGE 30 YEARS.",
+      "anim": "fade"
+    },
+    {
+      "at": 28.68,
+      "text": "FOLLOW FOR MORE 30-SEC MONEY LESSONS",
+      "anim": "pop"
+    }
+  ],
+  "sfx": [
+    {
+      "at": 0.0,
+      "files": [
+        "coin.wav",
+        "whoosh.wav"
+      ]
+    },
+    {
+      "at": 2.43,
+      "files": [
+        "coin-soft.wav"
+      ]
+    },
+    {
+      "at": 5.99,
+      "files": [
+        "whoosh-up.wav"
+      ]
+    },
+    {
+      "at": 11.29,
+      "files": [
+        "chime.wav"
+      ]
+    },
+    {
+      "at": 14.66,
+      "files": [
+        "whoosh-up.wav"
+      ]
+    },
+    {
+      "at": 19.4,
+      "files": [
+        "boom.wav",
+        "shimmer.wav"
+      ]
+    },
+    {
+      "at": 23.72,
+      "files": [
+        "chime.wav",
+        "chime-warm.wav"
+      ]
+    },
+    {
+      "at": 28.68,
+      "files": [
+        "pop.wav"
+      ]
+    }
+  ]
+}

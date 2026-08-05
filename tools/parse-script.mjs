@@ -9,6 +9,7 @@
 // Anything the script does not say is inferred from its own keywords, so a new
 // script.md in the same shape needs zero code changes.
 import { readFileSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 
 const [src = "script.md", dst = "video/src/script.json"] = process.argv.slice(2);
 const md = readFileSync(src, "utf8");
@@ -126,6 +127,40 @@ const out = {
 };
 
 writeFileSync(dst, JSON.stringify(out, null, 2));
+
+// ---------------------------------------------------------------- voice stub
+// The engine reads word timings from voice.json. Until a take exists there is
+// nothing to read, so write the script's own timing with the words spread
+// evenly — the video still builds and still captions, it just has no narrator.
+// `tools/align.py` overwrites this with what the recording actually did.
+const voice = join(dirname(dst), "voice.json");
+writeFileSync(
+  voice,
+  JSON.stringify(
+    {
+      total: out.durationInSeconds,
+      beats: beats.map((b) => {
+        const words = b.vo.split(/\s+/).filter(Boolean);
+        const step = (b.end - b.start) / Math.max(1, words.length);
+        return {
+          n: b.n,
+          file: "", // no recording yet
+          start: b.start,
+          dur: b.end - b.start,
+          speech: b.end - b.start,
+          words: words.map((w, i) => ({
+            w,
+            start: Number((i * step).toFixed(3)),
+            end: Number(((i + 1) * step).toFixed(3)),
+          })),
+        };
+      }),
+    },
+    null,
+    2,
+  ),
+);
+
 console.log(
   `${dst}\n  ${out.durationInSeconds}s · ${beats.length} beats · ` +
     `${texts.length} overlays · ${sfx.length} sfx cues\n  modules: ` +

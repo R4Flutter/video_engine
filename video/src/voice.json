@@ -1,0 +1,513 @@
+{
+  "total": 30.95,
+  "beats": [
+    {
+      "n": 1,
+      "file": "vo/beat-1.wav",
+      "start": 0.0,
+      "dur": 2.43,
+      "speech": 1.98,
+      "words": [
+        {
+          "w": "One",
+          "start": 0.0,
+          "end": 0.18
+        },
+        {
+          "w": "coin.",
+          "start": 0.18,
+          "end": 0.36
+        },
+        {
+          "w": "30",
+          "start": 1.04,
+          "end": 1.09
+        },
+        {
+          "w": "years.",
+          "start": 1.04,
+          "end": 1.3
+        },
+        {
+          "w": "One",
+          "start": 1.74,
+          "end": 1.79
+        },
+        {
+          "w": "crore.",
+          "start": 1.76,
+          "end": 1.98
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "file": "vo/beat-2.wav",
+      "start": 2.43,
+      "dur": 3.56,
+      "speech": 3.34,
+      "words": [
+        {
+          "w": "See,",
+          "start": 0.0,
+          "end": 0.18
+        },
+        {
+          "w": "₹100",
+          "start": 0.48,
+          "end": 1.3
+        },
+        {
+          "w": "a",
+          "start": 1.3,
+          "end": 1.42
+        },
+        {
+          "w": "day",
+          "start": 1.42,
+          "end": 1.56
+        },
+        {
+          "w": "is",
+          "start": 1.56,
+          "end": 1.86
+        },
+        {
+          "w": "only",
+          "start": 1.86,
+          "end": 2.06
+        },
+        {
+          "w": "₹3,000",
+          "start": 2.06,
+          "end": 3.12
+        },
+        {
+          "w": "a",
+          "start": 3.12,
+          "end": 3.2
+        },
+        {
+          "w": "month.",
+          "start": 3.2,
+          "end": 3.34
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "file": "vo/beat-3.wav",
+      "start": 5.99,
+      "dur": 5.3,
+      "speech": 5.04,
+      "words": [
+        {
+          "w": "And",
+          "start": 0.0,
+          "end": 0.2
+        },
+        {
+          "w": "parked",
+          "start": 0.2,
+          "end": 0.36
+        },
+        {
+          "w": "in",
+          "start": 0.36,
+          "end": 0.5
+        },
+        {
+          "w": "a",
+          "start": 0.5,
+          "end": 0.56
+        },
+        {
+          "w": "bank",
+          "start": 0.56,
+          "end": 0.68
+        },
+        {
+          "w": "account,",
+          "start": 0.68,
+          "end": 0.98
+        },
+        {
+          "w": "that's",
+          "start": 1.38,
+          "end": 1.6
+        },
+        {
+          "w": "nothing.",
+          "start": 1.6,
+          "end": 1.8
+        },
+        {
+          "w": "But",
+          "start": 2.54,
+          "end": 2.59
+        },
+        {
+          "w": "invested?",
+          "start": 2.56,
+          "end": 3.0
+        },
+        {
+          "w": "That",
+          "start": 3.7,
+          "end": 3.75
+        },
+        {
+          "w": "₹3,000",
+          "start": 3.72,
+          "end": 4.52
+        },
+        {
+          "w": "starts",
+          "start": 4.52,
+          "end": 4.74
+        },
+        {
+          "w": "working.",
+          "start": 4.74,
+          "end": 5.04
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "file": "vo/beat-4.wav",
+      "start": 11.29,
+      "dur": 3.37,
+      "speech": 3.03,
+      "words": [
+        {
+          "w": "At",
+          "start": 0.0,
+          "end": 0.1
+        },
+        {
+          "w": "12%",
+          "start": 0.1,
+          "end": 0.3
+        },
+        {
+          "w": "a",
+          "start": 0.62,
+          "end": 0.76
+        },
+        {
+          "w": "year,",
+          "start": 0.76,
+          "end": 1.0
+        },
+        {
+          "w": "10",
+          "start": 1.3,
+          "end": 1.46
+        },
+        {
+          "w": "years",
+          "start": 1.46,
+          "end": 1.68
+        },
+        {
+          "w": "becomes",
+          "start": 1.85,
+          "end": 2.02
+        },
+        {
+          "w": "₹7",
+          "start": 2.02,
+          "end": 2.96
+        },
+        {
+          "w": "lakh.",
+          "start": 2.98,
+          "end": 3.03
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "file": "vo/beat-5.wav",
+      "start": 14.66,
+      "dur": 4.74,
+      "speech": 4.44,
+      "words": [
+        {
+          "w": "20",
+          "start": 0.0,
+          "end": 0.16
+        },
+        {
+          "w": "years?",
+          "start": 0.16,
+          "end": 0.46
+        },
+        {
+          "w": "₹30",
+          "start": 0.82,
+          "end": 1.6
+        },
+        {
+          "w": "lakh.",
+          "start": 1.77,
+          "end": 1.94
+        },
+        {
+          "w": "Still",
+          "start": 1.94,
+          "end": 2.12
+        },
+        {
+          "w": "no",
+          "start": 2.12,
+          "end": 2.28
+        },
+        {
+          "w": "salary",
+          "start": 2.28,
+          "end": 2.52
+        },
+        {
+          "w": "raise.",
+          "start": 2.52,
+          "end": 2.9
+        },
+        {
+          "w": "Just",
+          "start": 3.18,
+          "end": 3.24
+        },
+        {
+          "w": "the",
+          "start": 3.24,
+          "end": 3.4
+        },
+        {
+          "w": "same",
+          "start": 3.4,
+          "end": 3.56
+        },
+        {
+          "w": "coin,",
+          "start": 3.56,
+          "end": 3.78
+        },
+        {
+          "w": "every",
+          "start": 4.12,
+          "end": 4.22
+        },
+        {
+          "w": "day.",
+          "start": 4.22,
+          "end": 4.44
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "file": "vo/beat-6.wav",
+      "start": 19.4,
+      "dur": 4.32,
+      "speech": 3.82,
+      "words": [
+        {
+          "w": "30",
+          "start": 0.0,
+          "end": 0.2
+        },
+        {
+          "w": "years?",
+          "start": 0.2,
+          "end": 0.5
+        },
+        {
+          "w": "One",
+          "start": 1.12,
+          "end": 1.1700000000000002
+        },
+        {
+          "w": "crore.",
+          "start": 1.14,
+          "end": 1.4
+        },
+        {
+          "w": "The",
+          "start": 1.96,
+          "end": 2.01
+        },
+        {
+          "w": "coin",
+          "start": 1.96,
+          "end": 2.12
+        },
+        {
+          "w": "did",
+          "start": 2.12,
+          "end": 2.32
+        },
+        {
+          "w": "the",
+          "start": 2.32,
+          "end": 2.42
+        },
+        {
+          "w": "work.",
+          "start": 2.42,
+          "end": 2.64
+        },
+        {
+          "w": "You",
+          "start": 3.0,
+          "end": 3.08
+        },
+        {
+          "w": "just",
+          "start": 3.08,
+          "end": 3.22
+        },
+        {
+          "w": "didn't",
+          "start": 3.22,
+          "end": 3.44
+        },
+        {
+          "w": "spend",
+          "start": 3.44,
+          "end": 3.6
+        },
+        {
+          "w": "it.",
+          "start": 3.6,
+          "end": 3.82
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "file": "vo/beat-7.wav",
+      "start": 23.72,
+      "dur": 7.23,
+      "speech": 6.68,
+      "words": [
+        {
+          "w": "So",
+          "start": 0.0,
+          "end": 0.18
+        },
+        {
+          "w": "no,",
+          "start": 0.18,
+          "end": 0.34
+        },
+        {
+          "w": "₹100",
+          "start": 0.96,
+          "end": 1.26
+        },
+        {
+          "w": "won't",
+          "start": 1.26,
+          "end": 1.48
+        },
+        {
+          "w": "change",
+          "start": 1.48,
+          "end": 1.62
+        },
+        {
+          "w": "your",
+          "start": 1.62,
+          "end": 1.78
+        },
+        {
+          "w": "life",
+          "start": 1.78,
+          "end": 1.92
+        },
+        {
+          "w": "today.",
+          "start": 1.92,
+          "end": 2.1
+        },
+        {
+          "w": "But",
+          "start": 2.68,
+          "end": 2.73
+        },
+        {
+          "w": "30",
+          "start": 2.68,
+          "end": 2.9
+        },
+        {
+          "w": "years",
+          "start": 2.9,
+          "end": 3.14
+        },
+        {
+          "w": "of",
+          "start": 3.14,
+          "end": 3.34
+        },
+        {
+          "w": "it?",
+          "start": 3.34,
+          "end": 3.46
+        },
+        {
+          "w": "One",
+          "start": 3.96,
+          "end": 4.04
+        },
+        {
+          "w": "crore.",
+          "start": 4.04,
+          "end": 4.36
+        },
+        {
+          "w": "Follow",
+          "start": 4.96,
+          "end": 5.01
+        },
+        {
+          "w": "for",
+          "start": 5.0,
+          "end": 5.24
+        },
+        {
+          "w": "more",
+          "start": 5.24,
+          "end": 5.4
+        },
+        {
+          "w": "money",
+          "start": 5.4,
+          "end": 5.56
+        },
+        {
+          "w": "lessons",
+          "start": 5.56,
+          "end": 5.86
+        },
+        {
+          "w": "in",
+          "start": 5.86,
+          "end": 6.14
+        },
+        {
+          "w": "30",
+          "start": 6.14,
+          "end": 6.34
+        },
+        {
+          "w": "seconds.",
+          "start": 6.34,
+          "end": 6.68
+        }
+      ]
+    }
+  ]
+}
