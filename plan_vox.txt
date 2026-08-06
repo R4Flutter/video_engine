@@ -1,0 +1,61 @@
+Vox Mode Plan — C:\finance_stickman\video
+Key architectural insight: your engine is already 90% of a Vox machine. script.md → parse-script.mjs → script.json → MODULES → FinanceShort.tsx is exactly the right pipeline. Vox is not a new engine — it's a second vocabulary + second staging component (VoxShort.tsx) that consumes the same script.json + voice.json. The finance engine stays untouched and both can render from the same episode file.
+The fork (decide before building)
+Option
+A. Vox shorts (9:16)
+B. Vox essays (16:9)
+The plan below works for both; the layout tokens in theme.ts are the only thing that branches. My recommendation: build A first (same canvas, zero risk), keep B as a phase-4 toggle (width/height already flow from script.json).
+File-by-file touch list
+New dependencies — video/package.json
+npm i roughjs lucide-react d3-geo topojson-client
+npm i -D @types/d3-geo @types/topojson-client
+- roughjs = the hand-drawn underline/circle/arrow (THE Vox signature, no design skill needed)
+- lucide-react = thin-stroke line icons (Vox's icon language)
+- d3-geo/topojson-client = maps that draw in country-by-country (phase 3)
+1. src/theme.ts — add a Vox palette (touch)
+Add a second token block, engine stays agnostic:
+vox: {
+  paper: "#F4F1EA",   // off-white paper
+  ink: "#1A1A1A",     // ink text
+  accent: "#D9491E",  // vox orange/red accent
+  muted: "#8A857C",
+  font: "Archivo/Inter/Space Grotesk"  // @remotion/google-fonts is already a dep
+}
+Add a layout object if you go Option B (landscape: { W: 1920, H: 1080, safe: {...} }).
+2. src/vox/elements.tsx — NEW file (the Vox Kit)
+The visual vocabulary, mirroring elements.tsx:
+Component	Source
+PaperBG	CSS noise + subtle SVG grain
+KineticText	voice.json words
+DrawIn	roughjs
+LineIcon	lucide-react
+InkChart	—
+ArchivalBG	public/footage/*.mp4
+3. src/vox/scenes.tsx — NEW file (generic Vox modules)
+One VOX_MODULES record — same contract as MODULES (({dur}) => JSX), so no per-episode JSX ever:
+kinetic    → big KineticText phrase (the hook/claim words slam word-by-word)
+doodle     → roughjs circle/underline over footage while a word lands
+icon       → LineIcon + label pop (mechanism step cards)
+chart      → InkChart draws in (compounding, growth)
+map        → country draws in (phase 3)
+footage    → full-bleed archival clip, kinetic caption overlay
+A script beat becomes: { module: "kinetic" | "doodle" | ... } — the same module field parse-script.mjs already emits.
+4. src/VoxShort.tsx — NEW file (staging, mirror of FinanceShort.tsx)
+Clone of FinanceShort.tsx with swaps only:
+- Backdrop → PaperBG
+- MODULES → VOX_MODULES
+- theme.color → theme.vox
+- TextTrack/CaptionTrack → KineticText driven by the same voice.json
+- Camera/duck/music/SFX logic copied verbatim — it's already perfect
+5. src/Root.tsx — touch (register the composition)
+<Composition id="VoxExplain" component={VoxShort} ... />   // same dims as FinanceShort
+6. tools/parse-script.mjs — touch (tiny)
+Parse an optional style: vox header in script.md → emit engine: "vox" + the new module names into script.json. Everything downstream already reads script.json.
+7. tools/fetch-footage.py — NEW file (assets)
+Pexels API free tier: keyword-per-beat → downloads clips to public/footage/ → ArchivalBG picks them up. Idempotent (skip existing).
+8. tools/voice.py — touch (one prompt tweak)
+Vox = calm explainer narrator. Your human_like_voice.md already tunes delivery — add a "Vox mode" direction (steady, deliberate, slightly lower energy). No structural change; align.py/voice.json are engine-agnostic and already carry word-level timestamps (voice.beats[].words[{w,start,end}]) — that's the fuel KineticText runs on.
+9. package.json — touch (scripts)
+"render:vox": "remotion render VoxExplain out/vox.mp4",
+"episode:vox": "npm run script && npm run voice && npm run align && npm run lint && npm run render:vox"
+Untouched files
