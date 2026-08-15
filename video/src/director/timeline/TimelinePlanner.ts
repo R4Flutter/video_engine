@@ -1,9 +1,4 @@
-// TimelinePlanner: the deterministic assembly.
-//
-// Every layer above has decided what should happen and why. This turns those
-// decisions into the ShortPlan's final data — beats with absolute timing,
-// attention events, audio events, transitions — in one place, in one order,
-// so the output is reproducible byte for byte.
+// TimelinePlanner: deterministic assembly of the complete edit plan.
 import type {
   AttentionEvent,
   AudioEvent,
@@ -24,6 +19,7 @@ import type { VisualDecision } from "../visual/VisualDirector.ts";
 import type { RevealDecision } from "../motion/RevealPlanner.ts";
 import type { TransitionDecision } from "../motion/TransitionDirector.ts";
 import type { BeatAudio } from "../audio/AudioDirector.ts";
+import type { ShotDecision } from "../visual/ShotPlanner.ts";
 import { round2 } from "../util.ts";
 
 export type TimelineInputs = {
@@ -34,6 +30,7 @@ export type TimelineInputs = {
   profiles: AttentionProfile[];
   novelty: number[];
   visuals: VisualDecision[];
+  shots: ShotDecision[];
   cameras: CameraIntent[];
   reveals: RevealDecision[];
   transitions: TransitionDecision[];
@@ -46,8 +43,6 @@ export type TimelineInputs = {
   loop: LoopPlan;
 };
 
-/** Words worth stressing on screen: the numbers, and the negation that makes
- *  a contradiction a contradiction. */
 const emphasisWords = (text: string, vo: string): string[] => {
   const out = new Set<string>();
   for (const m of `${text} ${vo}`.matchAll(/[$₹€£]\s?\d[\d,]*(?:\.\d+)?%?|\b\d[\d,]*(?:\.\d+)?%/g)) {
@@ -66,7 +61,6 @@ export const assembleTimeline = (i: TimelineInputs): ShortPlan => {
   const directed: DirectedBeat[] = beats.map((b, idx) => {
     const audio = i.audios[idx];
     const prev = beats[idx - 1];
-    // A J-cut must not collide with the previous take.
     const maxLead = prev ? Math.max(0, b.start - prev.start - 0.5) : 0;
     const lead = Math.min(audio.jCut ?? 0, maxLead);
     const seq = i.sequences.find((s) => b.n >= s.beatRange[0] && b.n <= s.beatRange[1]);
@@ -103,6 +97,7 @@ export const assembleTimeline = (i: TimelineInputs): ShortPlan => {
         captionMode: i.visuals[idx].captionMode,
         holdFrames: idx === 0 ? i.frameZero.holdFrames : 0,
       },
+      shot: i.shots[idx],
       motion: {
         camera: { intent: i.cameras[idx] },
         reveal: i.reveals[idx],
