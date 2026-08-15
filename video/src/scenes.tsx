@@ -1,159 +1,52 @@
-// Editorial finance scene vocabulary.
-// Cheap by design: transforms, opacity, borders, text and small SVG paths.
-// No blur, WebGL, particle systems or layout-heavy animation.
+// Finance scene vocabulary. Heavy intelligence, cheap rendering.
 import React from "react";
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
 import type { ScriptBeat } from "./director/types";
 import { Backdrop } from "./elements";
 import { theme } from "./theme";
+import { Archive, CompareFinance, DocumentFinance, EditorialGraphic, StatFinance } from "./finance/editorial";
 
 const { color } = theme;
 export type SceneProps = { dur: number; beat?: ScriptBeat };
 const sans = theme.font;
 const serif = 'Georgia, "Times New Roman", serif';
+const ease = (frame:number,a:number,b:number,out:readonly [number,number]=[0,1]) => interpolate(frame,[a,b],out,{extrapolateLeft:"clamp",extrapolateRight:"clamp",easing:Easing.bezier(0.22,1,0.36,1)});
 
-const ease = (frame: number, a: number, b: number, out: readonly [number, number] = [0, 1]) =>
-  interpolate(frame, [a, b], out, { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.bezier(0.22, 1, 0.36, 1) });
+const Kicker:React.FC<{children:React.ReactNode}> = ({children}) => <div style={{position:"absolute",left:90,top:215,fontFamily:sans,fontSize:26,fontWeight:800,letterSpacing:5,color:color.green}}>{children}</div>;
+const Rule:React.FC<{top:number}> = ({top}) => <div style={{position:"absolute",left:90,top,width:860,height:1,background:color.dim,opacity:.28}}/>;
+const TinySource:React.FC<{children:React.ReactNode}> = ({children}) => <div style={{position:"absolute",left:90,top:1510,maxWidth:820,fontFamily:sans,fontSize:22,fontWeight:650,letterSpacing:1.5,color:color.dim,opacity:.8,textTransform:"uppercase"}}>{children}</div>;
+const HeroNumber:React.FC<{value:string;top?:number;accent?:string;size?:number}> = ({value,top=580,accent=color.gold,size=250}) => <div style={{position:"absolute",left:90,top,width:900,fontFamily:sans,fontSize:size,lineHeight:.88,fontWeight:950,letterSpacing:-9,color:accent}}>{value}</div>;
+const Panel:React.FC<{x:number;y:number;w:number;h:number;children:React.ReactNode;accent?:string}> = ({x,y,w,h,children,accent=color.dim}) => { const frame=useCurrentFrame(); const lift=ease(frame,0,16,[18,0]); return <div style={{position:"absolute",left:x,top:y+lift,width:w,height:h,boxSizing:"border-box",border:`1px solid ${accent}`,background:"rgba(6,24,28,.94)",padding:28}}>{children}</div>; };
+const Bars:React.FC<{values:number[];labels?:string[];top?:number}> = ({values,labels=[],top=930}) => <div style={{position:"absolute",left:92,right:92,top,height:430,display:"flex",alignItems:"flex-end",gap:28}}>{values.map((v,i)=><div key={i} style={{flex:1,height:`${Math.max(0,Math.min(1,v))*100}%`,background:i===values.length-1?color.green:color.gold,borderTop:`5px solid ${i===values.length-1?color.text:color.goldLight}`,position:"relative"}}>{labels[i]?<div style={{position:"absolute",left:0,right:0,bottom:-62,textAlign:"center",fontFamily:sans,fontSize:22,fontWeight:700,color:color.dim}}>{labels[i]}</div>:null}</div>)}</div>;
+const Curve:React.FC<{progress:number;top?:number}> = ({progress,top=610}) => { const points=[[40,350],[150,330],[270,300],[390,276],[510,220],[620,170],[735,112],[850,70]] as const; const visible=Math.max(2,Math.floor(progress*points.length)); const poly=points.slice(0,visible).map(([x,y])=>`${x},${y}`).join(" "); return <svg width={900} height={430} style={{position:"absolute",left:90,top}} viewBox="0 0 900 430">{[70,150,230,310,390].map(y=><line key={y} x1="20" y1={y} x2="870" y2={y} stroke={color.dim} strokeOpacity=".17" strokeWidth="2"/>)}<polyline points={poly} fill="none" stroke={color.green} strokeWidth="12" strokeLinecap="round" strokeLinejoin="round"/>{points[visible-1]?<circle cx={points[visible-1][0]} cy={points[visible-1][1]} r="15" fill={color.gold}/>:null}</svg>; };
 
-const Kicker: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <div style={{ position: "absolute", left: 90, top: 215, fontFamily: sans, fontSize: 26, fontWeight: 800, letterSpacing: 5, color: color.green }}>
-    {children}
-  </div>
-);
-const Rule: React.FC<{ top: number }> = ({ top }) => (
-  <div style={{ position: "absolute", left: 90, top, width: 860, height: 1, background: color.dim, opacity: 0.28 }} />
-);
-const TinySource: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <div style={{ position: "absolute", left: 90, top: 1510, maxWidth: 820, fontFamily: sans, fontSize: 22, fontWeight: 650, letterSpacing: 1.5, color: color.dim, opacity: 0.8, textTransform: "uppercase" }}>
-    {children}
-  </div>
-);
-const HeroNumber: React.FC<{ value: string; top?: number; accent?: string; size?: number }> = ({ value, top = 580, accent = color.gold, size = 250 }) => (
-  <div style={{ position: "absolute", left: 90, top, width: 900, fontFamily: sans, fontSize: size, lineHeight: 0.88, fontWeight: 950, letterSpacing: -9, color: accent }}>
-    {value}
-  </div>
-);
-const Panel: React.FC<{ x:number; y:number; w:number; h:number; children:React.ReactNode; accent?:string }> = ({ x,y,w,h,children,accent=color.dim }) => {
-  const frame = useCurrentFrame();
-  const lift = ease(frame, 0, 16, [18, 0]);
-  return <div style={{ position:"absolute", left:x, top:y+lift, width:w, height:h, boxSizing:"border-box", border:`1px solid ${accent}`, background:"rgba(6,24,28,.94)", padding:28 }}>{children}</div>;
-};
-const Bars: React.FC<{ values:number[]; labels?:string[]; top?:number }> = ({ values, labels=[], top=930 }) => (
-  <div style={{ position:"absolute", left:92, right:92, top, height:430, display:"flex", alignItems:"flex-end", gap:28 }}>
-    {values.map((v,i)=><div key={i} style={{ flex:1, height:`${Math.max(0,Math.min(1,v))*100}%`, background:i===values.length-1?color.green:color.gold, borderTop:`5px solid ${i===values.length-1?color.text:color.goldLight}`, position:"relative" }}>
-      {labels[i] ? <div style={{ position:"absolute", left:0, right:0, bottom:-62, textAlign:"center", fontFamily:sans, fontSize:22, fontWeight:700, color:color.dim }}>{labels[i]}</div> : null}
-    </div>)}
-  </div>
-);
-const Curve: React.FC<{ progress:number; top?:number }> = ({ progress, top=610 }) => {
-  const points = [[40,350],[150,330],[270,300],[390,276],[510,220],[620,170],[735,112],[850,70]] as const;
-  const visible = Math.max(2, Math.floor(progress * points.length));
-  const poly = points.slice(0,visible).map(([x,y])=>`${x},${y}`).join(" ");
-  return <svg width={900} height={430} style={{ position:"absolute", left:90, top }} viewBox="0 0 900 430">
-    {[70,150,230,310,390].map(y=><line key={y} x1="20" y1={y} x2="870" y2={y} stroke={color.dim} strokeOpacity=".17" strokeWidth="2" />)}
-    <polyline points={poly} fill="none" stroke={color.green} strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" />
-    {points[visible-1] ? <circle cx={points[visible-1][0]} cy={points[visible-1][1]} r="15" fill={color.gold} /> : null}
-  </svg>;
+export const CoinDrop:React.FC<SceneProps> = ({dur,beat}) => { const frame=useCurrentFrame(); const p=ease(frame,0,Math.min(dur,24)); return <AbsoluteFill><Kicker>THE MONEY MOVE</Kicker><Rule top={355}/><div style={{position:"absolute",left:92,top:430,fontFamily:serif,fontSize:94,lineHeight:.98,fontWeight:700,color:color.text,maxWidth:700}}>Cash becomes a story when the <span style={{color:color.gold}}>decision</span> changes.</div><div style={{position:"absolute",left:interpolate(p,[0,1],[780,330]),top:interpolate(p,[0,1],[470,980]),width:190,height:190,borderRadius:"50%",background:color.gold,border:`10px solid ${color.goldLight}`,transform:`rotate(${interpolate(p,[0,1],[-20,0])}deg)`}}/><Panel x={90} y={1170} w={900} h={210} accent={color.green}><div style={{fontFamily:sans,fontSize:28,letterSpacing:3,color:color.green,fontWeight:900}}>EDITORIAL RULE</div><div style={{marginTop:18,fontFamily:sans,fontSize:34,color:color.text,lineHeight:1.15}}>{beat?.data?.[0]?.label??"Lead with the consequence, not the decoration."}</div></Panel><TinySource>source-led visual • camera carries the emphasis</TinySource></AbsoluteFill>; };
+
+export const CoinStack:React.FC<SceneProps> = ({dur}) => { const frame=useCurrentFrame(); const p=ease(frame,3,Math.max(18,dur-8)); const year=1970+Math.round(p*55); return <AbsoluteFill><Kicker>FROM ZERO TO SCALE</Kicker><Rule top={355}/><div style={{position:"absolute",left:90,top:470,fontFamily:sans,fontWeight:950,fontSize:180,color:color.text,letterSpacing:-8}}>{year}</div><div style={{position:"absolute",left:95,top:690,width:780,height:8,background:color.dim,opacity:.3}}/>{[.12,.31,.51,.72,.91].map((x,i)=><div key={i} style={{position:"absolute",left:95+x*770,top:658,width:72,height:72,borderRadius:"50%",background:i===4?color.green:color.gold,transform:`scale(${x<p?1:.55})`,opacity:x<p?1:.18}}/>)}<Curve progress={p} top={810}/><TinySource>timeline • milestone • consequence</TinySource></AbsoluteFill>; };
+
+export const InvestChart:React.FC<SceneProps> = ({dur,beat}) => { const frame=useCurrentFrame(); const p=ease(frame,8,Math.max(28,dur-12)); const value=beat?.data?.[0]?.raw??`$${Math.round(100+640*p)}`; return <AbsoluteFill><Kicker>THE MECHANISM</Kicker><Rule top={355}/><Curve progress={p} top={650}/><HeroNumber value={value} top={470} size={170} accent={color.text}/><div style={{position:"absolute",left:95,top:980,fontFamily:sans,fontSize:30,fontWeight:800,color:color.dim,letterSpacing:2}}>MECHANISM / CONSEQUENCE</div><Bars values={[.16,.23,.35,.48,.65,.84]} labels={["Y1","Y2","Y3","Y4","Y5","Y6"]} top={1080}/>{beat?.data?.[0]?.raw?<TinySource>proof • {beat.data[0].label}: {beat.data[0].raw}</TinySource>:<TinySource>proof • show the number, then show what moved it</TinySource>}</AbsoluteFill>; };
+
+export const JarFill:React.FC<SceneProps> = ({dur}) => { const frame=useCurrentFrame(); const p=ease(frame,0,Math.max(24,dur-8)); return <AbsoluteFill><Kicker>THE EVIDENCE</Kicker><Rule top={355}/><Panel x={90} y={500} w={580} h={760} accent={color.gold}><div style={{fontFamily:sans,fontWeight:900,fontSize:28,letterSpacing:3,color:color.gold}}>DOCUMENT / SCREEN / SOURCE</div><div style={{marginTop:80,height:400,border:`2px solid ${color.dim}`,background:"rgba(255,255,255,.025)",padding:24,boxSizing:"border-box"}}>{[0,1,2,3,4,5].map(i=><div key={i} style={{height:18,marginBottom:22,width:`${58+i*6}%`,background:i===3?color.green:color.dim,opacity:.45+p*.45,transform:`scaleX(${.35+p*.65})`,transformOrigin:"left"}}/>)}</div><div style={{marginTop:36,fontFamily:serif,fontSize:52,color:color.text,lineHeight:1.08}}>Show the artifact the viewer can <span style={{color:color.green}}>believe.</span></div></Panel><div style={{position:"absolute",left:725,top:640,width:270,height:270,border:`6px solid ${color.green}`,transform:`rotate(${interpolate(frame,[0,20],[-5,2],{extrapolateLeft:"clamp",extrapolateRight:"clamp"})}deg) scale(${.92+p*.08})`}}/><HeroNumber value={`${Math.round(p*100)}%`} top={980} size={150} accent={color.green}/><TinySource>source-first • let evidence interrupt the design</TinySource></AbsoluteFill>; };
+
+export const Mountain:React.FC<SceneProps> = ({dur,beat}) => { const frame=useCurrentFrame(); const p=ease(frame,4,Math.max(26,dur-10)); return <AbsoluteFill><Kicker>THE SCALE OF IT</Kicker><Rule top={355}/><HeroNumber value={beat?.data?.[0]?.raw??`${Math.round(8*p+2)}×`} top={450} size={250}/><div style={{position:"absolute",left:95,top:790,fontFamily:serif,fontSize:72,color:color.text,maxWidth:780}}>{beat?.reveal??"One business decision can compound."}</div><Bars values={[.18,.24,.33,.47,.63,.8,1]} labels={["A","B","C","D","E","F","NOW"]} top={1050}/><TinySource>escalation • make the consequence visibly larger than the setup</TinySource></AbsoluteFill>; };
+
+export const Payoff:React.FC<SceneProps> = ({dur,beat}) => { const frame=useCurrentFrame(); const impact=ease(frame,0,Math.min(12,dur)); const settle=ease(frame,10,Math.max(24,dur),[1.055,1]); const number=beat?.data?.[0]?.raw??"THE COST"; return <AbsoluteFill><Kicker>THE PAYOFF</Kicker><Rule top={355}/><div style={{position:"absolute",left:0,right:0,top:530,textAlign:"center",transform:`scale(${1+impact*.07+settle})`}}><div style={{fontFamily:serif,fontSize:88,lineHeight:1.02,color:color.text,fontWeight:700}}>{beat?.text??"The thing they ignored"}</div><div style={{marginTop:28,fontFamily:sans,fontSize:180,lineHeight:.9,fontWeight:950,letterSpacing:-8,color:color.gold}}>{number}</div></div><div style={{position:"absolute",left:92,top:1110,width:896,height:220,borderTop:`7px solid ${color.green}`,borderBottom:`1px solid ${color.dim}`,display:"flex",alignItems:"center",justifyContent:"space-between"}}><div style={{fontFamily:sans,fontSize:28,fontWeight:900,letterSpacing:3,color:color.green}}>CONTRADICTION</div><div style={{fontFamily:serif,fontSize:48,color:color.text,maxWidth:590,textAlign:"right"}}>{beat?.reveal??"The reveal closes the loop planted in the opening."}</div></div><TinySource>payoff • impact first, explanation second</TinySource></AbsoluteFill>; };
+
+export const Outro:React.FC<SceneProps> = ({dur}) => { const frame=useCurrentFrame(); const p=ease(frame,0,Math.max(24,dur-8)); return <AbsoluteFill><Kicker>ONE LAST THING</Kicker><Rule top={355}/><div style={{position:"absolute",left:90,top:560,maxWidth:860,fontFamily:serif,fontSize:112,lineHeight:.98,color:color.text,transform:`translateY(${(1-p)*20}px)`}}>The ending should <span style={{color:color.gold}}>rhyme</span> with the beginning.</div><div style={{position:"absolute",left:92,top:1180,width:896,height:160,borderLeft:`8px solid ${color.green}`,paddingLeft:34,boxSizing:"border-box",display:"flex",alignItems:"center"}}><div style={{fontFamily:sans,fontSize:32,color:color.dim,letterSpacing:2}}>CUT BACK TO FRAME ZERO</div></div><TinySource>loop • clean exit • no decorative motion after the message is complete</TinySource></AbsoluteFill>; };
+
+export const MODULES:Record<string,React.FC<SceneProps>> = {
+  coinDrop:CoinDrop,
+  coinStack:CoinStack,
+  investChart:InvestChart,
+  jarFill:JarFill,
+  mountain:Mountain,
+  payoff:Payoff,
+  outro:Outro,
+  archive:Archive,
+  documentFinance:DocumentFinance,
+  compareFinance:CompareFinance,
+  statFinance:StatFinance,
+  editorialGraphic:EditorialGraphic,
 };
 
-export const CoinDrop: React.FC<SceneProps> = ({ dur, beat }) => {
-  const frame = useCurrentFrame();
-  const p = ease(frame,0,Math.min(dur,24));
-  return <AbsoluteFill>
-    <Kicker>THE MONEY MOVE</Kicker><Rule top={355}/>
-    <div style={{ position:"absolute", left:92, top:430, fontFamily:serif, fontSize:94, lineHeight:.98, fontWeight:700, color:color.text, maxWidth:700 }}>
-      Cash becomes a story when the <span style={{ color:color.gold }}>decision</span> changes.
-    </div>
-    <div style={{ position:"absolute", left:interpolate(p,[0,1],[780,330]), top:interpolate(p,[0,1],[470,980]), width:190, height:190, borderRadius:"50%", background:color.gold, border:`10px solid ${color.goldLight}`, transform:`rotate(${interpolate(p,[0,1],[-20,0])}deg)` }}/>
-    <Panel x={90} y={1170} w={900} h={210} accent={color.green}>
-      <div style={{ fontFamily:sans, fontSize:28, letterSpacing:3, color:color.green, fontWeight:900 }}>EDITORIAL RULE</div>
-      <div style={{ marginTop:18, fontFamily:sans, fontSize:34, color:color.text, lineHeight:1.15 }}>{beat?.data?.[0]?.label ?? "Lead with the consequence, not the decoration."}</div>
-    </Panel>
-    <TinySource>source-led visual • camera carries the emphasis</TinySource>
-  </AbsoluteFill>;
-};
-
-export const CoinStack: React.FC<SceneProps> = ({ dur }) => {
-  const frame = useCurrentFrame();
-  const p = ease(frame,3,Math.max(18,dur-8));
-  const year = 1970 + Math.round(p*55);
-  return <AbsoluteFill>
-    <Kicker>FROM ZERO TO SCALE</Kicker><Rule top={355}/>
-    <div style={{ position:"absolute", left:90, top:470, fontFamily:sans, fontWeight:950, fontSize:180, color:color.text, letterSpacing:-8 }}>{year}</div>
-    <div style={{ position:"absolute", left:95, top:690, width:780, height:8, background:color.dim, opacity:.3 }}/>
-    {[.12,.31,.51,.72,.91].map((x,i)=><div key={i} style={{ position:"absolute", left:95+x*770, top:658, width:72, height:72, borderRadius:"50%", background:i===4?color.green:color.gold, transform:`scale(${x<p?1:.55})`, opacity:x<p?1:.18 }}/>) }
-    <Curve progress={p} top={810}/><TinySource>timeline • milestone • consequence</TinySource>
-  </AbsoluteFill>;
-};
-
-export const InvestChart: React.FC<SceneProps> = ({ dur, beat }) => {
-  const frame = useCurrentFrame();
-  const p = ease(frame,8,Math.max(28,dur-12));
-  const value = Math.round(100+640*p);
-  return <AbsoluteFill>
-    <Kicker>THE MECHANISM</Kicker><Rule top={355}/><Curve progress={p} top={650}/>
-    <HeroNumber value={`$${value}`} top={470} size={170} accent={color.text}/>
-    <div style={{ position:"absolute", left:95, top:980, fontFamily:sans, fontSize:30, fontWeight:800, color:color.dim, letterSpacing:2 }}>COMPOUNDED CHANGE</div>
-    <Bars values={[.16,.23,.35,.48,.65,.84]} labels={["Y1","Y2","Y3","Y4","Y5","Y6"]} top={1080}/>
-    {beat?.data?.[0]?.raw ? <TinySource>proof • {beat.data[0].label}: {beat.data[0].raw}</TinySource> : <TinySource>proof • show the number, then show what moved it</TinySource>}
-  </AbsoluteFill>;
-};
-
-export const JarFill: React.FC<SceneProps> = ({ dur }) => {
-  const frame = useCurrentFrame();
-  const p = ease(frame,0,Math.max(24,dur-8));
-  return <AbsoluteFill>
-    <Kicker>THE EVIDENCE</Kicker><Rule top={355}/>
-    <Panel x={90} y={500} w={580} h={760} accent={color.gold}>
-      <div style={{ fontFamily:sans, fontWeight:900, fontSize:28, letterSpacing:3, color:color.gold }}>DOCUMENT / SCREEN / SOURCE</div>
-      <div style={{ marginTop:80, height:400, border:`2px solid ${color.dim}`, background:"rgba(255,255,255,.025)", padding:24, boxSizing:"border-box" }}>
-        {[0,1,2,3,4,5].map(i=><div key={i} style={{ height:18, marginBottom:22, width:`${58+i*6}%`, background:i===3?color.green:color.dim, opacity:.45+p*.45, transform:`scaleX(${.35+p*.65})`, transformOrigin:"left" }}/>) }
-      </div>
-      <div style={{ marginTop:36, fontFamily:serif, fontSize:52, color:color.text, lineHeight:1.08 }}>Show the artifact the viewer can <span style={{ color:color.green }}>believe.</span></div>
-    </Panel>
-    <div style={{ position:"absolute", left:725, top:640, width:270, height:270, border:`6px solid ${color.green}`, transform:`rotate(${interpolate(frame,[0,20],[-5,2],{extrapolateLeft:"clamp",extrapolateRight:"clamp"})}deg) scale(${.92+p*.08})` }}/>
-    <HeroNumber value={`${Math.round(p*100)}%`} top={980} size={150} accent={color.green}/><TinySource>source-first • let evidence interrupt the design</TinySource>
-  </AbsoluteFill>;
-};
-
-export const Mountain: React.FC<SceneProps> = ({ dur }) => {
-  const frame = useCurrentFrame();
-  const p = ease(frame,4,Math.max(26,dur-10));
-  return <AbsoluteFill>
-    <Kicker>THE SCALE OF IT</Kicker><Rule top={355}/><HeroNumber value={`${Math.round(8*p+2)}×`} top={450} size={250}/>
-    <div style={{ position:"absolute", left:95, top:790, fontFamily:serif, fontSize:72, color:color.text, maxWidth:780 }}>One business decision can <span style={{ color:color.green }}>compound.</span></div>
-    <Bars values={[.18,.24,.33,.47,.63,.8,1]} labels={["A","B","C","D","E","F","NOW"]} top={1050}/><TinySource>escalation • make the consequence visibly larger than the setup</TinySource>
-  </AbsoluteFill>;
-};
-
-export const Payoff: React.FC<SceneProps> = ({ dur, beat }) => {
-  const frame = useCurrentFrame();
-  const impact = ease(frame,0,Math.min(12,dur));
-  const settle = ease(frame,10,Math.max(24,dur),[1.055,1]);
-  const number = beat?.data?.[0]?.raw ?? "THE COST";
-  return <AbsoluteFill>
-    <Kicker>THE PAYOFF</Kicker><Rule top={355}/>
-    <div style={{ position:"absolute", left:0, right:0, top:530, textAlign:"center", transform:`scale(${1+impact*.07+settle})` }}>
-      <div style={{ fontFamily:serif, fontSize:88, lineHeight:1.02, color:color.text, fontWeight:700 }}>The thing they ignored</div>
-      <div style={{ marginTop:28, fontFamily:sans, fontSize:180, lineHeight:.9, fontWeight:950, letterSpacing:-8, color:color.gold }}>{number}</div>
-    </div>
-    <div style={{ position:"absolute", left:92, top:1110, width:896, height:220, borderTop:`7px solid ${color.green}`, borderBottom:`1px solid ${color.dim}`, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-      <div style={{ fontFamily:sans, fontSize:28, fontWeight:900, letterSpacing:3, color:color.green }}>CONTRADICTION</div>
-      <div style={{ fontFamily:serif, fontSize:48, color:color.text, maxWidth:590, textAlign:"right" }}>{beat?.reveal ?? "The reveal closes the loop planted in the opening."}</div>
-    </div><TinySource>payoff • impact first, explanation second</TinySource>
-  </AbsoluteFill>;
-};
-
-export const Outro: React.FC<SceneProps> = ({ dur }) => {
-  const frame = useCurrentFrame();
-  const p = ease(frame,0,Math.max(24,dur-8));
-  return <AbsoluteFill>
-    <Kicker>ONE LAST THING</Kicker><Rule top={355}/>
-    <div style={{ position:"absolute", left:90, top:560, maxWidth:860, fontFamily:serif, fontSize:112, lineHeight:.98, color:color.text, transform:`translateY(${(1-p)*20}px)` }}>The ending should <span style={{ color:color.gold }}>rhyme</span> with the beginning.</div>
-    <div style={{ position:"absolute", left:92, top:1180, width:896, height:160, borderLeft:`8px solid ${color.green}`, paddingLeft:34, boxSizing:"border-box", display:"flex", alignItems:"center" }}><div style={{ fontFamily:sans, fontSize:32, color:color.dim, letterSpacing:2 }}>CUT BACK TO FRAME ZERO</div></div>
-    <TinySource>loop • clean exit • no decorative motion after the message is complete</TinySource>
-  </AbsoluteFill>;
-};
-
-export const MODULES: Record<string, React.FC<SceneProps>> = { coinDrop:CoinDrop, coinStack:CoinStack, investChart:InvestChart, jarFill:JarFill, mountain:Mountain, payoff:Payoff, outro:Outro };
 export { Backdrop };
