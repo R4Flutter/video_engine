@@ -1,21 +1,4 @@
-// plan.ts: the director's front door. Script in, ShortPlan out.
-//
-// Every layer below is deterministic, so the same script plus the same
-// overlay always produces the same plan — the renderer, the QC and the tests
-// all read one artifact and none of them can disagree about the edit.
-//
-// The order matters and is not arbitrary:
-//
-//   1. frame zero    everything else is conditioned on what beat one shows,
-//                    so the hook is planned before anything reads it
-//   2. story         what each beat is for
-//   3. curiosity     where a loop is open — the swipe model's largest term
-//   4. attention     rhythm, emotion, profiles
-//   5. visual        module, reveal, captions (+ variety enforcement)
-//   6. budget        remove whatever is competing
-//   7. motion/audio  camera, reveals, transitions, bed, silence, accents
-//   8. swipe         who leaves, and where
-//   9. assemble      one artifact
+// plan.ts: deterministic editorial director. Script in, complete ShortPlan out.
 import type { CameraIntent, DirectorOverlay, Script, ShortPlan } from "./types.ts";
 import { analyzeStory } from "./story/StoryAnalyzer.ts";
 import { planSequences } from "./story/SequencePlanner.ts";
@@ -27,6 +10,7 @@ import { profileFor } from "./attention/AttentionDirector.ts";
 import { budgetFor } from "./attention/NoveltyBudget.ts";
 import { estimateSwipe } from "./attention/SwipeRisk.ts";
 import { directVisuals } from "./visual/VisualDirector.ts";
+import { shotForBeat } from "./visual/ShotPlanner.ts";
 import { cameraFor } from "./motion/CameraPlanner.ts";
 import { revealFor } from "./motion/RevealPlanner.ts";
 import { transitionInto } from "./motion/TransitionDirector.ts";
@@ -47,7 +31,6 @@ export type DirectResult = {
   curiosity: CuriosityState;
 };
 
-/** Hand-written notes win over every guess. */
 const mergeOverlay = (script: Script, overlay: DirectorOverlay | undefined): Script => {
   if (!overlay) return script;
   return {
@@ -60,66 +43,51 @@ const mergeOverlay = (script: Script, overlay: DirectorOverlay | undefined): Scr
   };
 };
 
-export const buildShortPlan = (
-  rawScript: Script,
-  overlay?: DirectorOverlay,
-): DirectResult => {
+export const buildShortPlan = (rawScript: Script, overlay?: DirectorOverlay): DirectResult => {
   const script = mergeOverlay(rawScript, overlay);
   const beats = script.beats;
   const fps = script.fps || 30;
   const warnings: string[] = [];
 
-  // --- 1. frame zero ------------------------------------------------------
   const frameZero = planFrameZero(script);
   const holdSeconds = frameZero.holdFrames / fps;
   if (!frameZero.text) warnings.push("beat 1 has no on-screen hook — frame one will be blank");
   if (!frameZero.audioSynced) warnings.push("beat 1's on-screen hook does not match its narration");
 
-  // --- 2. story -----------------------------------------------------------
   const facts = analyzeStory(script);
   const emotions = buildEmotionalCurve(script);
   const sequences = planSequences(script, facts, emotions);
 
-  // --- 3. curiosity -------------------------------------------------------
   const curiosity = runCuriosity(script, facts);
   if (curiosity.longestFlatRun && curiosity.longestFlatRun.seconds >= 5) {
-    warnings.push(
-      `${curiosity.longestFlatRun.seconds}s with nothing unresolved (beats ${curiosity.longestFlatRun.from}–${curiosity.longestFlatRun.to})`,
-    );
+    warnings.push(`${curiosity.longestFlatRun.seconds}s with nothing unresolved (beats ${curiosity.longestFlatRun.from}–${curiosity.longestFlatRun.to})`);
   }
 
-  // --- 4. attention -------------------------------------------------------
   const rhythms = beats.map((b) => rhythmFor(b));
-  const profiles = beats.map((b, i) =>
-    profileFor(b, facts[i], emotions[i], rhythms[i], i === 0),
-  );
+  const profiles = beats.map((b, i) => profileFor(b, facts[i], emotions[i], rhythms[i], i === 0));
   const attentionEvents = scheduleAllEvents(script, facts, emotions, rhythms, holdSeconds);
 
-  // --- 5. visual ----------------------------------------------------------
-  const {
-    decisions: visuals,
-    novelty,
-    warnings: visualWarnings,
-  } = directVisuals(script, facts, frameZero.holdFrames);
+  const { decisions: visuals, novelty, warnings: visualWarnings } = directVisuals(script, facts, frameZero.holdFrames);
   warnings.push(...visualWarnings);
 
-  // --- 6. motion, then budget --------------------------------------------
-  const rawCameras = beats.map((b, i) => cameraFor(b, facts[i], visuals[i], emotions[i], i === 0));
+  // Choose the visual subject and shot before applying camera motion. This is
+  // the key documentary rule: motion serves a shot, never the other way around.
+  const shots = beats.map((b, i) => shotForBeat(b, facts[i], visuals[i], i));
+
+  const rawCameras = beats.map((b, i) => {
+    const base = cameraFor(b, facts[i], visuals[i], emotions[i], i === 0);
+    if (i === 0) return base;
+    if (shots[i].cameraBias === "still") return "hold" as CameraIntent;
+    if (shots[i].cameraBias === "impact") return "punch" as CameraIntent;
+    return base;
+  });
+
   const budgeted = beats.map((b, i) => {
-    const { camera, captionMode, trimmed } = budgetFor(
-      b,
-      visuals[i].module,
-      rawCameras[i],
-      visuals[i].captionMode,
-    );
+    const { camera, captionMode, trimmed } = budgetFor(b, visuals[i].module, rawCameras[i], visuals[i].captionMode);
     if (trimmed) {
-      // Report only what actually changed. A warning that says "pull→pull" is
-      // noise, and noise in a warnings list trains you to stop reading it.
       const changes = [];
       if (camera !== rawCameras[i]) changes.push(`camera ${rawCameras[i]}→${camera}`);
-      if (captionMode !== visuals[i].captionMode) {
-        changes.push(`captions ${visuals[i].captionMode}→${captionMode}`);
-      }
+      if (captionMode !== visuals[i].captionMode) changes.push(`captions ${visuals[i].captionMode}→${captionMode}`);
       warnings.push(`beat ${b.n}: over the motion budget — ${changes.join(", ")}`);
     }
     return { camera: camera as CameraIntent, captionMode };
@@ -127,21 +95,16 @@ export const buildShortPlan = (
   const cameras = budgeted.map((x) => x.camera);
   const trimmedVisuals = visuals.map((v, i) => ({ ...v, captionMode: budgeted[i].captionMode }));
 
-  const reveals = beats.map((b, i) =>
-    revealFor(b, facts[i], trimmedVisuals[i].reveal, profiles[i].strategy, i === 0, holdSeconds),
-  );
-  const transitions = beats.map((b, i) =>
-    transitionInto(
-      b,
-      beats[i - 1],
-      facts[i],
-      emotions[i],
-      i > 0 && trimmedVisuals[i].module === trimmedVisuals[i - 1].module,
-      i === beats.length - 1,
-    ),
-  );
+  const reveals = beats.map((b, i) => revealFor(b, facts[i], trimmedVisuals[i].reveal, profiles[i].strategy, i === 0, holdSeconds));
+  const transitions = beats.map((b, i) => transitionInto(
+    b,
+    beats[i - 1],
+    facts[i],
+    emotions[i],
+    i > 0 && trimmedVisuals[i].module === trimmedVisuals[i - 1].module,
+    i === beats.length - 1,
+  ));
 
-  // --- 7. audio -----------------------------------------------------------
   const audios = beats.map((b, i) => audioFor(b, facts[i], emotions[i], attentionEvents));
   const audioEvents = [
     ...planMusic(beats, facts, emotions),
@@ -149,7 +112,6 @@ export const buildShortPlan = (
     ...planSfx(beats, attentionEvents),
   ].sort((a, z) => a.at - z.at);
 
-  // --- 8. who leaves ------------------------------------------------------
   const swipe = estimateSwipe({
     beats,
     facts,
@@ -160,7 +122,6 @@ export const buildShortPlan = (
     openLoop: curiosity.openLoop,
   });
 
-  // --- 9. assemble --------------------------------------------------------
   const loop = planLoop(beats);
   const plan = assembleTimeline({
     script,
@@ -170,6 +131,7 @@ export const buildShortPlan = (
     profiles,
     novelty,
     visuals: trimmedVisuals,
+    shots,
     cameras,
     reveals,
     transitions,
@@ -184,8 +146,6 @@ export const buildShortPlan = (
 
   const issues = validateTimeline(plan);
   for (const issue of issues) warnings.push(`timeline: ${issue.message}`);
-
   const qc = runRetentionQC(plan, curiosity, beats[0]?.vo ?? "");
-
   return { plan, warnings, issues, qc, curiosity };
 };
