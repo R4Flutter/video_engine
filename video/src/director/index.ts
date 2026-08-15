@@ -1,6 +1,4 @@
-// The director's public surface. tools/direct.mjs imports buildShortPlan
-// through Node's type stripping; Remotion imports the types; tests import the
-// modules. One source of truth for the whole editorial layer.
+// Public surface for the editorial director.
 export * from "./types.ts";
 export * from "./util.ts";
 export { analyzeStory, analyzeBeat } from "./story/StoryAnalyzer.ts";
@@ -11,9 +9,10 @@ export { estimateSwipe, projectedRetention } from "./attention/SwipeRisk.ts";
 export { rhythmFor, scheduleAllEvents, scheduleBeatEvents } from "./attention/RhythmEngine.ts";
 export { buildEmotionalCurve, emotionFor } from "./attention/EmotionalCurve.ts";
 export { profileFor } from "./attention/AttentionDirector.ts";
-export { budgetFor, MODULE_MOTION, CAMERA_MOTION, CAPTION_MOTION } from "./attention/NoveltyBudget.ts";
+export { budgetFor, MODULE_MOTION, CAMERA_MOTION, CAPTION_MOTION, MOTION_CEILING } from "./attention/NoveltyBudget.ts";
 export { visualPurposeFor, MODULE_BY_PURPOSE } from "./visual/VisualPurpose.ts";
 export { visualFor, directVisuals, NATIVE_REVEAL, CAPTION_BY_MODULE } from "./visual/VisualDirector.ts";
+export { shotForBeat } from "./visual/ShotPlanner.ts";
 export { enforceVariety, moduleRuns, knownModule } from "./visual/VisualContinuity.ts";
 export { cameraFor } from "./motion/CameraPlanner.ts";
 export { revealFor } from "./motion/RevealPlanner.ts";
