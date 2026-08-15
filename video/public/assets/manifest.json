@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "policy": "asset-first",
+  "generated": false,
+  "folders": {
+    "subjects": "assets/01_SUBJECTS",
+    "archive": "assets/02_ARCHIVE",
+    "evidence": "assets/03_EVIDENCE",
+    "graphics": "assets/04_GRAPHICS",
+    "backgrounds": "assets/05_BACKGROUNDS",
+    "broll": "assets/06_BROLL",
+    "logos": "assets/07_LOGOS",
+    "ui_mockups": "assets/08_UI_MOCKUPS",
+    "maps": "assets/09_MAPS"
+  },
+  "assets": []
+}
