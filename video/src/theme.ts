@@ -12,6 +12,19 @@ export const theme = {
     dim: "#7FA6A6",
     ink: "#041215",
   },
+  // Vox: a printed page, not a stage. Ink on paper, one accent, nothing else —
+  // the restraint is the look, so resist adding a sixth colour here.
+  vox: {
+    paper: "#F4F1EA",
+    paperDeep: "#E4DED1",
+    ink: "#1A1A1A",
+    accent: "#D9491E",
+    muted: "#8A857C",
+    rule: "#C9C2B4",
+    // Archivo is loaded by vox/elements.tsx; the rest of the stack is what
+    // renders if the font server is unreachable.
+    font: `"Archivo", "Bahnschrift", "Segoe UI", system-ui, sans-serif`,
+  },
   // Segoe UI ships the rupee glyph and needs no network at render time.
   font: `"Segoe UI", system-ui, -apple-system, sans-serif`,
   // 1080x1920 minus the phone UI: nothing that matters lives outside this.
@@ -28,7 +41,7 @@ export const H = 1920;
 export const POP = { damping: 12, mass: 0.6, stiffness: 180 };
 export const SOFT = { damping: 200, mass: 1, stiffness: 100 };
 
-export const inr = (n: number) =>
-  new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 }).format(
+export const usd = (n: number) =>
+  new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(
     Math.round(n),
   );

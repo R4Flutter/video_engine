@@ -109,7 +109,7 @@ export const Coin: React.FC<{
       fontSize={52}
       fill={color.goldDeep}
     >
-      ₹
+      $
     </text>
   </svg>
 );

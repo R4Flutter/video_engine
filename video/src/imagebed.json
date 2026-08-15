@@ -1,0 +1,57 @@
+[
+ {
+  "start": 0.0,
+  "end": 2.0,
+  "file": "img/bed-1-1.png"
+ },
+ {
+  "start": 2.0,
+  "end": 4.0,
+  "file": "img/bed-2-1.png"
+ },
+ {
+  "start": 4.0,
+  "end": 8.0,
+  "file": "img/bed-3-1.png"
+ },
+ {
+  "start": 8.0,
+  "end": 10.5,
+  "file": "img/bed-4-1.png"
+ },
+ {
+  "start": 10.5,
+  "end": 13.0,
+  "file": "img/bed-4-2.png"
+ },
+ {
+  "start": 13.0,
+  "end": 17.0,
+  "file": "img/bed-5-1.png"
+ },
+ {
+  "start": 17.0,
+  "end": 19.5,
+  "file": "img/bed-6-1.png"
+ },
+ {
+  "start": 19.5,
+  "end": 22.0,
+  "file": "img/bed-6-2.png"
+ },
+ {
+  "start": 22.0,
+  "end": 24.667,
+  "file": "img/bed-7-1.png"
+ },
+ {
+  "start": 24.667,
+  "end": 27.333,
+  "file": "img/bed-7-2.png"
+ },
+ {
+  "start": 27.333,
+  "end": 30.0,
+  "file": "img/bed-7-3.png"
+ }
+]

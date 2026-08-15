@@ -2,7 +2,7 @@
 // Both are driven entirely by script.json, both stay inside the safe area.
 import React from "react";
 import { Easing, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
-import { inr, POP, theme } from "./theme";
+import { POP, theme, usd } from "./theme";
 
 const { color, safe } = theme;
 
@@ -11,11 +11,11 @@ type TextCue = { at: number; text: string; anim: string };
 /** Big words shrink so a long line never leaves the safe area. */
 const sizeFor = (text: string) => (text.length > 40 ? 66 : text.length > 26 ? 82 : 104);
 
-/** Numbers and ₹ amounts carry the message, so they get the gold. */
+/** Numbers and $ amounts carry the message, so they get the gold. */
 const Rich: React.FC<{ text: string }> = ({ text }) => (
   <>
-    {text.split(/(₹[\d,]+|\d+%|\b\d+\b)/g).map((part, i) =>
-      /^(₹[\d,]+|\d+%|\d+)$/.test(part) ? (
+    {text.split(/(\$[\d.,]+[kMB]?|₹[\d,]+|\d+%|\b\d+\b)/g).map((part, i) =>
+      /^(\$[\d.,]+[kMB]?|₹[\d,]+|\d+%|\d+)$/.test(part) ? (
         <span key={i} style={{ color: color.gold }}>
           {part}
         </span>
@@ -26,17 +26,24 @@ const Rich: React.FC<{ text: string }> = ({ text }) => (
   </>
 );
 
-/** "10 YEARS → ₹7,00,000" rolls its amount up from zero. */
+/** "10 YEARS → ₹7,00,000" or "$2,400 A YEAR" rolls its amount up from zero. */
 const CountUp: React.FC<{ text: string; frame: number }> = ({ text, frame }) => {
-  const m = text.match(/₹([\d,]+)/);
+  const m = text.match(/([$₹])([\d,]+)/);
   if (!m) return <Rich text={text} />;
-  const target = Number(m[1].replace(/,/g, ""));
+  const symbol = m[1];
+  const target = Number(m[2].replace(/,/g, ""));
   const t = interpolate(frame, [0, 26], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: Easing.out(Easing.cubic),
   });
-  return <Rich text={text.replace(m[0], `₹${inr(target * t)}`)} />;
+  const rolled =
+    symbol === "$"
+      ? usd(target * t)
+      : new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 }).format(
+          Math.round(target * t),
+        );
+  return <Rich text={text.replace(m[0], `${symbol}${rolled}`)} />;
 };
 
 const Typed: React.FC<{ text: string; frame: number }> = ({ text, frame }) => {

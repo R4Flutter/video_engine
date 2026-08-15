@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Finance Video Pipeline — Flowchart</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+  body { background: #0e1216; color: #e8e6e1; font-family: system-ui, sans-serif; margin: 0; padding: 24px; }
+  h1 { font-size: 18px; font-weight: 600; margin: 0 0 4px; }
+  p  { font-size: 12px; color: #9aa4af; margin: 0 0 16px; }
+  .wrap { background: #141a20; border: 1px solid #232b33; border-radius: 12px; padding: 16px; overflow: auto; }
+</style>
+</head>
+<body>
+  <h1>Full Pipeline — 1min Long-Form + 1min Short</h1>
+  <p>VIRALFORGE intelligence → script → world building (b-roll) → pipeline → render → master → QC loop</p>
+  <div class="wrap">
+    <pre class="mermaid">
+flowchart LR
+    subgraph VF["VIRALFORGE  (yt_engine)"]
+        A1["run_mvp.py<br/>crawl 23 business/finance channels<br/>YOUTUBE_API_KEY"] --> A2["corpus db<br/>3,898 videos + heatmaps<br/>+ transcripts"]
+        A2 --> A3["viral:hook 'topic'<br/>ranked hook candidates"]
+        A2 --> A4["viral:patterns<br/>what works in niche"]
+    end
+
+    subgraph SCRIPT["WRITE SCRIPT"]
+        B1["long: script.md<br/>60s · beats A-C"]
+        B2["short: script_vox.md<br/>60s · 6 beats"]
+    end
+
+    subgraph WORLD["WORLD BUILDING  (b-roll)"]
+        C1["app-mockup.py<br/>draws UI screens"]
+        C2["image_prompts.py<br/>8 prompts to generate"]
+        C3["you drop imgs → public/img<br/>bed-1-1.jpg ... bed-6-2.jpg"]
+        C4["fetch-imagebed.py<br/>→ imagebed.json (10 slots)"]
+        C5["fetch-footage.py<br/>→ footage.json (archival)"]
+    end
+
+    subgraph PIPE["PIPELINE  (finance_stickman/video)"]
+        D1["npm run script<br/>or script:vox<br/>check + parse-script → script.json"]
+        D2["npm run direct<br/>director-plan.json"]
+        D3["npm run voice<br/>narration mp3"]
+        D4["npm run align<br/>beat timings + lipsync"]
+        D5["npm run gate<br/>qc --strict (must pass)"]
+    end
+
+    subgraph OUT["OUTPUT"]
+        E1["npm run render<br/>FinanceShort → final.mp4"]
+        E2["npm run render:vox<br/>VoxExplain → vox.mp4<br/>(ImageBed+mockups+LiftCaption)"]
+        E3["npm run master<br/>→ *_upload.mp4 (loudness)"]
+    end
+
+    subgraph QC["VIRALFORGE QC"]
+        F1["viral:score video.mp4<br/>--title '...'<br/>scorecard 0-100"]
+        F2{"pass?<br/>overall ≥ 80"}
+    end
+
+    A3 --> SCRIPT
+    A4 --> SCRIPT
+    B1 --> C1
+    B2 --> C2
+    C2 --> C3 --> C4
+    B1 --> C5
+    C1 --> C4
+    SCRIPT --> D1 --> D2 --> D3 --> D4 --> D5
+    C4 --> D4
+    C5 --> D4
+    D5 --> OUT
+    E1 --> E3
+    E2 --> E3
+    E3 --> F1 --> F2
+    F2 -- "no → fix script/visuals" --> SCRIPT
+    F2 -- "yes → upload" --> G["PUBLISH"]
+    </pre>
+  </div>
+<script>mermaid.initialize({ startOnLoad: true, theme: "dark" });</script>
+</body>
+</html>

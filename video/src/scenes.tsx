@@ -13,7 +13,6 @@ import {
 import {
   Backdrop,
   Badge,
-  Character,
   Coin,
   CoinPile,
   GrowthChart,
@@ -21,7 +20,7 @@ import {
   Jar,
   Sparkles,
 } from "./elements";
-import { POP, theme } from "./theme";
+import { theme } from "./theme";
 
 const { color, stage } = theme;
 const GROUND = stage.groundY;
@@ -60,9 +59,8 @@ export const CoinDrop: React.FC<SceneProps> = () => {
           transform: `translateY(-60px) scale(${ease(frame, 0, 40, [1.15, 1])})`,
         }}
       >
-        ₹
+        $
       </div>
-      <Character x={840} y={GROUND} h={560} face="left" />
       <Jar x={470} bottom={GROUND} h={360} fill={frame > land ? 0.12 : 0} />
       <Coin x={470} y={y} size={104} rot={interpolate(drop, [0, 1], [-160, 0])} />
       {ring > 0 && ring < 22 ? (
@@ -84,7 +82,7 @@ export const CoinDrop: React.FC<SceneProps> = () => {
   );
 };
 
-/** Beat 2 — ₹100 a day stacks into a month. Calendar ticks alongside. */
+/** Beat 2 — $10 a day stacks into a month. Calendar ticks alongside. */
 export const CoinStack: React.FC<SceneProps> = () => {
   const frame = useCurrentFrame();
   const days = 30;
@@ -95,7 +93,6 @@ export const CoinStack: React.FC<SceneProps> = () => {
   const gridY = 720;
   return (
     <AbsoluteFill>
-      <Character x={220} y={GROUND} h={470} face="right" />
       <Ground x={452} y={GROUND + 4} w={230} />
       {Array.from({ length: days }, (_, i) => {
         const t = frame - i * per;
@@ -147,7 +144,6 @@ export const InvestChart: React.FC<SceneProps> = ({ dur }) => {
   const progress = ease(frame, 26, dur - 18);
   return (
     <AbsoluteFill>
-      <Character x={175} y={GROUND} h={420} face="right" />
       <GrowthChart x={cx} y={cy} w={cw} h={ch} progress={progress} />
       {Array.from({ length: 6 }, (_, i) => {
         const t = ease(frame, 4 + i * 6, 34 + i * 6);
@@ -196,7 +192,6 @@ export const JarFill: React.FC<SceneProps> = ({ dur }) => {
   const spill = Math.max(0, fill - 0.94) * 16;
   return (
     <AbsoluteFill>
-      <Character x={880} y={GROUND} h={420} face="left" />
       <Badge x={800} y={800} size={250} label="10 YEARS" enter={frame - 58} />
       <Ground x={430} y={GROUND + 4} w={420} />
       <Jar x={430} bottom={GROUND} h={520} fill={fill} />
@@ -227,10 +222,7 @@ export const JarFill: React.FC<SceneProps> = ({ dur }) => {
 /** Beat 5 — twenty years. The pile becomes a mountain. */
 export const Mountain: React.FC<SceneProps> = ({ dur }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
   const grow = ease(frame, 8, dur - 24);
-  const beat = frame % Math.round(fps * 0.8);
-  const hop = spring({ frame: beat, fps, config: POP, durationInFrames: 12 });
   return (
     <AbsoluteFill>
       <CoinPile x={640} baseY={GROUND} w={620} h={430 * grow} grow={grow} count={120} />
@@ -250,19 +242,17 @@ export const Mountain: React.FC<SceneProps> = ({ dur }) => {
           />
         );
       })}
-      <Character x={160} y={GROUND} h={420} face="right" hop={Math.max(0, hop) * 42} />
     </AbsoluteFill>
   );
 };
 
-/** Beat 6 — thirty years. He climbs it and holds up the same coin. */
+/** Beat 6 — thirty years. The same coin rises above the pile. */
 export const Payoff: React.FC<SceneProps> = ({ dur }) => {
   const frame = useCurrentFrame();
   const peakH = 560;
   const climb = ease(frame, 6, dur * 0.62);
   const cx = interpolate(climb, [0, 1], [250, 640]);
   const cy = interpolate(climb, [0, 1], [GROUND, GROUND - peakH + 15]);
-  const ch = interpolate(climb, [0, 1], [420, 290]);
   const flash = interpolate(frame, [dur * 0.62, dur * 0.62 + 8, dur * 0.62 + 26], [0, 0.28, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -271,15 +261,14 @@ export const Payoff: React.FC<SceneProps> = ({ dur }) => {
   return (
     <AbsoluteFill>
       <CoinPile x={640} baseY={GROUND} w={840} h={peakH} grow={1} count={190} seed="peak" />
-      <Character x={cx} y={cy} h={ch} face="right" lean={interpolate(climb, [0, 0.8, 1], [-6, -3, 0])} />
       <Coin
         x={cx + 96 * raise}
-        y={cy - ch + 84 - 30 * raise}
-        size={80 + 30 * raise}
+        y={cy - 200 - 40 * raise}
+        size={80 + 40 * raise}
         opacity={raise}
         rot={interpolate(raise, [0, 1], [-40, 0])}
       />
-      {raise > 0.4 ? <Sparkles x={cx} y={cy - ch} spread={340} frame={frame} seed="pk" /> : null}
+      {raise > 0.4 ? <Sparkles x={cx + 96} y={cy - 240} spread={340} frame={frame} seed="pk" /> : null}
       <AbsoluteFill style={{ backgroundColor: color.goldLight, opacity: flash, mixBlendMode: "screen" }} />
     </AbsoluteFill>
   );
@@ -301,7 +290,6 @@ export const Outro: React.FC<SceneProps> = ({ dur }) => {
         seed="peak"
       />
       <Jar x={400} bottom={GROUND} h={interpolate(calm, [0, 1], [0, 420])} fill={calm} />
-      <Character x={760} y={GROUND} h={interpolate(calm, [0, 1], [420, 520])} face="left" />
     </AbsoluteFill>
   );
 };

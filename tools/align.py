@@ -9,11 +9,17 @@ beat, overlay and sfx cue sits where the voice actually put it.
 
 Runs on the normal interpreter — faster-whisper uses CTranslate2, not torch, so
 it stays clear of the Chatterbox venv.
+
+Transcripts are cached against the wav's own bytes, so a beat whose take didn't
+change is never transcribed twice. Retiming still runs in full every time: the
+timeline depends on all the beats together, not just the ones that moved.
 """
 
 import argparse
 import difflib
+import hashlib
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -28,6 +34,7 @@ SCRIPT = ROOT / "video/src/script.json"
 VOICE = ROOT / "video/src/voice.json"
 VO = ROOT / "video/public/audio/vo"
 PLAN = VO / "voice-plan.json"
+CACHE = VO / ".heard.json"
 
 HOLD = 0.28  # silence after a beat when voice-plan.json has no direction for it
 MIN_BEAT = 1.0
@@ -153,6 +160,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="base.en")
     ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--force", action="store_true", help="re-transcribe every beat")
     args = ap.parse_args()
     if args.selftest:
         return selftest()
@@ -163,7 +171,8 @@ def main() -> None:
         if PLAN.exists()
         else {}
     )
-    model = WhisperModel(args.model, device="cpu", compute_type="int8")
+    cached = {} if args.force else json.loads(CACHE.read_text("utf8")) if CACHE.exists() else {}
+    heard_cache, model = {}, None
 
     beats, cursor = [], 0.0
     old_spans, new_spans = [], []
@@ -171,14 +180,43 @@ def main() -> None:
         path = VO / f"beat-{beat['n']}.wav"
         if not path.exists():
             raise SystemExit(f"missing {path} — run tools/voice.py first")
-        segments, info = model.transcribe(
-            str(path), word_timestamps=True, initial_prompt=speakable(beat["vo"])
-        )
-        heard = [
-            (w.word.strip(), w.start, w.end) for s in segments for w in (s.words or [])
-        ]
+
+        # Keyed on the wav's bytes and the model that read them: a re-cut script
+        # that leaves a take untouched gets that take's timings for free, and a
+        # --model change correctly invalidates all of them.
+        key = hashlib.sha1(path.read_bytes()).hexdigest()[:16] + f":{args.model}"
+        hit = cached.get(key)
+        if hit:
+            heard = [(w, s, e) for w, s, e in hit["heard"]]
+            duration = hit["duration"]
+        else:
+            if model is None:
+                # CTranslate2 takes what it's given; unset it uses a fraction of
+                # the machine. int8 on all cores is the fast path on CPU.
+                model = WhisperModel(
+                    args.model,
+                    device="cpu",
+                    compute_type="int8",
+                    cpu_threads=max(1, os.cpu_count() or 1),
+                )
+            segments, info = model.transcribe(
+                str(path),
+                word_timestamps=True,
+                initial_prompt=speakable(beat["vo"]),
+                # We already know what was said — word_times() maps the result
+                # back onto the scripted words. Searching five beams for a
+                # better sentence buys nothing and costs most of the runtime.
+                beam_size=1,
+                condition_on_previous_text=False,
+            )
+            heard = [
+                (w.word.strip(), w.start, w.end) for s in segments for w in (s.words or [])
+            ]
+            duration = info.duration
+        heard_cache[key] = {"heard": heard, "duration": duration}
+
         words = word_times(beat["vo"], heard)
-        speech = words[-1]["end"] if words else info.duration
+        speech = words[-1]["end"] if words else duration
         dur = max(MIN_BEAT, round(speech + hold.get(beat["n"], HOLD), 3))
 
         beats.append(
@@ -194,7 +232,8 @@ def main() -> None:
         old_spans.append((beat["start"], beat["end"]))
         new_spans.append((round(cursor, 3), round(cursor + dur, 3)))
         cursor += dur
-        print(f"  beat {beat['n']}  {speech:5.2f}s speech  {len(words)} words")
+        mark = "cached" if hit else "heard "
+        print(f"  beat {beat['n']}  {mark}  {speech:5.2f}s speech  {len(words)} words")
 
     total = round(cursor, 3)
     for beat, (start, end) in zip(script["beats"], new_spans):
@@ -214,6 +253,8 @@ def main() -> None:
         json.dumps({"total": total, "beats": beats}, indent=2, ensure_ascii=False),
         encoding="utf8",
     )
+    # Only this run's keys: takes that no longer exist stop being carried.
+    CACHE.write_text(json.dumps(heard_cache, ensure_ascii=False), encoding="utf8")
     print(f"\n{total}s episode — {VOICE.name} written, script.json retimed")
 
 

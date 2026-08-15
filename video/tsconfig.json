@@ -6,6 +6,9 @@
     "jsx": "react-jsx",
     "strict": true,
     "noEmit": true,
+    // The director imports with explicit .ts extensions so Node's type
+    // stripping can run those files directly from tools/direct.mjs.
+    "allowImportingTsExtensions": true,
     "lib": ["es2015"],
     "esModuleInterop": true,
     "resolveJsonModule": true,

@@ -1,511 +1,551 @@
 {
-  "total": 30.95,
+  "total": 30,
   "beats": [
     {
       "n": 1,
-      "file": "vo/beat-1.wav",
-      "start": 0.0,
-      "dur": 2.43,
-      "speech": 1.98,
+      "file": "",
+      "start": 0,
+      "dur": 2,
+      "speech": 2,
       "words": [
         {
-          "w": "One",
-          "start": 0.0,
-          "end": 0.18
+          "w": "Kodak",
+          "start": 0,
+          "end": 0.333
         },
         {
-          "w": "coin.",
-          "start": 0.18,
-          "end": 0.36
+          "w": "invented",
+          "start": 0.333,
+          "end": 0.667
         },
         {
-          "w": "30",
-          "start": 1.04,
-          "end": 1.09
+          "w": "it.",
+          "start": 0.667,
+          "end": 1
         },
         {
-          "w": "years.",
-          "start": 1.04,
-          "end": 1.3
+          "w": "Never",
+          "start": 1,
+          "end": 1.333
         },
         {
-          "w": "One",
-          "start": 1.74,
-          "end": 1.79
+          "w": "sold",
+          "start": 1.333,
+          "end": 1.667
         },
         {
-          "w": "crore.",
-          "start": 1.76,
-          "end": 1.98
+          "w": "it.",
+          "start": 1.667,
+          "end": 2
         }
       ]
     },
     {
       "n": 2,
-      "file": "vo/beat-2.wav",
-      "start": 2.43,
-      "dur": 3.56,
-      "speech": 3.34,
+      "file": "",
+      "start": 2,
+      "dur": 2,
+      "speech": 2,
       "words": [
         {
-          "w": "See,",
-          "start": 0.0,
-          "end": 0.18
+          "w": "1975.",
+          "start": 0,
+          "end": 0.222
         },
         {
-          "w": "₹100",
-          "start": 0.48,
-          "end": 1.3
+          "w": "Steve",
+          "start": 0.222,
+          "end": 0.444
         },
         {
-          "w": "a",
-          "start": 1.3,
-          "end": 1.42
+          "w": "Sasson",
+          "start": 0.444,
+          "end": 0.667
         },
         {
-          "w": "day",
-          "start": 1.42,
-          "end": 1.56
+          "w": "builds",
+          "start": 0.667,
+          "end": 0.889
         },
         {
-          "w": "is",
-          "start": 1.56,
-          "end": 1.86
+          "w": "it.",
+          "start": 0.889,
+          "end": 1.111
         },
         {
-          "w": "only",
-          "start": 1.86,
-          "end": 2.06
+          "w": "Point",
+          "start": 1.111,
+          "end": 1.333
         },
         {
-          "w": "₹3,000",
-          "start": 2.06,
-          "end": 3.12
+          "w": "one",
+          "start": 1.333,
+          "end": 1.556
         },
         {
-          "w": "a",
-          "start": 3.12,
-          "end": 3.2
+          "w": "megapixels.",
+          "start": 1.556,
+          "end": 1.778
         },
         {
-          "w": "month.",
-          "start": 3.2,
-          "end": 3.34
+          "w": "Toaster-sized.",
+          "start": 1.778,
+          "end": 2
         }
       ]
     },
     {
       "n": 3,
-      "file": "vo/beat-3.wav",
-      "start": 5.99,
-      "dur": 5.3,
-      "speech": 5.04,
+      "file": "",
+      "start": 4,
+      "dur": 4,
+      "speech": 4,
       "words": [
         {
-          "w": "And",
-          "start": 0.0,
-          "end": 0.2
+          "w": "The",
+          "start": 0,
+          "end": 0.286
         },
         {
-          "w": "parked",
-          "start": 0.2,
-          "end": 0.36
+          "w": "problem?",
+          "start": 0.286,
+          "end": 0.571
         },
         {
-          "w": "in",
-          "start": 0.36,
-          "end": 0.5
+          "w": "Film",
+          "start": 0.571,
+          "end": 0.857
+        },
+        {
+          "w": "was",
+          "start": 0.857,
+          "end": 1.143
+        },
+        {
+          "w": "90%",
+          "start": 1.143,
+          "end": 1.429
+        },
+        {
+          "w": "of",
+          "start": 1.429,
+          "end": 1.714
+        },
+        {
+          "w": "Kodak's",
+          "start": 1.714,
+          "end": 2
+        },
+        {
+          "w": "money.",
+          "start": 2,
+          "end": 2.286
+        },
+        {
+          "w": "Every",
+          "start": 2.286,
+          "end": 2.571
+        },
+        {
+          "w": "digital",
+          "start": 2.571,
+          "end": 2.857
+        },
+        {
+          "w": "photo",
+          "start": 2.857,
+          "end": 3.143
+        },
+        {
+          "w": "kills",
+          "start": 3.143,
+          "end": 3.429
         },
         {
           "w": "a",
-          "start": 0.5,
-          "end": 0.56
+          "start": 3.429,
+          "end": 3.714
         },
         {
-          "w": "bank",
-          "start": 0.56,
-          "end": 0.68
-        },
-        {
-          "w": "account,",
-          "start": 0.68,
-          "end": 0.98
-        },
-        {
-          "w": "that's",
-          "start": 1.38,
-          "end": 1.6
-        },
-        {
-          "w": "nothing.",
-          "start": 1.6,
-          "end": 1.8
-        },
-        {
-          "w": "But",
-          "start": 2.54,
-          "end": 2.59
-        },
-        {
-          "w": "invested?",
-          "start": 2.56,
-          "end": 3.0
-        },
-        {
-          "w": "That",
-          "start": 3.7,
-          "end": 3.75
-        },
-        {
-          "w": "₹3,000",
-          "start": 3.72,
-          "end": 4.52
-        },
-        {
-          "w": "starts",
-          "start": 4.52,
-          "end": 4.74
-        },
-        {
-          "w": "working.",
-          "start": 4.74,
-          "end": 5.04
+          "w": "print.",
+          "start": 3.714,
+          "end": 4
         }
       ]
     },
     {
       "n": 4,
-      "file": "vo/beat-4.wav",
-      "start": 11.29,
-      "dur": 3.37,
-      "speech": 3.03,
+      "file": "",
+      "start": 8,
+      "dur": 5,
+      "speech": 5,
       "words": [
         {
-          "w": "At",
-          "start": 0.0,
-          "end": 0.1
+          "w": "So",
+          "start": 0,
+          "end": 0.417
         },
         {
-          "w": "12%",
-          "start": 0.1,
-          "end": 0.3
+          "w": "they",
+          "start": 0.417,
+          "end": 0.833
         },
         {
-          "w": "a",
-          "start": 0.62,
-          "end": 0.76
+          "w": "shelved",
+          "start": 0.833,
+          "end": 1.25
         },
         {
-          "w": "year,",
-          "start": 0.76,
-          "end": 1.0
+          "w": "it.",
+          "start": 1.25,
+          "end": 1.667
         },
         {
-          "w": "10",
-          "start": 1.3,
-          "end": 1.46
+          "w": "While",
+          "start": 1.667,
+          "end": 2.083
         },
         {
-          "w": "years",
-          "start": 1.46,
-          "end": 1.68
+          "w": "Sony,",
+          "start": 2.083,
+          "end": 2.5
         },
         {
-          "w": "becomes",
-          "start": 1.85,
-          "end": 2.02
+          "w": "Canon",
+          "start": 2.5,
+          "end": 2.917
         },
         {
-          "w": "₹7",
-          "start": 2.02,
-          "end": 2.96
+          "w": "and",
+          "start": 2.917,
+          "end": 3.333
         },
         {
-          "w": "lakh.",
-          "start": 2.98,
-          "end": 3.03
+          "w": "Fuji",
+          "start": 3.333,
+          "end": 3.75
+        },
+        {
+          "w": "marched",
+          "start": 3.75,
+          "end": 4.167
+        },
+        {
+          "w": "right",
+          "start": 4.167,
+          "end": 4.583
+        },
+        {
+          "w": "past.",
+          "start": 4.583,
+          "end": 5
         }
       ]
     },
     {
       "n": 5,
-      "file": "vo/beat-5.wav",
-      "start": 14.66,
-      "dur": 4.74,
-      "speech": 4.44,
+      "file": "",
+      "start": 13,
+      "dur": 4,
+      "speech": 4,
       "words": [
         {
-          "w": "20",
-          "start": 0.0,
-          "end": 0.16
+          "w": "2012.",
+          "start": 0,
+          "end": 0.25
         },
         {
-          "w": "years?",
-          "start": 0.16,
-          "end": 0.46
+          "w": "Chapter",
+          "start": 0.25,
+          "end": 0.5
         },
         {
-          "w": "₹30",
-          "start": 0.82,
-          "end": 1.6
+          "w": "11.",
+          "start": 0.5,
+          "end": 0.75
         },
         {
-          "w": "lakh.",
-          "start": 1.77,
-          "end": 1.94
+          "w": "Six",
+          "start": 0.75,
+          "end": 1
         },
         {
-          "w": "Still",
-          "start": 1.94,
-          "end": 2.12
+          "w": "billion",
+          "start": 1,
+          "end": 1.25
         },
         {
-          "w": "no",
-          "start": 2.12,
-          "end": 2.28
+          "w": "dollars",
+          "start": 1.25,
+          "end": 1.5
         },
         {
-          "w": "salary",
-          "start": 2.28,
-          "end": 2.52
+          "w": "in",
+          "start": 1.5,
+          "end": 1.75
         },
         {
-          "w": "raise.",
-          "start": 2.52,
-          "end": 2.9
+          "w": "debt.",
+          "start": 1.75,
+          "end": 2
         },
         {
-          "w": "Just",
-          "start": 3.18,
-          "end": 3.24
+          "w": "The",
+          "start": 2,
+          "end": 2.25
+        },
+        {
+          "w": "company",
+          "start": 2.25,
+          "end": 2.5
+        },
+        {
+          "w": "that",
+          "start": 2.5,
+          "end": 2.75
+        },
+        {
+          "w": "invented",
+          "start": 2.75,
+          "end": 3
         },
         {
           "w": "the",
-          "start": 3.24,
-          "end": 3.4
+          "start": 3,
+          "end": 3.25
         },
         {
-          "w": "same",
-          "start": 3.4,
-          "end": 3.56
+          "w": "camera",
+          "start": 3.25,
+          "end": 3.5
         },
         {
-          "w": "coin,",
-          "start": 3.56,
-          "end": 3.78
+          "w": "goes",
+          "start": 3.5,
+          "end": 3.75
         },
         {
-          "w": "every",
-          "start": 4.12,
-          "end": 4.22
-        },
-        {
-          "w": "day.",
-          "start": 4.22,
-          "end": 4.44
+          "w": "bankrupt.",
+          "start": 3.75,
+          "end": 4
         }
       ]
     },
     {
       "n": 6,
-      "file": "vo/beat-6.wav",
-      "start": 19.4,
-      "dur": 4.32,
-      "speech": 3.82,
+      "file": "",
+      "start": 17,
+      "dur": 5,
+      "speech": 5,
       "words": [
         {
-          "w": "30",
-          "start": 0.0,
-          "end": 0.2
-        },
-        {
-          "w": "years?",
-          "start": 0.2,
-          "end": 0.5
-        },
-        {
-          "w": "One",
-          "start": 1.12,
-          "end": 1.1700000000000002
-        },
-        {
-          "w": "crore.",
-          "start": 1.14,
-          "end": 1.4
-        },
-        {
           "w": "The",
-          "start": 1.96,
-          "end": 2.01
+          "start": 0,
+          "end": 0.313
         },
         {
-          "w": "coin",
-          "start": 1.96,
-          "end": 2.12
+          "w": "weapon",
+          "start": 0.313,
+          "end": 0.625
         },
         {
-          "w": "did",
-          "start": 2.12,
-          "end": 2.32
+          "w": "that",
+          "start": 0.625,
+          "end": 0.938
         },
         {
-          "w": "the",
-          "start": 2.32,
-          "end": 2.42
+          "w": "could",
+          "start": 0.938,
+          "end": 1.25
         },
         {
-          "w": "work.",
-          "start": 2.42,
-          "end": 2.64
+          "w": "have",
+          "start": 1.25,
+          "end": 1.563
         },
         {
-          "w": "You",
-          "start": 3.0,
-          "end": 3.08
+          "w": "saved",
+          "start": 1.563,
+          "end": 1.875
         },
         {
-          "w": "just",
-          "start": 3.08,
-          "end": 3.22
+          "w": "them?",
+          "start": 1.875,
+          "end": 2.188
         },
         {
-          "w": "didn't",
-          "start": 3.22,
-          "end": 3.44
+          "w": "They",
+          "start": 2.188,
+          "end": 2.5
         },
         {
-          "w": "spend",
-          "start": 3.44,
-          "end": 3.6
+          "w": "built",
+          "start": 2.5,
+          "end": 2.813
         },
         {
           "w": "it.",
-          "start": 3.6,
-          "end": 3.82
+          "start": 2.813,
+          "end": 3.125
+        },
+        {
+          "w": "All",
+          "start": 3.125,
+          "end": 3.438
+        },
+        {
+          "w": "the",
+          "start": 3.438,
+          "end": 3.75
+        },
+        {
+          "w": "way",
+          "start": 3.75,
+          "end": 4.063
+        },
+        {
+          "w": "back",
+          "start": 4.063,
+          "end": 4.375
+        },
+        {
+          "w": "in",
+          "start": 4.375,
+          "end": 4.688
+        },
+        {
+          "w": "1975.",
+          "start": 4.688,
+          "end": 5
         }
       ]
     },
     {
       "n": 7,
-      "file": "vo/beat-7.wav",
-      "start": 23.72,
-      "dur": 7.23,
-      "speech": 6.68,
+      "file": "",
+      "start": 22,
+      "dur": 8,
+      "speech": 8,
       "words": [
         {
-          "w": "So",
-          "start": 0.0,
-          "end": 0.18
+          "w": "The",
+          "start": 0,
+          "end": 0.333
         },
         {
-          "w": "no,",
-          "start": 0.18,
-          "end": 0.34
+          "w": "weapon",
+          "start": 0.333,
+          "end": 0.667
         },
         {
-          "w": "₹100",
-          "start": 0.96,
-          "end": 1.26
+          "w": "that",
+          "start": 0.667,
+          "end": 1
         },
         {
-          "w": "won't",
-          "start": 1.26,
-          "end": 1.48
+          "w": "could",
+          "start": 1,
+          "end": 1.333
         },
         {
-          "w": "change",
-          "start": 1.48,
-          "end": 1.62
+          "w": "have",
+          "start": 1.333,
+          "end": 1.667
         },
         {
-          "w": "your",
-          "start": 1.62,
-          "end": 1.78
+          "w": "saved",
+          "start": 1.667,
+          "end": 2
         },
         {
-          "w": "life",
-          "start": 1.78,
-          "end": 1.92
+          "w": "them",
+          "start": 2,
+          "end": 2.333
         },
         {
-          "w": "today.",
-          "start": 1.92,
-          "end": 2.1
+          "w": "all?",
+          "start": 2.333,
+          "end": 2.667
         },
         {
-          "w": "But",
-          "start": 2.68,
-          "end": 2.73
+          "w": "Kodak",
+          "start": 2.667,
+          "end": 3
         },
         {
-          "w": "30",
-          "start": 2.68,
-          "end": 2.9
+          "w": "invented",
+          "start": 3,
+          "end": 3.333
         },
         {
-          "w": "years",
-          "start": 2.9,
-          "end": 3.14
+          "w": "it.",
+          "start": 3.333,
+          "end": 3.667
+        },
+        {
+          "w": "They",
+          "start": 3.667,
+          "end": 4
+        },
+        {
+          "w": "never",
+          "start": 4,
+          "end": 4.333
+        },
+        {
+          "w": "sold",
+          "start": 4.333,
+          "end": 4.667
+        },
+        {
+          "w": "a",
+          "start": 4.667,
+          "end": 5
+        },
+        {
+          "w": "single",
+          "start": 5,
+          "end": 5.333
+        },
+        {
+          "w": "one",
+          "start": 5.333,
+          "end": 5.667
         },
         {
           "w": "of",
-          "start": 3.14,
-          "end": 3.34
+          "start": 5.667,
+          "end": 6
         },
         {
-          "w": "it?",
-          "start": 3.34,
-          "end": 3.46
+          "w": "them.",
+          "start": 6,
+          "end": 6.333
         },
         {
-          "w": "One",
-          "start": 3.96,
-          "end": 4.04
+          "w": "It",
+          "start": 6.333,
+          "end": 6.667
         },
         {
-          "w": "crore.",
-          "start": 4.04,
-          "end": 4.36
+          "w": "cost",
+          "start": 6.667,
+          "end": 7
         },
         {
-          "w": "Follow",
-          "start": 4.96,
-          "end": 5.01
+          "w": "them",
+          "start": 7,
+          "end": 7.333
         },
         {
-          "w": "for",
-          "start": 5.0,
-          "end": 5.24
+          "w": "everything.",
+          "start": 7.333,
+          "end": 7.667
         },
         {
-          "w": "more",
-          "start": 5.24,
-          "end": 5.4
-        },
-        {
-          "w": "money",
-          "start": 5.4,
-          "end": 5.56
-        },
-        {
-          "w": "lessons",
-          "start": 5.56,
-          "end": 5.86
-        },
-        {
-          "w": "in",
-          "start": 5.86,
-          "end": 6.14
-        },
-        {
-          "w": "30",
-          "start": 6.14,
-          "end": 6.34
-        },
-        {
-          "w": "seconds.",
-          "start": 6.34,
-          "end": 6.68
+          "w": "1975.",
+          "start": 7.667,
+          "end": 8
         }
       ]
     }

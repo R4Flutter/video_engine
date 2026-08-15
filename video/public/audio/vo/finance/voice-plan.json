@@ -1,0 +1,65 @@
+[
+  {
+    "n": 1,
+    "name": "THE SLAP",
+    "spoken": "One coin. 30 years. One crore.",
+    "energy": 0.72,
+    "pace": 0.32,
+    "holdAfter": 0.45,
+    "seconds": 2.236
+  },
+  {
+    "n": 2,
+    "name": "THE CONTEXT",
+    "spoken": "See, 100 rupees a day is only 3000 rupees a month.",
+    "energy": 0.5,
+    "pace": 0.42,
+    "holdAfter": 0.22,
+    "seconds": 3.487
+  },
+  {
+    "n": 3,
+    "name": "THE INSIGHT",
+    "spoken": "And parked in a bank account, that's nothing. But invested? That 3000 rupees starts working.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.26,
+    "seconds": 5.298
+  },
+  {
+    "n": 4,
+    "name": "10 YEARS",
+    "spoken": "At 12 percent a year, 10 years becomes 7 lakh rupees.",
+    "energy": 0.54,
+    "pace": 0.46,
+    "holdAfter": 0.34,
+    "seconds": 3.296
+  },
+  {
+    "n": 5,
+    "name": "20 YEARS",
+    "spoken": "20 years? 30 lakh rupees. Still no salary raise. Just the same coin, every day.",
+    "energy": 0.62,
+    "pace": 0.39,
+    "holdAfter": 0.3,
+    "seconds": 4.695
+  },
+  {
+    "n": 6,
+    "name": "THE PAYOFF",
+    "spoken": "30 years? One crore. The coin did the work. You just didn't spend it.",
+    "energy": 0.76,
+    "pace": 0.34,
+    "holdAfter": 0.5,
+    "seconds": 3.949
+  },
+  {
+    "n": 7,
+    "name": "THE CALLBACK + CTA",
+    "spoken": "So no, 100 rupees won't change your life today. But 30 years of it? One crore. Follow for more money lessons in 30 seconds.",
+    "energy": 0.5,
+    "pace": 0.45,
+    "holdAfter": 0.55,
+    "seconds": 6.999
+  }
+]

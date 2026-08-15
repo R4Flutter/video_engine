@@ -1,3 +1,11 @@
 .venv/
 .venv-tts/
 __pycache__/
+
+# Derived / temp — regenerate, never commit
+video/build/
+video/backup/
+video/render_vox.log
+out-tmp.json
+_nexa_tmp_ignore.txt
+voice.json

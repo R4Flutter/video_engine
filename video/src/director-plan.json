@@ -1,0 +1,1113 @@
+{
+  "version": "short-1.0",
+  "project": {
+    "title": "KODAK INVENTED IT. NEVER SOLD IT.",
+    "durationInSeconds": 30,
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "engine": "vox",
+    "mode": "SHORT"
+  },
+  "frameZero": {
+    "text": "KODAK INVENTED IT. NEVER SOLD IT.",
+    "source": "hook",
+    "words": 6,
+    "chars": 33,
+    "holdFrames": 20,
+    "size": "max",
+    "glanceable": true,
+    "audioSynced": true,
+    "hookType": "contradiction",
+    "timeToClaim": 1
+  },
+  "loop": {
+    "motif": "KODAK INVENTED NEVER",
+    "openedAtBeat": 1,
+    "closedAtBeat": 7,
+    "closes": true,
+    "seamless": true
+  },
+  "sequences": [
+    {
+      "id": "seq_01",
+      "purpose": "hook",
+      "beatRange": [
+        1,
+        1
+      ],
+      "start": 0,
+      "end": 2,
+      "openQuestion": "What did they invent that they refused to sell?",
+      "emotion": "curiosity"
+    },
+    {
+      "id": "seq_02",
+      "purpose": "turn",
+      "beatRange": [
+        2,
+        2
+      ],
+      "start": 2,
+      "end": 4,
+      "answer": "Steve Sasson built the first portable digital camera — 1975, 0.1 megapixels, the size of a toaster",
+      "emotion": "recognition"
+    },
+    {
+      "id": "seq_03",
+      "purpose": "reveal",
+      "beatRange": [
+        3,
+        3
+      ],
+      "start": 4,
+      "end": 8,
+      "answer": "Film was 90% of Kodak's money — every digital photo would kill a print",
+      "emotion": "tension"
+    },
+    {
+      "id": "seq_04",
+      "purpose": "escalate",
+      "beatRange": [
+        4,
+        6
+      ],
+      "start": 8,
+      "end": 22,
+      "openQuestion": "Why did Kodak just watch?",
+      "answer": "Kodak shelved the camera while Sony, Canon and Fuji built the market it refused",
+      "emotion": "tension"
+    },
+    {
+      "id": "seq_05",
+      "purpose": "payoff",
+      "beatRange": [
+        7,
+        7
+      ],
+      "start": 22,
+      "end": 30,
+      "answer": "They built the weapon that could have saved them — Kodak invented it, never sold it, 1975",
+      "emotion": "satisfaction"
+    }
+  ],
+  "beats": [
+    {
+      "n": 1,
+      "name": "THE HOOK",
+      "start": 0,
+      "end": 2,
+      "audioStart": 0,
+      "narrative": {
+        "purpose": "hook",
+        "question": "What did they invent that they refused to sell?"
+      },
+      "attention": {
+        "strategy": "frame_zero",
+        "novelty": 1,
+        "curiosity": 0.89,
+        "tension": 0.35,
+        "informationDensity": 0.38,
+        "emotionalIntensity": 0.35,
+        "tier": "MICRO",
+        "swipeRisk": 0.25,
+        "retained": 0.75
+      },
+      "visual": {
+        "purpose": "CLAIM",
+        "module": "kinetic",
+        "reveal": "IMMEDIATE",
+        "captionMode": "NONE",
+        "holdFrames": 20
+      },
+      "motion": {
+        "camera": {
+          "intent": "hold"
+        },
+        "reveal": {
+          "mode": "IMMEDIATE",
+          "holdUntil": 0.67,
+          "triggers": [
+            {
+              "at": 0,
+              "kind": "hold",
+              "label": "frame zero — complete hook, no motion"
+            }
+          ]
+        },
+        "transitionIn": {
+          "type": "cut",
+          "reason": "NEW_IDEA",
+          "frames": 0
+        }
+      },
+      "typography": {
+        "text": "KODAK INVENTED IT. NEVER SOLD IT.",
+        "emphasisWords": [
+          "NEVER"
+        ]
+      },
+      "audio": {
+        "musicLevel": 0.6,
+        "musicMood": "swell",
+        "sfx": [
+          {
+            "at": 0,
+            "files": [
+              "stamp.wav"
+            ]
+          },
+          {
+            "at": 0.84,
+            "files": [
+              "whoosh-up.wav"
+            ]
+          }
+        ],
+        "silence": []
+      },
+      "sequenceId": "seq_01"
+    },
+    {
+      "n": 2,
+      "name": "THE INVENTOR",
+      "start": 2,
+      "end": 4,
+      "audioStart": 2,
+      "narrative": {
+        "purpose": "turn",
+        "reveal": "Steve Sasson built the first portable digital camera — 1975, 0.1 megapixels, the size of a toaster"
+      },
+      "attention": {
+        "strategy": "impact",
+        "novelty": 1,
+        "curiosity": 0.63,
+        "tension": 0.35,
+        "informationDensity": 0.77,
+        "emotionalIntensity": 0.72,
+        "tier": "MICRO",
+        "swipeRisk": 0.08,
+        "retained": 0.69
+      },
+      "visual": {
+        "purpose": "EXPLAIN",
+        "module": "timeline",
+        "reveal": "PROGRESSIVE",
+        "captionMode": "SUBTITLE",
+        "holdFrames": 0
+      },
+      "motion": {
+        "camera": {
+          "intent": "punch"
+        },
+        "reveal": {
+          "mode": "PROGRESSIVE",
+          "holdUntil": 2.06,
+          "triggers": [
+            {
+              "at": 3.39,
+              "kind": "reveal",
+              "label": "Steve Sasson built the first portable di"
+            }
+          ]
+        },
+        "transitionIn": {
+          "type": "punch",
+          "reason": "CONTRADICTION",
+          "frames": 3
+        }
+      },
+      "typography": {
+        "text": "1975 — 0.1 MEGAPIXELS",
+        "emphasisWords": []
+      },
+      "audio": {
+        "musicLevel": 0.22,
+        "musicMood": "drop",
+        "sfx": [],
+        "silence": []
+      },
+      "sequenceId": "seq_02"
+    },
+    {
+      "n": 3,
+      "name": "THE MECHANISM",
+      "start": 4,
+      "end": 8,
+      "audioStart": 3.75,
+      "jCut": 0.25,
+      "narrative": {
+        "purpose": "reveal",
+        "reveal": "Film was 90% of Kodak's money — every digital photo would kill a print"
+      },
+      "attention": {
+        "strategy": "resolve",
+        "novelty": 1,
+        "curiosity": 0.63,
+        "tension": 0.78,
+        "informationDensity": 0.64,
+        "emotionalIntensity": 0.72,
+        "tier": "IDEA",
+        "swipeRisk": 0.07,
+        "retained": 0.64
+      },
+      "visual": {
+        "purpose": "COMPARE",
+        "module": "compare",
+        "reveal": "SEQUENTIAL",
+        "captionMode": "EMPHASIS",
+        "holdFrames": 0
+      },
+      "motion": {
+        "camera": {
+          "intent": "push"
+        },
+        "reveal": {
+          "mode": "SEQUENTIAL",
+          "holdUntil": 4.12,
+          "triggers": [
+            {
+              "at": 6.75,
+              "kind": "reveal",
+              "label": "Film was 90% of Kodak's money — every di"
+            }
+          ]
+        },
+        "transitionIn": {
+          "type": "punch",
+          "reason": "IMPACT",
+          "frames": 3
+        }
+      },
+      "typography": {
+        "text": "FILM = 90% OF THE MONEY",
+        "emphasisWords": [
+          "90%"
+        ]
+      },
+      "audio": {
+        "musicLevel": 0.22,
+        "musicMood": "drop",
+        "sfx": [
+          {
+            "at": 5.08,
+            "files": [
+              "whoosh-up.wav"
+            ]
+          },
+          {
+            "at": 7.04,
+            "files": [
+              "chime.wav"
+            ]
+          }
+        ],
+        "silence": [
+          {
+            "at": 6,
+            "dur": 0.7,
+            "kind": "PRE_REVEAL_SILENCE"
+          }
+        ]
+      },
+      "sequenceId": "seq_03"
+    },
+    {
+      "n": 4,
+      "name": "THE COMPETITORS",
+      "start": 8,
+      "end": 13,
+      "audioStart": 7.75,
+      "jCut": 0.25,
+      "narrative": {
+        "purpose": "escalate",
+        "question": "Why did Kodak just watch?",
+        "reveal": "Kodak shelved the camera while Sony, Canon and Fuji built the market it refused"
+      },
+      "attention": {
+        "strategy": "open_loop",
+        "novelty": 1,
+        "curiosity": 0.95,
+        "tension": 0.78,
+        "informationDensity": 0.38,
+        "emotionalIntensity": 0.72,
+        "tier": "IDEA",
+        "swipeRisk": 0.07,
+        "retained": 0.6
+      },
+      "visual": {
+        "purpose": "EXPLAIN",
+        "module": "icon",
+        "reveal": "SEQUENTIAL",
+        "captionMode": "SUBTITLE",
+        "holdFrames": 0
+      },
+      "motion": {
+        "camera": {
+          "intent": "push"
+        },
+        "reveal": {
+          "mode": "SEQUENTIAL",
+          "holdUntil": 8.15,
+          "triggers": [
+            {
+              "at": 8.73,
+              "kind": "question",
+              "label": "Why did Kodak just watch?"
+            },
+            {
+              "at": 11.75,
+              "kind": "reveal",
+              "label": "Kodak shelved the camera while Sony, Can"
+            }
+          ]
+        },
+        "transitionIn": {
+          "type": "cut",
+          "reason": "NEW_IDEA",
+          "frames": 0
+        }
+      },
+      "typography": {
+        "text": "SONY. CANON. FUJI.",
+        "emphasisWords": []
+      },
+      "audio": {
+        "musicLevel": 0.22,
+        "musicMood": "drop",
+        "sfx": [
+          {
+            "at": 9.08,
+            "files": [
+              "whoosh-up.wav"
+            ]
+          },
+          {
+            "at": 11.6,
+            "files": [
+              "boom.wav"
+            ]
+          }
+        ],
+        "silence": [
+          {
+            "at": 10.5,
+            "dur": 0.7,
+            "kind": "PRE_REVEAL_SILENCE"
+          }
+        ]
+      },
+      "sequenceId": "seq_04"
+    },
+    {
+      "n": 5,
+      "name": "THE COLLAPSE",
+      "start": 13,
+      "end": 17,
+      "audioStart": 12.75,
+      "jCut": 0.25,
+      "narrative": {
+        "purpose": "escalate",
+        "question": "How does the company that invented it die?",
+        "reveal": "The company that invented the camera filed for bankruptcy — 2012, Chapter 11, six billion in debt"
+      },
+      "attention": {
+        "strategy": "open_loop",
+        "novelty": 1,
+        "curiosity": 0.95,
+        "tension": 0.78,
+        "informationDensity": 0.9,
+        "emotionalIntensity": 0.72,
+        "tier": "IDEA",
+        "swipeRisk": 0.05,
+        "retained": 0.57
+      },
+      "visual": {
+        "purpose": "EXPLAIN",
+        "module": "stat",
+        "reveal": "COUNTER_REVEAL",
+        "captionMode": "EMPHASIS",
+        "holdFrames": 0
+      },
+      "motion": {
+        "camera": {
+          "intent": "punch"
+        },
+        "reveal": {
+          "mode": "COUNTER_REVEAL",
+          "holdUntil": 13.12,
+          "triggers": [
+            {
+              "at": 13.79,
+              "kind": "question",
+              "label": "How does the company that invented it di"
+            },
+            {
+              "at": 15.86,
+              "kind": "reveal",
+              "label": "The company that invented the camera fil"
+            }
+          ]
+        },
+        "transitionIn": {
+          "type": "cut",
+          "reason": "NEW_IDEA",
+          "frames": 0
+        }
+      },
+      "typography": {
+        "text": "CHAPTER 11 — 2012",
+        "emphasisWords": []
+      },
+      "audio": {
+        "musicLevel": 0.22,
+        "musicMood": "drop",
+        "sfx": [
+          {
+            "at": 14.08,
+            "files": [
+              "whoosh-up.wav"
+            ]
+          }
+        ],
+        "silence": [
+          {
+            "at": 15,
+            "dur": 0.7,
+            "kind": "PRE_REVEAL_SILENCE"
+          }
+        ]
+      },
+      "sequenceId": "seq_04"
+    },
+    {
+      "n": 6,
+      "name": "THE WEAPON",
+      "start": 17,
+      "end": 22,
+      "audioStart": 16.75,
+      "jCut": 0.25,
+      "narrative": {
+        "purpose": "escalate",
+        "question": "The weapon that could have saved them?",
+        "reveal": "The weapon that could have saved them was the one they buried — 1975"
+      },
+      "attention": {
+        "strategy": "open_loop",
+        "novelty": 1,
+        "curiosity": 0.95,
+        "tension": 0.78,
+        "informationDensity": 0.51,
+        "emotionalIntensity": 0.72,
+        "tier": "IDEA",
+        "swipeRisk": 0.04,
+        "retained": 0.54
+      },
+      "visual": {
+        "purpose": "EXPLAIN",
+        "module": "callout",
+        "reveal": "DRAW_ON",
+        "captionMode": "SUBTITLE",
+        "holdFrames": 0
+      },
+      "motion": {
+        "camera": {
+          "intent": "push"
+        },
+        "reveal": {
+          "mode": "DRAW_ON",
+          "holdUntil": 17.15,
+          "triggers": [
+            {
+              "at": 17.97,
+              "kind": "question",
+              "label": "The weapon that could have saved them?"
+            },
+            {
+              "at": 20.4,
+              "kind": "reveal",
+              "label": "The weapon that could have saved them wa"
+            }
+          ]
+        },
+        "transitionIn": {
+          "type": "cut",
+          "reason": "NEW_IDEA",
+          "frames": 0
+        }
+      },
+      "typography": {
+        "text": "THE WEAPON THEY BUILT",
+        "emphasisWords": []
+      },
+      "audio": {
+        "musicLevel": 0.22,
+        "musicMood": "drop",
+        "sfx": [
+          {
+            "at": 18.08,
+            "files": [
+              "whoosh-up.wav"
+            ]
+          },
+          {
+            "at": 20.11,
+            "files": [
+              "chime.wav"
+            ]
+          }
+        ],
+        "silence": [
+          {
+            "at": 19.5,
+            "dur": 0.7,
+            "kind": "PRE_REVEAL_SILENCE"
+          }
+        ]
+      },
+      "sequenceId": "seq_04"
+    },
+    {
+      "n": 7,
+      "name": "THE PAYOFF",
+      "start": 22,
+      "end": 30,
+      "audioStart": 21.75,
+      "jCut": 0.25,
+      "lCut": 0.4,
+      "narrative": {
+        "purpose": "payoff",
+        "reveal": "They built the weapon that could have saved them — Kodak invented it, never sold it, 1975"
+      },
+      "attention": {
+        "strategy": "impact",
+        "novelty": 0.7,
+        "curiosity": 0.63,
+        "tension": 0.35,
+        "informationDensity": 0.63,
+        "emotionalIntensity": 0.6,
+        "tier": "OVERLONG",
+        "swipeRisk": 0.06,
+        "retained": 0.51
+      },
+      "visual": {
+        "purpose": "EXPLAIN",
+        "module": "kinetic",
+        "reveal": "MASK",
+        "captionMode": "NONE",
+        "holdFrames": 0
+      },
+      "motion": {
+        "camera": {
+          "intent": "settle"
+        },
+        "reveal": {
+          "mode": "MASK",
+          "holdUntil": 22.24,
+          "triggers": [
+            {
+              "at": 27.67,
+              "kind": "reveal",
+              "label": "They built the weapon that could have sa"
+            }
+          ]
+        },
+        "transitionIn": {
+          "type": "hold",
+          "reason": "LOOP_CLOSE",
+          "frames": 9
+        }
+      },
+      "typography": {
+        "text": "THEY INVENTED IT. NEVER SOLD IT.",
+        "emphasisWords": [
+          "NEVER"
+        ]
+      },
+      "audio": {
+        "musicLevel": 0.28,
+        "musicMood": "quiet",
+        "sfx": [
+          {
+            "at": 23.2,
+            "files": [
+              "whoosh-up.wav"
+            ]
+          },
+          {
+            "at": 27.52,
+            "files": [
+              "boom.wav"
+            ]
+          }
+        ],
+        "silence": [
+          {
+            "at": 26,
+            "dur": 0.7,
+            "kind": "PRE_REVEAL_SILENCE"
+          },
+          {
+            "at": 29.3,
+            "dur": 0.7,
+            "kind": "POST_REVEAL_SILENCE"
+          }
+        ]
+      },
+      "sequenceId": "seq_05"
+    }
+  ],
+  "swipeCurve": [
+    {
+      "beat": 1,
+      "at": 0,
+      "risk": 0.25,
+      "retained": 0.75,
+      "drivers": []
+    },
+    {
+      "beat": 2,
+      "at": 2,
+      "risk": 0.08,
+      "retained": 0.69,
+      "drivers": [
+        "carries a reveal",
+        "4.5 words/sec — too fast to follow"
+      ]
+    },
+    {
+      "beat": 3,
+      "at": 4,
+      "risk": 0.07,
+      "retained": 0.64,
+      "drivers": [
+        "carries a reveal"
+      ]
+    },
+    {
+      "beat": 4,
+      "at": 8,
+      "risk": 0.07,
+      "retained": 0.6,
+      "drivers": [
+        "carries a reveal"
+      ]
+    },
+    {
+      "beat": 5,
+      "at": 13,
+      "risk": 0.05,
+      "retained": 0.57,
+      "drivers": [
+        "carries a reveal",
+        "information density is high enough to lose people"
+      ]
+    },
+    {
+      "beat": 6,
+      "at": 17,
+      "risk": 0.04,
+      "retained": 0.54,
+      "drivers": [
+        "carries a reveal"
+      ]
+    },
+    {
+      "beat": 7,
+      "at": 22,
+      "risk": 0.06,
+      "retained": 0.51,
+      "drivers": [
+        "carries a reveal",
+        "8.0s on one idea with nothing staged inside it"
+      ]
+    }
+  ],
+  "projectedRetention": 0.51,
+  "attentionEvents": [
+    {
+      "at": 0,
+      "type": "PATTERN_INTERRUPT",
+      "beat": 1,
+      "strength": 1,
+      "label": "KODAK INVENTED IT. NEVER SOL"
+    },
+    {
+      "at": 0.84,
+      "type": "QUESTION",
+      "beat": 1,
+      "strength": 0.85,
+      "label": "KODAK INVENTED IT. NEVER SOL"
+    },
+    {
+      "at": 2,
+      "type": "TEXT_CHANGE",
+      "beat": 2,
+      "strength": 0.6,
+      "label": "1975 — 0.1 MEGAPIXELS"
+    },
+    {
+      "at": 2.84,
+      "type": "NUMBER_REVEAL",
+      "beat": 2,
+      "strength": 0.54,
+      "label": "1975 — 0.1 MEGAPIXELS"
+    },
+    {
+      "at": 4,
+      "type": "TEXT_CHANGE",
+      "beat": 3,
+      "strength": 0.6,
+      "label": "FILM = 90% OF THE MONEY"
+    },
+    {
+      "at": 5.08,
+      "type": "QUESTION",
+      "beat": 3,
+      "strength": 0.85,
+      "label": "FILM = 90% OF THE MONEY"
+    },
+    {
+      "at": 7.04,
+      "type": "NUMBER_REVEAL",
+      "beat": 3,
+      "strength": 0.76,
+      "label": "FILM = 90% OF THE MONEY"
+    },
+    {
+      "at": 8,
+      "type": "TEXT_CHANGE",
+      "beat": 4,
+      "strength": 0.6,
+      "label": "SONY. CANON. FUJI."
+    },
+    {
+      "at": 9.08,
+      "type": "QUESTION",
+      "beat": 4,
+      "strength": 0.85,
+      "label": "SONY. CANON. FUJI."
+    },
+    {
+      "at": 11.6,
+      "type": "REVEAL",
+      "beat": 4,
+      "strength": 0.85,
+      "label": "SONY. CANON. FUJI."
+    },
+    {
+      "at": 13,
+      "type": "TEXT_CHANGE",
+      "beat": 5,
+      "strength": 0.6,
+      "label": "CHAPTER 11 — 2012"
+    },
+    {
+      "at": 14.08,
+      "type": "QUESTION",
+      "beat": 5,
+      "strength": 0.85,
+      "label": "CHAPTER 11 — 2012"
+    },
+    {
+      "at": 15.67,
+      "type": "NUMBER_REVEAL",
+      "beat": 5,
+      "strength": 0.59,
+      "label": "CHAPTER 11 — 2012"
+    },
+    {
+      "at": 17,
+      "type": "TEXT_CHANGE",
+      "beat": 6,
+      "strength": 0.6,
+      "label": "THE WEAPON THEY BUILT"
+    },
+    {
+      "at": 18.08,
+      "type": "QUESTION",
+      "beat": 6,
+      "strength": 0.85,
+      "label": "THE WEAPON THEY BUILT"
+    },
+    {
+      "at": 20.11,
+      "type": "NUMBER_REVEAL",
+      "beat": 6,
+      "strength": 0.66,
+      "label": "THE WEAPON THEY BUILT"
+    },
+    {
+      "at": 22,
+      "type": "TEXT_CHANGE",
+      "beat": 7,
+      "strength": 0.6,
+      "label": "THEY INVENTED IT. NEVER SOLD"
+    },
+    {
+      "at": 23.2,
+      "type": "QUESTION",
+      "beat": 7,
+      "strength": 0.85,
+      "label": "THEY INVENTED IT. NEVER SOLD"
+    },
+    {
+      "at": 25.36,
+      "type": "NUMBER_REVEAL",
+      "beat": 7,
+      "strength": 0.58,
+      "label": "THEY INVENTED IT. NEVER SOLD"
+    },
+    {
+      "at": 27.52,
+      "type": "REVEAL",
+      "beat": 7,
+      "strength": 0.85,
+      "label": "THEY INVENTED IT. NEVER SOLD"
+    },
+    {
+      "at": 29.25,
+      "type": "QUESTION",
+      "beat": 7,
+      "strength": 0.85,
+      "label": "THEY INVENTED IT. NEVER SOLD"
+    }
+  ],
+  "audioEvents": [
+    {
+      "at": 0,
+      "kind": "music_level",
+      "value": 0.6
+    },
+    {
+      "at": 0,
+      "kind": "sfx",
+      "label": "stamp.wav"
+    },
+    {
+      "at": 0.84,
+      "kind": "sfx",
+      "label": "whoosh-up.wav"
+    },
+    {
+      "at": 2,
+      "kind": "music_level",
+      "value": 0.6
+    },
+    {
+      "at": 2,
+      "kind": "music_level",
+      "value": 0.22
+    },
+    {
+      "at": 4,
+      "kind": "music_level",
+      "value": 0.22
+    },
+    {
+      "at": 4,
+      "kind": "music_level",
+      "value": 0.22
+    },
+    {
+      "at": 5.08,
+      "kind": "sfx",
+      "label": "whoosh-up.wav"
+    },
+    {
+      "at": 6,
+      "kind": "silence_start",
+      "label": "PRE_REVEAL_SILENCE"
+    },
+    {
+      "at": 6.7,
+      "kind": "silence_end",
+      "label": "PRE_REVEAL_SILENCE"
+    },
+    {
+      "at": 7.04,
+      "kind": "sfx",
+      "label": "chime.wav"
+    },
+    {
+      "at": 8,
+      "kind": "music_level",
+      "value": 0.22
+    },
+    {
+      "at": 8,
+      "kind": "music_level",
+      "value": 0.22
+    },
+    {
+      "at": 9.08,
+      "kind": "sfx",
+      "label": "whoosh-up.wav"
+    },
+    {
+      "at": 10.5,
+      "kind": "silence_start",
+      "label": "PRE_REVEAL_SILENCE"
+    },
+    {
+      "at": 11.2,
+      "kind": "silence_end",
+      "label": "PRE_REVEAL_SILENCE"
+    },
+    {
+      "at": 11.6,
+      "kind": "sfx",
+      "label": "boom.wav"
+    },
+    {
+      "at": 13,
+      "kind": "music_level",
+      "value": 0.22
+    },
+    {
+      "at": 13,
+      "kind": "music_level",
+      "value": 0.22
+    },
+    {
+      "at": 14.08,
+      "kind": "sfx",
+      "label": "whoosh-up.wav"
+    },
+    {
+      "at": 15,
+      "kind": "silence_start",
+      "label": "PRE_REVEAL_SILENCE"
+    },
+    {
+      "at": 15.7,
+      "kind": "silence_end",
+      "label": "PRE_REVEAL_SILENCE"
+    },
+    {
+      "at": 17,
+      "kind": "music_level",
+      "value": 0.22
+    },
+    {
+      "at": 17,
+      "kind": "music_level",
+      "value": 0.22
+    },
+    {
+      "at": 18.08,
+      "kind": "sfx",
+      "label": "whoosh-up.wav"
+    },
+    {
+      "at": 19.5,
+      "kind": "silence_start",
+      "label": "PRE_REVEAL_SILENCE"
+    },
+    {
+      "at": 20.11,
+      "kind": "sfx",
+      "label": "chime.wav"
+    },
+    {
+      "at": 20.2,
+      "kind": "silence_end",
+      "label": "PRE_REVEAL_SILENCE"
+    },
+    {
+      "at": 22,
+      "kind": "music_level",
+      "value": 0.22
+    },
+    {
+      "at": 22,
+      "kind": "music_level",
+      "value": 0.28
+    },
+    {
+      "at": 23.2,
+      "kind": "sfx",
+      "label": "whoosh-up.wav"
+    },
+    {
+      "at": 26,
+      "kind": "silence_start",
+      "label": "PRE_REVEAL_SILENCE"
+    },
+    {
+      "at": 26.7,
+      "kind": "silence_end",
+      "label": "PRE_REVEAL_SILENCE"
+    },
+    {
+      "at": 27.52,
+      "kind": "sfx",
+      "label": "boom.wav"
+    },
+    {
+      "at": 29.3,
+      "kind": "silence_start",
+      "label": "POST_REVEAL_SILENCE"
+    },
+    {
+      "at": 30,
+      "kind": "music_level",
+      "value": 0.28
+    },
+    {
+      "at": 30,
+      "kind": "silence_end",
+      "label": "POST_REVEAL_SILENCE"
+    }
+  ],
+  "transitions": [
+    {
+      "fromBeat": 1,
+      "toBeat": 2,
+      "at": 2,
+      "type": "punch",
+      "reason": "CONTRADICTION",
+      "frames": 3
+    },
+    {
+      "fromBeat": 2,
+      "toBeat": 3,
+      "at": 4,
+      "type": "punch",
+      "reason": "IMPACT",
+      "frames": 3
+    },
+    {
+      "fromBeat": 3,
+      "toBeat": 4,
+      "at": 8,
+      "type": "cut",
+      "reason": "NEW_IDEA",
+      "frames": 0
+    },
+    {
+      "fromBeat": 4,
+      "toBeat": 5,
+      "at": 13,
+      "type": "cut",
+      "reason": "NEW_IDEA",
+      "frames": 0
+    },
+    {
+      "fromBeat": 5,
+      "toBeat": 6,
+      "at": 17,
+      "type": "cut",
+      "reason": "NEW_IDEA",
+      "frames": 0
+    },
+    {
+      "fromBeat": 6,
+      "toBeat": 7,
+      "at": 22,
+      "type": "hold",
+      "reason": "LOOP_CLOSE",
+      "frames": 9
+    }
+  ]
+}
