@@ -1,5 +1,5 @@
-// Shared staging: audio plus a lightweight editorial camera language.
-// Motion is transform-only so Remotion can render it efficiently on CPU.
+// Shared staging: lightweight editorial camera + audio.
+// The renderer remains transform/opacity based for CPU-friendly rendering.
 import React from "react";
 import { Audio, Easing, getInputProps, interpolate, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import script from "./script.json";
@@ -24,30 +24,30 @@ export const impactAt = (module:string, word:RegExp, frac=0.6) => {
   return take.start + (hit ? hit.start : (beat.end - beat.start) * frac);
 };
 
-/**
- * Camera grammar is selected by the director plan, while the exact pixel
- * movement stays here in the renderer. That separation keeps editorial intent
- * stable while rendering taste can evolve independently.
- */
+/** Director chooses intent + composition. This function turns those decisions
+ * into small transform deltas: no per-frame AI, no WebGL, no heavy layout. */
 export const usePlanCamera = (impact:number, strength=1.1) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const beat = script.beats.find((b) => frame >= b.start*fps && frame < b.end*fps) ?? script.beats[script.beats.length-1];
   const planBeat = beatPlan(beat.n);
   const intent = planBeat?.motion?.camera?.intent ?? beat.camera ?? "settle";
+  const composition = planBeat?.shot?.composition ?? "center";
   const [legacyFrom, legacyTo] = cameraMove(beat.n);
   const start = beat.start*fps;
   const end = Math.max(start+1, beat.end*fps);
   const t = Math.max(0, Math.min(1, (frame-start)/(end-start)));
-  const direction = beat.n % 2 === 0 ? 1 : -1;
+
   let scale = legacyFrom;
   let tx = 0;
   let ty = 0;
   let rotate = 0;
+  const direction = beat.n % 2 === 0 ? 1 : -1;
+  const compBias = composition === "left_focus" ? -12 : composition === "right_focus" ? 12 : 0;
+  const drift = compBias * interpolate(t, [0,1], [0.45, 1]);
 
   switch (intent) {
-    case "hold":
-      scale = 1; break;
+    case "hold": scale = 1; break;
     case "push":
       scale = interpolate(t,[0,1],[1.0,1.045]);
       tx = direction * interpolate(t,[0,1],[8,-10]);
@@ -75,10 +75,12 @@ export const usePlanCamera = (impact:number, strength=1.1) => {
       break;
   }
 
+  if (beat.n !== 1) tx += drift;
+
   const hit = frame - Math.round(impact*fps);
   const shake = strength > 0 && hit > 0 && hit < 10 ? Math.sin(hit*2.4) * (10-hit) * strength : 0;
   const transform = `translate3d(${tx+shake}px, ${ty+shake*0.5}px, 0) scale(${scale}) rotate(${rotate}deg)`;
-  return { scale, shake, tx, ty, rotate, transform };
+  return { scale, shake, tx, ty, rotate, transform, composition };
 };
 
 export const useCamera = (table:Record<string,[number,number]>, impact:number, strength=1.1) => {
