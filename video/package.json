@@ -30,6 +30,7 @@
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc",
     "check": "node ../tools/check.mjs && npm run test:director",
+    "prompt:check": "python ../tools/check-prompt-system.py",
     "script": "node ../tools/check.mjs && node ../tools/parse-script.mjs ../script.md src/script.json && npm run direct",
     "script:vox": "node ../tools/check.mjs && node ../tools/parse-script.mjs ../script_vox.md src/script.json && npm run direct",
     "direct": "node --experimental-strip-types ../tools/direct.mjs",
