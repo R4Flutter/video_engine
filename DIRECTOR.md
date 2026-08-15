@@ -49,11 +49,21 @@ video/src/script.json  +  video/src/voice.json (timing stub)
    ▼
 video/src/director-plan.json   ← the edit: frame zero, camera, reveals,
    │                             music, silence, and who leaves where
-   │  npm run qc               → findings, reasons, fixes
+   │  asset-director            → prompt/AGENT.md + production asset pack
+   ▼
+prompt/                        ← independent, render-ready asset specifications
+   │  P0/P1/P2 asset manifest
+   │  subjects / archive / evidence / graphics / backgrounds / B-roll /
+   │  logos / UI / maps / misc
+   │  npm run qc                 → findings, reasons, fixes
    │  npm run render
    ▼
 out/final.mp4
 ```
+
+The asset stage is intentionally **CPU-first**: the local 16 GB machine plans,
+validates, organizes, and renders. Heavy image/video generation is external to
+the local pipeline; it must not become a hidden GPU requirement.
 
 Two commands matter while writing:
 
@@ -83,9 +93,26 @@ plan, so the renderer, the QC and the tests can never disagree about the edit.
 | **attention** | how often something has to change; what register the beat is in |
 | **visual** | which module, which reveal, which caption mode — and is the frame repeating itself |
 | **budget** | is too much moving at once, and what gets removed |
-| **motion / audio** | camera, staged reveals, transitions, bed level, silence windows, accents |
+| **motion / audio** | camera, staged reveals, transitions, bed level, silence, accents |
 | **swipe** | who leaves, where, and why |
 | **assemble** | one artifact both the renderer and the QC read |
+
+---
+
+## Asset direction rules
+
+The asset system is separate from the typography/camera system. The director
+chooses **what the viewer should understand**; `prompt/AGENT.md` chooses the
+best production medium for that fact.
+
+Do not globalize a previous episode's style. A paper-cut episode may use
+paper-cut assets; a finance episode may use photographic founders, financial
+documents, charts, logos, maps, UI mockups and short realistic B-roll in the
+same cut.
+
+The asset planner must decompose a beat into independent files when that makes
+the edit stronger. It must never solve multiple unrelated needs with a single
+collage or “VOX-style visual”.
 
 ---
 
@@ -98,11 +125,11 @@ loops, staleness, module repetition, information density, read speed, beat
 length, and whether it is the ask.
 
 Two honest caveats, because a number that looks precise gets trusted more than
-it deserves:
+deserves:
 
 1. **The constants are calibrated against the published shape of Shorts
-   retention curves, not against this channel's analytics.** They rank two cuts
-   of the same script against each other. They do not predict views.
+   retention curves, not against this channel's analytics.** They rank two
+   cuts of the same script against each other. They do not predict views.
 2. **The model can only see the plan.** A boring idea, perfectly cut, scores
    well. The engine judges the edit — never the story.
 
@@ -147,7 +174,7 @@ Short died:
 - **Captions never fall below EMPHASIS.** The essay engine trims captions first
   to buy motion budget. A Short cannot: a large share of the feed is watched
   muted, so stripping the words trades the channel that is definitely reaching
-  the viewer for one that might not be. The camera gets calmed instead.
+  the viewer for one that might be reaching it.
 - **No module runs back to back.** In thirty seconds a repeat reads as one long
   beat.
 - **The ask comes after the payoff.** Asking before delivering loses the half
