@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "assets": [
+    {
+      "id": "subject-example",
+      "path": "assets/subjects/example.png",
+      "kind": "subject_cutout",
+      "tags": ["example", "hero", "right-facing"],
+      "transparent": true,
+      "orientations": ["left_focus", "right_focus", "center"],
+      "shotSizes": ["medium", "close", "detail"]
+    },
+    {
+      "id": "archive-example",
+      "path": "assets/archive/example.jpg",
+      "kind": "archival_photo",
+      "tags": ["company", "factory", "history"],
+      "transparent": false,
+      "orientations": ["left_focus", "right_focus", "full_bleed"],
+      "shotSizes": ["wide", "medium", "detail"]
+    },
+    {
+      "id": "document-example",
+      "path": "assets/documents/example.png",
+      "kind": "document",
+      "tags": ["filing", "proof", "finance"],
+      "transparent": false,
+      "orientations": ["center", "left_focus", "right_focus"],
+      "shotSizes": ["medium", "close", "detail"]
+    }
+  ]
+}
