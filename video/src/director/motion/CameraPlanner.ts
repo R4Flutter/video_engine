@@ -1,15 +1,26 @@
-// CameraPlanner: semantic camera intent, not scale values. The renderer's
-// camera table turns intent into framing, so a change of taste happens in one
-// place instead of seven.
-//
-// The Shorts-specific rule: beat one holds. A camera move on the hook frame
-// competes with reading it, and reading it is the only thing that matters in
-// that half second.
+// CameraPlanner: semantic camera intent, not pixel values.
+// The renderer decides the exact transform; this layer decides why the camera
+// should move.
 import type { CameraIntent, Emotion, ScriptBeat } from "../types.ts";
 import type { BeatFacts } from "../story/StoryAnalyzer.ts";
 import type { VisualDecision } from "../visual/VisualDirector.ts";
 
 const KNOWN: CameraIntent[] = ["hold", "push", "pull", "punch", "settle"];
+
+const ALIASES: Array<[string, CameraIntent]> = [
+  ["dolly in", "push"],
+  ["push in", "push"],
+  ["zoom in", "push"],
+  ["move in", "push"],
+  ["dolly out", "pull"],
+  ["pull out", "pull"],
+  ["zoom out", "pull"],
+  ["track", "settle"],
+  ["pan", "settle"],
+  ["drift", "settle"],
+  ["whip", "punch"],
+  ["slam", "punch"],
+];
 
 const BY_PURPOSE: Record<string, CameraIntent> = {
   hook: "hold",
@@ -23,7 +34,7 @@ const BY_PURPOSE: Record<string, CameraIntent> = {
 };
 
 const BY_MODULE: Record<string, CameraIntent> = {
-  kinetic: "hold", // flying type plus a moving camera is two edits fighting
+  kinetic: "hold",
   stat: "push",
   compare: "settle",
   chart: "settle",
@@ -42,6 +53,14 @@ const BY_MODULE: Record<string, CameraIntent> = {
   outro: "pull",
 };
 
+const intentFromText = (value: string): CameraIntent | undefined => {
+  const named = value.toLowerCase().trim();
+  const direct = KNOWN.find((k) => named === k || named.includes(k));
+  if (direct) return direct;
+  for (const [alias, intent] of ALIASES) if (named.includes(alias)) return intent;
+  return undefined;
+};
+
 export const cameraFor = (
   b: ScriptBeat,
   facts: BeatFacts,
@@ -50,9 +69,8 @@ export const cameraFor = (
   isFirst: boolean,
 ): CameraIntent => {
   if (b.camera) {
-    const named = b.camera.toLowerCase();
-    const hit = KNOWN.find((k) => named.includes(k));
-    if (hit) return hit;
+    const explicit = intentFromText(b.camera);
+    if (explicit) return explicit;
   }
   if (isFirst) return "hold";
   if (facts.purpose === "payoff" || facts.purpose === "reveal") return "punch";
