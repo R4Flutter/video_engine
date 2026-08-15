@@ -1,14 +1,9 @@
-// VisualQC: variety, competition and legibility on a small screen.
-//
-// A 9:16 frame is viewed at arm's length on a device the size of a hand. What
-// reads as "rich" on a monitor reads as noise there, so the thresholds here
-// are tighter than the essay engine's.
+// VisualQC: judges the visual edit as an editor would, not just as an animation.
 import type { QcFinding, ShortPlan } from "../types.ts";
 import { clamp } from "../util.ts";
 import { moduleRuns } from "../visual/VisualContinuity.ts";
 import { MODULE_MOTION, CAMERA_MOTION, CAPTION_MOTION, MOTION_CEILING } from "../attention/NoveltyBudget.ts";
 
-/** On-screen text past this cannot be read on a phone before the cut. */
 const MAX_OVERLAY_CHARS = 42;
 
 export const runVisualQC = (plan: ShortPlan): { findings: QcFinding[]; score: number } => {
@@ -18,111 +13,81 @@ export const runVisualQC = (plan: ShortPlan): { findings: QcFinding[]; score: nu
     findings.push(f);
     score -= f.level === "warn" ? 1.2 : 0.4;
   };
-
   const beats = plan.beats;
 
-  // 1. Back-to-back identical modules. In thirty seconds this reads as one
-  //    long beat, and the swipe model charges for it.
+  // 1. Back-to-back identical modules.
   for (const run of moduleRuns(beats.map((b) => ({ n: b.n, module: b.visual.module })))) {
     if (run.beats.length >= 2) {
-      flag({
-        at: beats.find((b) => b.n === run.beats[0])?.start ?? 0,
-        beat: run.beats[0],
-        level: "warn",
-        severity: "MED",
-        rule: "module-run",
-        message: `${run.beats.length}× "${run.module}" back to back (beats ${run.beats.join(", ")})`,
-        reason: "the frame never re-languages, so two beats read as one.",
-        fix: "restage one of them — change what the frame is made of, not just what it says.",
-      });
+      flag({ at: beats.find((b) => b.n === run.beats[0])?.start ?? 0, beat: run.beats[0], level: "warn", severity: "MED", rule: "module-run", message: `${run.beats.length}× "${run.module}" back to back (beats ${run.beats.join(", ")})`, reason: "the frame never re-languages, so two beats read as one.", fix: "change what the frame is made of, not just what it says." });
     }
   }
 
-  // 2. Domination.
+  // 2. Module domination.
   const counts: Record<string, number> = {};
   for (const b of beats) counts[b.visual.module] = (counts[b.visual.module] ?? 0) + 1;
   for (const [m, n] of Object.entries(counts)) {
     if (n / beats.length > 0.4) {
-      flag({
-        at: -1,
-        level: "warn",
-        severity: "MED",
-        rule: "module-dominance",
-        message: `"${m}" carries ${Math.round((n / beats.length) * 100)}% of the cut`,
-        reason: "one visual language for the whole video is a template, and templates get scrolled past.",
-        fix: "give two of those beats a different `Module:` row.",
-      });
+      flag({ at: -1, level: "warn", severity: "MED", rule: "module-dominance", message: `"${m}" carries ${Math.round((n / beats.length) * 100)}% of the cut`, reason: "one visual language for the whole video becomes a template.", fix: "vary the visual source, not merely the wording." });
     }
   }
 
-  // 3. Variety floor.
-  const distinct = new Set(beats.map((b) => b.visual.module)).size;
-  if (distinct < 3 && beats.length >= 5) {
-    flag({
-      at: -1,
-      level: "warn",
-      severity: "MED",
-      rule: "low-variety",
-      message: `only ${distinct} distinct modules across ${beats.length} beats`,
-      reason: "novelty is the cheapest attention reset available and this cut isn't spending it.",
-      fix: "vary the frame: a number, then a chart, then a mark on a photo.",
-    });
+  // 3. Asset diversity: professional documentary edits change the evidence
+  // language as well as the animation language.
+  const assets = beats.map((b) => b.shot?.asset).filter(Boolean);
+  if (assets.length >= 5) {
+    const distinctAssets = new Set(assets).size;
+    if (distinctAssets < 3) {
+      flag({ at: -1, level: "warn", severity: "MED", rule: "asset-variety", message: `only ${distinctAssets} asset types across ${assets.length} planned shots`, reason: "a video can have many modules and still feel like one template if the underlying evidence never changes.", fix: "mix footage/photo, documents, charts, comparison and typography where the story permits." });
+    }
   }
 
-  // 4. Frame competition — the novelty budget, re-checked after all trims.
+  // 4. Composition rhythm. Repeating the same side of the frame creates a
+  // subconscious static feeling even when the camera is moving.
+  let sideRuns = 0;
+  let lastComposition = "";
   for (const b of beats) {
-    const load =
-      (MODULE_MOTION[b.visual.module] ?? 0.5) +
-      (CAMERA_MOTION[b.motion.camera.intent] ?? 0.3) +
-      CAPTION_MOTION[b.visual.captionMode];
+    const c = b.shot?.composition ?? "center";
+    if ((c === "left_focus" || c === "right_focus") && c === lastComposition) sideRuns += 1;
+    else if (c === "left_focus" || c === "right_focus") sideRuns = 0;
+    lastComposition = c;
+  }
+  if (sideRuns >= 3) {
+    flag({ at: -1, level: "info", severity: "LOW", rule: "composition-run", message: "the same side-of-frame composition repeats too long", reason: "professional edits subtly reposition attention to refresh the eye.", fix: "alternate left/right focus or return to a deliberate center frame on a reveal." });
+  }
+
+  // 5. Motion budget.
+  for (const b of beats) {
+    const load = (MODULE_MOTION[b.visual.module] ?? 0.5) + (CAMERA_MOTION[b.motion.camera.intent] ?? 0.3) + CAPTION_MOTION[b.visual.captionMode];
     if (load > MOTION_CEILING) {
-      flag({
-        at: b.start,
-        beat: b.n,
-        level: "info",
-        severity: "MED",
-        rule: "frame-competition",
-        message: `"${b.visual.module}" + ${b.motion.camera.intent} camera + ${b.visual.captionMode} captions (load ${load.toFixed(2)})`,
-        reason: "three things moving at once means none of them is read.",
-        fix: "hold the camera or quiet the captions on this beat.",
-      });
+      flag({ at: b.start, beat: b.n, level: "info", severity: "MED", rule: "frame-competition", message: `"${b.visual.module}" + ${b.motion.camera.intent} camera + ${b.visual.captionMode} captions (load ${load.toFixed(2)})`, reason: "three things moving at once means none of them is read.", fix: "hold the camera or quiet the captions." });
     }
   }
 
-  // 5. Overlay legibility.
+  // 6. Overlay legibility.
   for (const b of beats) {
     const text = b.typography.text;
     if (text.length > MAX_OVERLAY_CHARS) {
-      flag({
-        at: b.start,
-        beat: b.n,
-        level: "info",
-        severity: "MED",
-        rule: "overlay-too-long",
-        message: `on-screen text is ${text.length} chars`,
-        reason: `past ~${MAX_OVERLAY_CHARS} chars the type has to shrink, and small type on a phone is not read.`,
-        fix: "cut it to the claim. the narration carries the qualifier.",
-      });
+      flag({ at: b.start, beat: b.n, level: "info", severity: "MED", rule: "overlay-too-long", message: `on-screen text is ${text.length} chars`, reason: `past ~${MAX_OVERLAY_CHARS} chars the type has to shrink on a phone.`, fix: "cut it to the claim; the narration carries the qualifier." });
+    }
+    const capWords = text.trim().split(/\s+/).filter(Boolean).length;
+    const maxWords = b.shot?.maxCaptionWords ?? 14;
+    if (capWords > maxWords && b.visual.captionMode !== "NONE") {
+      flag({ at: b.start, beat: b.n, level: "info", severity: "LOW", rule: "caption-density", message: `${capWords} words exceeds the shot's ${maxWords}-word reading budget`, reason: "the shot already carries a visual argument; text must remain glanceable.", fix: "emphasize the essential phrase and leave the rest to narration." });
     }
   }
 
-  // 6. Every beat that states a number should show it. A spoken number the
-  //    viewer cannot see is a number they cannot check, and checkability is
-  //    what makes a finance claim credible.
+  // 7. Proof must be visible.
   for (const b of beats) {
     const spokenNumber = /[$₹€£]\s?\d|\b\d[\d,]*(\.\d+)?%?\b/.test(b.name + " " + b.typography.text);
     if (b.narrative.purpose === "proof" && !spokenNumber && !b.typography.text) {
-      flag({
-        at: b.start,
-        beat: b.n,
-        level: "info",
-        severity: "MED",
-        rule: "unshown-number",
-        message: "a proof beat with nothing on screen to check",
-        reason: "a number that is only spoken is a number the viewer has to take on trust.",
-        fix: "put the figure in `On-screen text` so it can be read and screenshotted.",
-      });
+      flag({ at: b.start, beat: b.n, level: "info", severity: "MED", rule: "unshown-number", message: "a proof beat with nothing on screen to check", reason: "checkability is central to finance credibility.", fix: "put the figure in On-screen text or route the beat to a document/chart shot." });
     }
+  }
+
+  // 8. Expensive assets are capped. This is an explicit 16 GB CPU guardrail.
+  const mediumCost = beats.filter((b) => b.shot?.cpuCost === "medium").length;
+  if (mediumCost > Math.ceil(beats.length * 0.65)) {
+    flag({ at: -1, level: "warn", severity: "MED", rule: "cpu-asset-budget", message: `${mediumCost}/${beats.length} shots request medium-cost assets`, reason: "too many video/photo composites increase decode and memory pressure on CPU-only hardware.", fix: "reserve real footage for the beats where it changes understanding; use SVG/data graphics elsewhere." });
   }
 
   return { findings, score: Number(clamp(score, 0, 10).toFixed(1)) };
