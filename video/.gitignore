@@ -3,12 +3,17 @@ dist
 .DS_Store
 .env
 
-# Ignore the output video from Git but not videos you import into src/.
+# Render outputs / local caches
 out
+cache
+.tmp
 
-# Stock clips are re-downloadable from the script's own keywords.
-public/footage
-
-# Derived from the takes themselves — regenerating them is the whole point.
+# Derived local narration artifacts
 public/audio/vo/.takes.json
 public/audio/vo/.heard.json
+
+# External/legacy media fetch folders are not part of the production asset library
+public/footage
+
+# Production assets are intentionally tracked when supplied/generated for an episode.
+# Put daily inputs only in public/assets/00_INBOX before organizing them.
