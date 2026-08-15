@@ -1,19 +1,10 @@
 // Shared staging: audio plus a lightweight editorial camera language.
 // Motion is transform-only so Remotion can render it efficiently on CPU.
 import React from "react";
-import {
-  Audio,
-  Easing,
-  getInputProps,
-  interpolate,
-  Sequence,
-  staticFile,
-  useCurrentFrame,
-  useVideoConfig,
-} from "remotion";
+import { Audio, Easing, getInputProps, interpolate, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import script from "./script.json";
 import voice from "./voice.json";
-import { bedLevel, cameraMove, SFX_CUES } from "./plan";
+import { bedLevel, beatPlan, cameraMove, SFX_CUES } from "./plan";
 
 const BED = 0.4;
 const SWELL = 0.58;
@@ -34,20 +25,16 @@ export const impactAt = (module:string, word:RegExp, frac=0.6) => {
 };
 
 /**
- * Director camera grammar:
- * - hold   = composition-first; almost no movement
- * - push   = importance / tension; slow 3–5% scale plus lateral drift
- * - pull   = context / release; reverse of push
- * - punch  = reveal / payoff; short impact hit, then settle
- * - settle = subtle breathing move; still enough to read as a shot
- *
- * Deliberately no blur, filter or CSS animation. Every camera motion is a
- * single transform matrix, keeping render cost low on CPU-only machines.
+ * Camera grammar is selected by the director plan, while the exact pixel
+ * movement stays here in the renderer. That separation keeps editorial intent
+ * stable while rendering taste can evolve independently.
  */
 export const usePlanCamera = (impact:number, strength=1.1) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const beat = script.beats.find((b) => frame >= b.start*fps && frame < b.end*fps) ?? script.beats[script.beats.length-1];
+  const planBeat = beatPlan(beat.n);
+  const intent = planBeat?.motion?.camera?.intent ?? beat.camera ?? "settle";
   const [legacyFrom, legacyTo] = cameraMove(beat.n);
   const start = beat.start*fps;
   const end = Math.max(start+1, beat.end*fps);
@@ -58,7 +45,7 @@ export const usePlanCamera = (impact:number, strength=1.1) => {
   let ty = 0;
   let rotate = 0;
 
-  switch (beat.camera?.toLowerCase()) {
+  switch (intent) {
     case "hold":
       scale = 1; break;
     case "push":
@@ -94,7 +81,6 @@ export const usePlanCamera = (impact:number, strength=1.1) => {
   return { scale, shake, tx, ty, rotate, transform };
 };
 
-// Legacy API kept for any composition that still wants a module-local camera.
 export const useCamera = (table:Record<string,[number,number]>, impact:number, strength=1.1) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
