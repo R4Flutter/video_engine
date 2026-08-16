@@ -1,271 +1,300 @@
-"""script.json footage keywords -> archival imagery in video/public/footage/.
+"""Automatically fetch B-roll videos from Pexels + Pixabay.
 
-    set PIXABAY_API_KEY=...  &&  python tools/fetch-footage.py [--force]
+The engine owns VIDEO assets; the user continues to provide/generate image assets.
 
-or (the original backend)
+Usage:
+    set PEXELS_API_KEY=...
+    set PIXABAY_API_KEY=...
+    python tools/fetch-footage.py
 
-    set PEXELS_API_KEY=...   &&  python tools/fetch-footage.py [--force]
+At least one key is required. When both are present, both providers are queried
+and the best candidate is selected using duration, resolution, aspect ratio,
+and provider result order. Downloads are stored locally in
+video/public/footage/ and a provenance manifest is written to
+video/src/footage.json.
 
-Pixabay wins when both are set: its key is a query param, so it needs no header.
-The Pixabay video API has no orientation filter, so the aspect match is done
-here instead of by the server.
-
-One asset per beat that asks for imagery, named beat-N.mp4 or beat-N.jpg, plus a
-manifest at video/src/footage.json that the ArchivalBG component reads.
-Idempotent: a beat whose asset is already on disk is skipped, so re-running after
-a script edit only fetches what changed.
-
-A `footage` beat wants motion and takes a still only if no clip matches; a
-`doodle` beat wants a still, because a hand-drawn mark reads better over one.
-
-Without a key this exits quietly and writes whatever is already downloaded — the
-vox modules fall back to plain paper, so the episode still renders.
-
-Free key: https://www.pexels.com/api/  (Pexels asks for a credit in the caption.)
+The script is intentionally idempotent and cache-friendly: an existing beat
+asset is skipped unless --force is supplied. API responses are cached for 24h
+under video/out/footage-cache/ to reduce repeated API calls.
 """
 
+from __future__ import annotations
+
 import argparse
+import hashlib
 import json
 import os
 import re
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent
 SCRIPT = ROOT / "video/src/script.json"
 OUT = ROOT / "video/public/footage"
 MANIFEST = ROOT / "video/src/footage.json"
+CACHE = ROOT / "video/out/footage-cache"
 
-VIDEO_API = "https://api.pexels.com/videos/search"
-PHOTO_API = "https://api.pexels.com/v1/search"
-# Pixabay keys are query params, not headers; same shape of response for both.
-PIX_VIDEO_API = "https://pixabay.com/api/videos/"
-PIX_PHOTO_API = "https://pixabay.com/api/"
-# Which kind of asset each module wants, best first.
-WANTS = {"footage": ("video", "photo"), "doodle": ("photo", "video")}
+PEXELS_VIDEO_API = "https://api.pexels.com/v1/videos/search"
+PIXABAY_VIDEO_API = "https://pixabay.com/api/videos/"
+CACHE_TTL = 24 * 60 * 60
 
 
-def get(url: str, key: str, params: dict):
-    req = urllib.request.Request(
-        f"{url}?" + urllib.parse.urlencode(params), headers={"Authorization": key}
-    )
+def request_json(url: str, *, headers: dict[str, str] | None = None) -> Any:
+    req = urllib.request.Request(url, headers=headers or {})
     with urllib.request.urlopen(req, timeout=30) as res:
         return json.load(res)
 
 
-def pix_get(url: str, key: str, params: dict):
-    params = dict(params, key=key, safesearch="true")
-    req = urllib.request.Request(
-        f"{url}?" + urllib.parse.urlencode(params),
-        headers={"User-Agent": "Mozilla/5.0 (finance-stickman/1.0)"},
-    )
-    with urllib.request.urlopen(req, timeout=30) as res:
-        return json.load(res)
+def cached_json(cache_key: str, loader) -> Any:
+    CACHE.mkdir(parents=True, exist_ok=True)
+    path = CACHE / f"{hashlib.sha256(cache_key.encode()).hexdigest()}.json"
+    if path.exists() and time.time() - path.stat().st_mtime < CACHE_TTL:
+        return json.loads(path.read_text(encoding="utf8"))
+    data = loader()
+    path.write_text(json.dumps(data), encoding="utf8")
+    return data
 
 
-def pix_video(query: str, key: str, portrait: bool, want_secs: float):
-    """Pixabay has no orientation filter for video — pick the clip whose aspect
-    matches the canvas and whose long edge sits closest to the target without
-    going under it. The API serves a small set of pre-rendered sizes (large is
-    ~1920 on the long edge for HD clips)."""
-    hits = pix_get(
-        PIX_VIDEO_API, key, {"q": query, "per_page": 15}
-    ).get("hits", [])
-    if not hits:
-        return None
-    target = 1920  # the long edge of either canvas
-    hits.sort(key=lambda h: (h.get("duration", 0) < want_secs, -h.get("duration", 0)))
-    for hit in hits:
-        sizes = hit.get("videos") or {}
-        files = [
-            (f.get("width", 0), f.get("height", 0), f.get("url"))
-            for f in sizes.values()
-            if f and f.get("url")
-        ]
-        if not files:
-            continue
-        files.sort(
-            key=lambda fw: (
-                # wrong aspect first: a portrait clip on a 16:9 canvas crops hard
-                fw[0] < fw[1] if portrait else fw[0] >= fw[1],
-                max(fw[0], fw[1]) < target,
-                abs(max(fw[0], fw[1]) - target),
-            )
+def normalize_query(beat: dict[str, Any]) -> str:
+    """Turn the beat's explicit footage field into a compact stock query.
+
+    If the script has no footage keyword, derive one from visual/reveal/VO.
+    This means the script author does not have to manually maintain a second
+    asset list for ordinary B-roll beats.
+    """
+    explicit = str(beat.get("footage") or "").strip()
+    if explicit:
+        query = explicit
+    else:
+        source = " ".join(
+            str(beat.get(k) or "") for k in ("visual", "reveal", "vo")
         )
-        return files[0][2]
-    return None
+        query = re.sub(r"[^\w\s-]", " ", source)
+
+    # Remove production language that hurts stock search quality.
+    stop = {
+        "the", "and", "then", "with", "onto", "page", "one", "two",
+        "three", "hold", "still", "across", "words", "lands", "single",
+        "big", "number", "card", "visual", "camera", "motion", "beats",
+        "could", "have", "been", "would", "they", "them", "their",
+    }
+    words = [w for w in re.findall(r"[A-Za-z0-9-]+", query.lower()) if w not in stop]
+    return " ".join(words[:8])
 
 
-def pix_photo(query: str, key: str, portrait: bool):
-    """The image API does take an orientation — but only horizontal/vertical,
-    and a landscape photo already crops fine on a portrait canvas."""
-    hits = pix_get(
-        PIX_PHOTO_API,
-        key,
-        {
-            "q": query,
-            "image_type": "photo",
-            "orientation": "vertical" if portrait else "horizontal",
-            "per_page": 15,
-        },
-    ).get("hits", [])
-    if not hits:
-        return None
-    # largeImageURL runs ~1920 on the long edge; webformat is a 640 fallback.
-    for hit in hits:
-        link = hit.get("largeImageURL") or hit.get("webformatURL")
-        if link:
-            return link
-    return None
-
-
-def search_video(query: str, key: str, portrait: bool, want_secs: float):
-    """The best single clip for a keyword, or None. 'Best' is the file closest to
-    the canvas without going under it — upscaled stock reads as mush."""
-    videos = get(
-        VIDEO_API,
-        key,
-        {
-            "query": query,
-            "orientation": "portrait" if portrait else "landscape",
-            "per_page": 15,
-            "size": "medium",
-        },
-    ).get("videos", [])
-    if not videos:
+def choose_file(files: list[dict[str, Any]], *, portrait: bool, target_long_edge: int) -> dict[str, Any] | None:
+    valid = [
+        f for f in files
+        if f.get("url") and int(f.get("width") or 0) and int(f.get("height") or 0)
+    ]
+    if not valid:
         return None
 
-    target = 1920 if portrait else 1080  # the long edge of the canvas
-    # OffthreadVideo does not loop, so a clip shorter than its beat freezes on
-    # its last frame. Long enough beats everything else; among those, longest
-    # first, because the beat retimes when the read changes.
-    videos.sort(key=lambda v: (v.get("duration", 0) < want_secs, -v.get("duration", 0)))
-    for video in videos:
+    def score(f: dict[str, Any]) -> tuple:
+        width = int(f["width"])
+        height = int(f["height"])
+        long_edge = max(width, height)
+        is_portrait = height > width
+        # Aspect mismatch matters more than raw resolution for Shorts.
+        orientation_penalty = 0 if is_portrait == portrait else 1
+        resolution_penalty = 0 if long_edge >= target_long_edge else 1
+        distance = abs(long_edge - target_long_edge)
+        return (orientation_penalty, resolution_penalty, distance)
+
+    return sorted(valid, key=score)[0]
+
+
+def pexels_search(query: str, key: str, *, portrait: bool, want_secs: float) -> list[dict[str, Any]]:
+    params = urllib.parse.urlencode({
+        "query": query,
+        "orientation": "portrait" if portrait else "landscape",
+        "size": "large",
+        "per_page": 20,
+    })
+    url = f"{PEXELS_VIDEO_API}?{params}"
+    data = cached_json(f"pexels:{url}", lambda: request_json(url, headers={"Authorization": key}))
+    results: list[dict[str, Any]] = []
+    for video in data.get("videos", []):
         files = [
-            f
+            {
+                "url": f.get("link"),
+                "width": f.get("width"),
+                "height": f.get("height"),
+                "quality": f.get("quality"),
+            }
             for f in video.get("video_files", [])
-            if f.get("file_type") == "video/mp4" and f.get("height")
+            if f.get("file_type") == "video/mp4"
         ]
-        if not files:
-            continue
-        files.sort(
-            key=lambda f: (
-                max(f["width"], f["height"]) < target,
-                abs(max(f["width"], f["height"]) - target),
-            )
-        )
-        return files[0]["link"]
-    return None
+        results.append({
+            "provider": "pexels",
+            "id": video.get("id"),
+            "source_url": video.get("url"),
+            "creator": (video.get("user") or {}).get("name"),
+            "duration": float(video.get("duration") or 0),
+            "file": choose_file(files, portrait=portrait, target_long_edge=1920),
+        })
+    return [r for r in results if r["file"]]
 
 
-def search_photo(query: str, key: str, portrait: bool):
-    """The best single still for a keyword, or None."""
-    photos = get(
-        PHOTO_API,
-        key,
-        {
-            "query": query,
-            "orientation": "portrait" if portrait else "landscape",
-            "per_page": 15,
-        },
-    ).get("photos", [])
-    target = 1920 if portrait else 1080
-    photos.sort(key=lambda p: abs(max(p.get("width", 0), p.get("height", 0)) - target))
-    for photo in photos:
-        link = (photo.get("src") or {}).get("original")
-        if link:
-            return link
+def pixabay_search(query: str, key: str, *, portrait: bool, want_secs: float) -> list[dict[str, Any]]:
+    params = urllib.parse.urlencode({
+        "key": key,
+        "q": query,
+        "video_type": "film",
+        "safesearch": "true",
+        "order": "popular",
+        "per_page": 20,
+        "min_width": 1280,
+        "min_height": 720,
+    })
+    url = f"{PIXABAY_VIDEO_API}?{params}"
+    data = cached_json(f"pixabay:{url}", lambda: request_json(url, headers={"User-Agent": "video-engine/1.0"}))
+    results: list[dict[str, Any]] = []
+    for hit in data.get("hits", []):
+        files = []
+        for rendition in (hit.get("videos") or {}).values():
+            if rendition.get("url"):
+                files.append({
+                    "url": rendition.get("url"),
+                    "width": rendition.get("width"),
+                    "height": rendition.get("height"),
+                })
+        results.append({
+            "provider": "pixabay",
+            "id": hit.get("id"),
+            "source_url": hit.get("pageURL"),
+            "creator": hit.get("user"),
+            "duration": float(hit.get("duration") or 0),
+            "file": choose_file(files, portrait=portrait, target_long_edge=1920),
+        })
+    return [r for r in results if r["file"]]
+
+
+def candidate_score(item: dict[str, Any], *, want_secs: float, portrait: bool) -> tuple:
+    f = item["file"]
+    width, height = int(f["width"]), int(f["height"])
+    long_edge = max(width, height)
+    orientation_penalty = 0 if (height > width) == portrait else 1
+    # Prefer clips that can cover the beat without freezing/looping.
+    duration_penalty = 0 if item["duration"] >= want_secs else 1
+    duration_gap = abs(item["duration"] - want_secs)
+    # Prefer 4K/Full-HD, but don't punish a slightly shorter good clip too hard.
+    resolution_penalty = 0 if long_edge >= 1920 else 1
+    return (
+        orientation_penalty,
+        duration_penalty,
+        resolution_penalty,
+        duration_gap,
+        -long_edge,
+    )
+
+
+def download(url: str, dest: Path) -> None:
+    req = urllib.request.Request(url, headers={"User-Agent": "video-engine/1.0"})
+    with urllib.request.urlopen(req, timeout=180) as res, dest.open("wb") as out:
+        while True:
+            chunk = res.read(1024 * 1024)
+            if not chunk:
+                break
+            out.write(chunk)
+
+
+def existing_asset(beat_no: int) -> Path | None:
+    for ext in ("mp4", "webm", "mov"):
+        p = OUT / f"beat-{beat_no}.{ext}"
+        if p.exists():
+            return p
     return None
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--force", action="store_true", help="re-download clips that exist")
+    ap = argparse.ArgumentParser(description="Fetch B-roll videos from Pexels and Pixabay")
+    ap.add_argument("--force", action="store_true", help="replace existing beat videos")
     args = ap.parse_args()
 
     script = json.loads(SCRIPT.read_text(encoding="utf8"))
-    portrait = script["height"] >= script["width"]
-    beats = [b for b in script["beats"] if b.get("module") in WANTS]
+    width, height = int(script["width"]), int(script["height"])
+    portrait = height >= width
+    beats = [b for b in script.get("beats", []) if b.get("module") not in {"doodle"}]
+
+    pexels_key = os.environ.get("PEXELS_API_KEY", "").strip()
+    pixabay_key = os.environ.get("PIXABAY_API_KEY", "").strip()
+    if not pexels_key and not pixabay_key:
+        print("No PEXELS_API_KEY or PIXABAY_API_KEY set; footage stage skipped.", file=sys.stderr)
+        return
+
     OUT.mkdir(parents=True, exist_ok=True)
-    key = os.environ.get("PEXELS_API_KEY", "").strip()
-    pix_key = os.environ.get("PIXABAY_API_KEY", "").strip()
-    backend = "pixabay" if pix_key else "pexels"
-
-    if beats and not key and not pix_key:
-        print("no PEXELS_API_KEY or PIXABAY_API_KEY set - skipping download.", file=sys.stderr)
-
-    def existing(n: int):
-        return next((p for p in (OUT / f"beat-{n}.mp4", OUT / f"beat-{n}.jpg") if p.exists()), None)
+    manifest: dict[str, Any] = {}
 
     for beat in beats:
-        have = existing(beat["n"])
+        n = int(beat["n"])
+        have = existing_asset(n)
         if have and not args.force:
-            print(f"  beat {beat['n']}  have {have.name}")
+            old = manifest.get(str(n), {})
+            manifest[str(n)] = old or {"file": f"footage/{have.name}", "status": "existing"}
+            print(f"  beat {n:02d}  existing {have.name}")
             continue
-        if not key and not pix_key:
-            continue
-        # The script's own words are the fallback query, so a beat that forgot
-        # its Footage row still gets something on screen.
-        query = (
-            beat.get("footage") or re.sub(r"[^\w\s]", " ", beat.get("visual", ""))[:80]
-        ).strip()
+
+        query = normalize_query(beat)
         if not query:
+            print(f"  beat {n:02d}  no searchable visual query", file=sys.stderr)
             continue
-        # Pixabay treats a comma list as one fuzzy phrase; the first keyword is
-        # the one the beat was written around, so that is what it searches.
-        pix_query = query.split(",")[0].strip()
 
-        link, ext = None, None
-        for kind in WANTS[beat["module"]]:
+        want_secs = max(0.5, float(beat.get("end", 0)) - float(beat.get("start", 0)))
+        candidates: list[dict[str, Any]] = []
+
+        if pexels_key:
             try:
-                if kind == "video":
-                    link = (
-                        pix_video(pix_query, pix_key, portrait, beat["end"] - beat["start"])
-                        if backend == "pixabay"
-                        else search_video(query, key, portrait, beat["end"] - beat["start"])
-                    )
-                else:
-                    link = (
-                        pix_photo(pix_query, pix_key, portrait)
-                        if backend == "pixabay"
-                        else search_photo(query, key, portrait)
-                    )
+                candidates.extend(pexels_search(query, pexels_key, portrait=portrait, want_secs=want_secs))
             except urllib.error.HTTPError as err:
-                print(
-                    f"  beat {beat['n']}  {backend} {err.code} - {err.reason}",
-                    file=sys.stderr,
-                )
-                break
-            if link:
-                ext = "mp4" if kind == "video" else "jpg"
-                break
-        if not link:
-            print(f"  beat {beat['n']}  no match for {query!r}", file=sys.stderr)
+                print(f"  beat {n:02d}  Pexels HTTP {err.code}", file=sys.stderr)
+            except Exception as err:
+                print(f"  beat {n:02d}  Pexels error: {err}", file=sys.stderr)
+
+        if pixabay_key:
+            try:
+                candidates.extend(pixabay_search(query, pixabay_key, portrait=portrait, want_secs=want_secs))
+            except urllib.error.HTTPError as err:
+                print(f"  beat {n:02d}  Pixabay HTTP {err.code}", file=sys.stderr)
+            except Exception as err:
+                print(f"  beat {n:02d}  Pixabay error: {err}", file=sys.stderr)
+
+        if not candidates:
+            print(f"  beat {n:02d}  no video match for {query!r}", file=sys.stderr)
             continue
 
-        if have:  # --force, and the new asset may be the other kind
+        best = sorted(candidates, key=lambda x: candidate_score(x, want_secs=want_secs, portrait=portrait))[0]
+        if have:
             have.unlink()
-        dest = OUT / f"beat-{beat['n']}.{ext}"
-        # Pixabay's CDN 403s urllib's default User-Agent; Pexels does not care.
-        req = urllib.request.Request(
-            link,
-            headers={"User-Agent": "Mozilla/5.0 (finance-stickman/1.0)"},
-        )
-        with urllib.request.urlopen(req, timeout=120) as res, open(dest, "wb") as out:
-            out.write(res.read())
-        print(f"  beat {beat['n']}  {dest.name}  <- {query!r}")
 
-    # Rebuilt from disk every run, so deleting an asset is how you drop it.
-    manifest = {
-        str(b["n"]): f"footage/{existing(b['n']).name}"
-        for b in beats
-        if existing(b["n"])
-    }
+        dest = OUT / f"beat-{n:02d}.mp4"
+        try:
+            download(best["file"]["url"], dest)
+        except Exception as err:
+            print(f"  beat {n:02d}  download failed: {err}", file=sys.stderr)
+            continue
+
+        manifest[str(n)] = {
+            "file": f"footage/{dest.name}",
+            "provider": best["provider"],
+            "asset_id": best["id"],
+            "source_url": best["source_url"],
+            "creator": best["creator"],
+            "query": query,
+            "duration": best["duration"],
+            "width": best["file"]["width"],
+            "height": best["file"]["height"],
+        }
+        print(f"  beat {n:02d}  {dest.name} <- {best['provider']} <- {query!r}")
+
+    MANIFEST.parent.mkdir(parents=True, exist_ok=True)
     MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf8")
-    print(f"\n{MANIFEST.name} - {len(manifest)}/{len(beats)} beats have imagery")
+    print(f"\nfootage.json — {len(manifest)} video assets")
 
 
 if __name__ == "__main__":
