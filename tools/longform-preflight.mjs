@@ -1,6 +1,6 @@
 // Production preflight for long-form finance episodes.
 // Fails before render when generated artifacts are stale, misrouted, or not a genuine documentary plan.
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { resolve, join } from "node:path";
 
 const root = resolve(new URL("..", import.meta.url).pathname);
@@ -45,11 +45,8 @@ for (const b of plan.beats ?? []) {
   if (raw) assets.add(String(raw).replace(/\\/g, "/").replace(/^assets\//, ""));
 }
 for (const asset of assets) {
-  // Generated plans may reference files in public/assets. Do not silently render a black frame.
   const candidates = [join(root, "video/public/assets", asset), join(root, "video/public", asset)];
-  if (!candidates.some((p) => { try { return require("node:fs").existsSync(p); } catch { return false; } })) {
-    warnings.push(`asset referenced by director plan is not present locally: ${asset}`);
-  }
+  if (!candidates.some((p) => existsSync(p))) warnings.push(`asset referenced by director plan is not present locally: ${asset}`);
 }
 
 console.log(`LONG-FORM PREFLIGHT`);
