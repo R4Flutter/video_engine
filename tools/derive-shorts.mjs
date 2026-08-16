@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /**
  * Derive three standalone Shorts from the current long-form director plan.
- * This is selection/reframing, not a crude FFmpeg crop: each short gets a
- * self-contained hook, context, escalation and payoff window while reusing
- * the long-form voice/visual assets.
+ * Selection/reframing only: no synthetic story facts and no arbitrary crop of
+ * the entire film. The selected beats retain enough visual metadata for the
+ * dedicated vertical renderer to reproduce the long-form visual language.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -15,6 +15,11 @@ const plan = readJson(path.join(VIDEO, "src", "director-plan.json"));
 const script = readJson(path.join(VIDEO, "src", "script.json"));
 
 const project = plan.project ?? {};
+if (project.mode !== "LONG_FORM" || Number(project.durationInSeconds) < 120) {
+  throw new Error("Shorts extraction requires a current LONG_FORM director plan (>=120s). Run npm run direct first.");
+}
+if (script.engine !== "finance") throw new Error(`Shorts extraction expected finance source, got ${script.engine}`);
+
 const rawBeats = plan.beats ?? plan.timeline?.beats ?? script.beats ?? [];
 const beats = rawBeats.map((b, i) => ({
   n: Number(b.n ?? b.id ?? i + 1),
@@ -22,11 +27,11 @@ const beats = rawBeats.map((b, i) => ({
   start: Number(b.start ?? b.startTime ?? 0),
   end: Number(b.end ?? b.endTime ?? 0),
   module: String(b.module ?? b.visual?.module ?? b.visual?.sourceMode ?? "footage"),
-  text: String(b.text ?? b.hook ?? b.visual?.text ?? ""),
-  hook: String(b.hook ?? b.attention?.hook ?? ""),
-  payoff: String(b.payoff ?? b.attention?.payoff ?? ""),
+  text: String(b.text ?? b.typography?.text ?? b.visual?.text ?? ""),
+  hook: String(b.hook ?? b.attention?.hook ?? b.narrative?.question ?? ""),
+  payoff: String(b.payoff ?? b.attention?.payoff ?? b.narrative?.reveal ?? ""),
   reason: String(b.reasonForChange ?? b.visual?.reasonForChange ?? ""),
-  reveal: String(b.reveal ?? b.attention?.reveal ?? ""),
+  reveal: String(b.reveal ?? b.attention?.reveal ?? b.narrative?.reveal ?? ""),
   raw: b,
 })).filter(b => b.end > b.start);
 
@@ -59,22 +64,19 @@ for (let i = 0; i < beats.length; i++) {
       + (window.some(b => b.hook) ? 5 : 0)
       + (window.some(b => b.payoff) ? 5 : 0)
       + (window.length >= 3 ? 2 : 0);
-    const topic = window.map(b => b.name).join(" → ");
-    candidates.push({ i, j, start, end, dur, score, topic, window });
+    candidates.push({ i, j, start, end, dur, score, window });
   }
 }
 
 candidates.sort((a, b) => b.score - a.score);
 const chosen = [];
 for (const c of candidates) {
-  // Prefer editorially distinct sections rather than three neighboring clips.
   const overlap = chosen.some(x => Math.max(x.start, c.start) < Math.min(x.end, c.end));
   const separation = chosen.every(x => Math.abs(x.start - c.start) >= 90);
   if (!overlap && separation) chosen.push(c);
   if (chosen.length === 3) break;
 }
 if (chosen.length < 3) throw new Error(`Could only find ${chosen.length} distinct 22–58s candidates.`);
-
 chosen.sort((a, b) => a.start - b.start);
 
 const shorts = chosen.map((c, index) => {
@@ -93,28 +95,37 @@ const shorts = chosen.map((c, index) => {
     hook: hook.slice(0, 180),
     payoff: payoff.slice(0, 180),
     score: c.score,
-    beats: c.window.map((b) => ({
-      n: b.n,
-      name: b.name,
-      sourceStart: b.start,
-      sourceEnd: b.end,
-      start: Number((b.start - start).toFixed(3)),
-      end: Number((b.end - start).toFixed(3)),
-      module: b.module,
-      text: b.text,
-      hook: b.hook,
-      reveal: b.reveal,
-      payoff: b.payoff,
-    })),
+    beats: c.window.map((b) => {
+      const raw = b.raw ?? {};
+      return {
+        n: b.n,
+        name: b.name,
+        sourceStart: b.start,
+        sourceEnd: b.end,
+        start: Number((b.start - start).toFixed(3)),
+        end: Number((b.end - start).toFixed(3)),
+        module: b.module,
+        text: b.text,
+        hook: b.hook,
+        reveal: b.reveal,
+        payoff: b.payoff,
+        visual: raw.visual ?? {},
+        narrative: raw.narrative ?? {},
+        motion: raw.motion ?? {},
+        typography: raw.typography ?? {},
+        camera: raw.motion?.camera ?? {},
+      };
+    }),
   };
 });
 
 const out = {
-  version: 1,
+  version: 2,
   mode: "SHORTS_FROM_LONGFORM",
   source: {
     title: project.title ?? script.title ?? "Long-form episode",
     duration: Number(project.durationInSeconds ?? script.durationInSeconds ?? 0),
+    planVersion: plan.version ?? null,
   },
   policy: {
     targetCount: 3,
