@@ -1,13 +1,13 @@
 import "./index.css";
 import { Composition } from "remotion";
 import { FinanceShort } from "./FinanceShort";
+import { FinanceLong } from "./FinanceLong";
 import { VoxShort } from "./VoxShort";
 import { StickmanExplain, StickmanLab } from "./StickmanExplain";
 import { Thumbnail } from "./Thumbnail";
 import script from "./script.json";
+import director from "./director-plan.json";
 
-// Both compositions stage the same script.json. Which one to render is the
-// script's own choice: script.engine is "vox" when the script.md said so.
 const dims = {
   width: script.width,
   height: script.height,
@@ -15,40 +15,19 @@ const dims = {
   durationInFrames: Math.round(script.durationInSeconds * script.fps),
 };
 
+const longDuration = Number(director?.project?.durationInSeconds || script.durationInSeconds);
+const longFps = Number(director?.project?.fps || script.fps);
+
 export const RemotionRoot: React.FC = () => {
   return (
     <>
       <Composition id="FinanceShort" component={FinanceShort} {...dims} />
+      <Composition id="FinanceLong" component={FinanceLong} width={1920} height={1080} fps={longFps} durationInFrames={Math.round(longDuration * longFps)} />
       <Composition id="VoxExplain" component={VoxShort} {...dims} />
-      {/* The same film for landscape: the page, the plates and the captions
-          all scale from width/height, so nothing adapts specially here. */}
-      <Composition
-        id="VoxWide"
-        component={VoxShort}
-        width={1920}
-        height={1080}
-        fps={dims.fps}
-        durationInFrames={dims.durationInFrames}
-      />
-      {/* Same script, presented by a figure rather than by the page. */}
+      <Composition id="VoxWide" component={VoxShort} width={1920} height={1080} fps={dims.fps} durationInFrames={dims.durationInFrames} />
       <Composition id="StickmanExplain" component={StickmanExplain} {...dims} />
-      {/* The shelf poster for the episode — a still, never rendered to video. */}
-      <Composition
-        id="Thumbnail"
-        component={Thumbnail}
-        width={script.width}
-        height={script.height}
-        fps={script.fps}
-        durationInFrames={1}
-      />
-      {/* The rig on its own, for looking at the mouth and the arms. Not an
-          episode — never render this to the channel. */}
-      <Composition
-        id="StickmanLab"
-        component={StickmanLab}
-        {...dims}
-        durationInFrames={Math.round(8 * dims.fps)}
-      />
+      <Composition id="Thumbnail" component={Thumbnail} width={script.width} height={script.height} fps={script.fps} durationInFrames={1} />
+      <Composition id="StickmanLab" component={StickmanLab} {...dims} durationInFrames={Math.round(8 * dims.fps)} />
     </>
   );
 };
