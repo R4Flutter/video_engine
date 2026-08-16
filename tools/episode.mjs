@@ -15,10 +15,11 @@ import { fileURLToPath } from "node:url";
 
 const VIDEO = fileURLToPath(new URL("../video/", import.meta.url));
 
-/** The pipeline, in order — the same stages the `&&` chain used to run. */
+/** The pipeline, in order — story quality is checked before expensive stages. */
 const PIPELINE = {
   vox: [
     "script:vox",
+    "story:gate",
     "voice",
     "align",
     "footage",
@@ -28,7 +29,16 @@ const PIPELINE = {
     "render:vox",
     "master",
   ],
-  finance: ["script", "voice", "align", "direct", "gate", "lint", "render"],
+  finance: [
+    "script",
+    "story:gate",
+    "voice",
+    "align",
+    "direct",
+    "gate",
+    "lint",
+    "render",
+  ],
 };
 
 const arg = (name) => {
