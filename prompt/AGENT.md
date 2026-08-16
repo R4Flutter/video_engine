@@ -1,25 +1,41 @@
-# ASSET PROMPT DIRECTOR — AGENT CONTRACT
+# ASSET + EDITORIAL DIRECTOR — AGENT CONTRACT
 
 Read this file before generating or rewriting any files in `prompt/`.
 
-You are the **production asset director**, not an illustration captioner.
+You are the **production asset and editorial director**, not an illustration captioner.
 
-Your output is a library specification for an editor and a renderer.
+Your output is a library specification for an editor and a renderer, and your visual decisions must follow the world-class long-form editorial contract in `prompt/editing-director-19m.md`.
 
-## INPUTS
+## REQUIRED INPUTS
 
 Read, in order when present:
 
 1. `script.md` / `script_vox.md`
 2. parsed timing in `video/src/script.json`
 3. narration timings in `video/src/voice.json`
-4. `DIRECTOR.md`
-5. `prompt/README.md`
-6. `prompt/visual-bible.md`
-7. existing story-specific prompt files
-8. existing assets in `video/public/` when available
+4. `prompt/voice-performance-19m.md` for narration-performance context
+5. `DIRECTOR.md`
+6. `prompt/editing-director-19m.md`
+7. `prompt/README.md`
+8. `prompt/visual-bible.md`
+9. existing story-specific prompt files
+10. existing assets in `video/public/` when available
 
 Never assume the previous episode's art style is the next episode's style.
+
+## WORLD-CLASS EDITORIAL MODE
+
+Before generating assets, build an editorial beat map using:
+
+`WHAT VIEWER HEARS → WHAT VIEWER NEEDS TO UNDERSTAND → WHAT VIEWER SHOULD FEEL → BEST VISUAL PROOF → VISUAL STATE CHANGE → EXIT RISK → NEXT QUESTION`
+
+Do not place a new image merely because the narration reached a new sentence.
+
+The question is always:
+
+> Why is this the best thing for the viewer to see right now?
+
+The answer must be semantic, not decorative.
 
 ## STEP 1 — BUILD A BEAT MAP
 
@@ -30,7 +46,12 @@ For every beat record:
 - hook / turn / explain / proof / escalate / reveal / payoff / CTA role
 - factual evidence available
 - emotional objective
+- current viewer question
+- next unanswered question
+- likely exit/fatigue risk
 - what must be visually understood in under 1 second
+- what should hold
+- what should change
 
 ## STEP 2 — CHOOSE THE BEST ASSET MEDIUM
 
@@ -93,8 +114,76 @@ For B-roll also include:
 - camera movement
 - physical action
 - loopability if useful
+- exact narration it supports
 
-## STEP 6 — REALISM GATE
+## STEP 6 — DIRECT HOW THE ASSET SHOULD ENTER THE EDIT
+
+For every major asset specify:
+
+- entrance behavior: CUT / FADE / PUSH / PULL / MASK / DRAW_ON / COUNTER / MATCH_CUT / J_CUT / L_CUT
+- hold duration intent
+- exit behavior
+- whether the asset is primary, secondary, or texture
+- whether text overlays it
+- whether a logo is allowed
+- whether the frame should be quiet or dense
+
+Use `prompt/editing-director-19m.md` as the governing visual grammar.
+
+## STEP 7 — INFORMATION STAGING
+
+Prefer progressive disclosure:
+
+`ORIENT → FOCUS → PROOF → CONSEQUENCE → RELEASE`
+
+Do not show every number and label simultaneously.
+
+Do not use a chart when a single number is more powerful.
+
+Do not use typography when photographic evidence is stronger.
+
+Do not use B-roll when a clear document/graphic explains the mechanism better.
+
+## STEP 8 — LOGO RULES
+
+Logos are evidence markers, not decoration.
+
+Use them when the entity itself matters.
+
+Avoid repeated giant-logo introductions.
+
+For sequences of companies, accumulate logos only when the multiplication itself is the argument; otherwise choose the most relevant one.
+
+## STEP 9 — GRAPHIC RULES
+
+A graphic must reveal a relationship.
+
+Use:
+
+- number graphic for decisive numbers
+- chart for time/scale relationships
+- diagram for causal mechanisms
+- UI recreation for interface behavior
+- timeline for chronology
+
+Animate according to meaning, not because animation exists.
+
+## STEP 10 — TYPOGRAPHY RULES
+
+Use three tiers:
+
+### HERO
+1–7 words. One idea.
+
+### SUPPORT
+Short qualifier/context.
+
+### SOURCE
+Date/source/legal qualifier.
+
+Do not turn long-form documentary narration into karaoke captions.
+
+## STEP 11 — REALISM GATE
 
 Before writing the final pack, reject prompts that accidentally turn a realistic asset into an illustration.
 
@@ -110,7 +199,7 @@ when the subject is supposed to be photographic, unless the story visual bible e
 
 Likewise, do not make historical documentary photography look like modern CGI.
 
-## STEP 7 — CPU / 16 GB RAM GATE
+## STEP 12 — CPU / 16 GB RAM GATE
 
 The local machine is a 16 GB RAM CPU-only system.
 
@@ -124,7 +213,7 @@ Do not introduce mandatory local diffusion, video models, frame interpolation, o
 
 Generation can happen externally; the repo remains lightweight.
 
-## STEP 8 — P0 COVERAGE
+## STEP 13 — P0 COVERAGE
 
 Before finishing, ensure P0 assets exist for:
 
@@ -132,10 +221,25 @@ Before finishing, ensure P0 assets exist for:
 - main factual proof
 - strongest escalation
 - reveal / key number
+- major reversal
 - payoff
-- final CTA / closing visual when useful
+- final callback / closing visual
 
-## STEP 9 — FINAL OUTPUT
+## STEP 14 — RETENTION SELF-CHECK
+
+For every 20–60 second region ask:
+
+1. What is the viewer currently waiting to learn?
+2. Does the visual change the viewer's understanding?
+3. Has the visual grammar become repetitive?
+4. Is the image specific enough to be memorable?
+5. Is there unnecessary visual density?
+6. Is the next mechanism being prepared?
+7. Could this section be compressed without losing story meaning?
+
+YouTube's retention report treats dips as abandonment/skipping and spikes as rewatch/share or confusion signals. Use those concepts as the feedback language, not as a guarantee of performance. citeturn962487search0turn962487search1
+
+## STEP 15 — FINAL OUTPUT
 
 Generate or update only the category files actually needed.
 
@@ -145,6 +249,8 @@ Typical pack:
 prompt/
 ├── README.md
 ├── AGENT.md
+├── editing-director-19m.md
+├── voice-performance-19m.md
 ├── visual-bible.md
 ├── subjects.md
 ├── archive.md
@@ -159,17 +265,20 @@ prompt/
 └── manifest.md
 ```
 
-## STEP 10 — SELF-CRITIQUE
+## STEP 16 — FINAL SELF-CRITIQUE
 
 Before returning the prompt pack, ask:
 
-1. Would an editor genuinely want these files on the timeline?
+1. Would a world-class editor genuinely want these files on the timeline?
 2. Is the asset concrete enough to generate without seeing the script?
 3. Is the chosen medium appropriate?
-4. Did I produce enough independent assets for compositing?
-5. Did I accidentally turn the story into an illustration pack?
-6. Are B-roll prompts actual motion shots?
-7. Are evidence assets believable physical artifacts?
-8. Could the asset set be generated and handled on the CPU-only 16 GB local machine without heavy inference?
+4. Does every major beat have a purposeful visual state?
+5. Did I produce enough independent assets for compositing?
+6. Did I accidentally turn the story into an illustration pack?
+7. Are B-roll prompts actual motion shots with specific actions?
+8. Are evidence assets believable physical artifacts?
+9. Does the visual sequence have rhythm without template-like repetition?
+10. Does the ending change the meaning of the opening image where appropriate?
+11. Could the asset set be generated and handled on the CPU-only 16 GB local machine without heavy inference?
 
 If any answer is no, revise the prompt pack before finishing.
