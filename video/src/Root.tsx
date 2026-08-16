@@ -8,6 +8,7 @@ import { StickmanExplain, StickmanLab } from "./StickmanExplain";
 import { Thumbnail } from "./Thumbnail";
 import script from "./script.json";
 import director from "./director-plan.json";
+import shortsManifest from "./shorts-manifest.json";
 
 const dims = {
   width: script.width,
@@ -19,19 +20,19 @@ const dims = {
 const longDuration = Number(director?.project?.durationInSeconds || script.durationInSeconds);
 const longFps = Number(director?.project?.fps || script.fps);
 const shortFps = 30;
-const shortFrames = 60 * shortFps;
+const shortDurations = (shortsManifest.shorts ?? []).map((s) => Math.max(1, Math.ceil(Number(s.duration || 1) * shortFps)));
+const shortFrames = (index: number) => shortDurations[index] ?? 1;
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      {/* SHORTS ENGINE: legacy/direct Short renderer. */}
       <Composition id="FinanceShort" component={FinanceShort} {...dims} />
-      <Composition id="Shorts1" component={ShortsEngine} width={1080} height={1920} fps={shortFps} durationInFrames={shortFrames} defaultProps={{ index: 0 }} />
-      <Composition id="Shorts2" component={ShortsEngine} width={1080} height={1920} fps={shortFps} durationInFrames={shortFrames} defaultProps={{ index: 1 }} />
-      <Composition id="Shorts3" component={ShortsEngine} width={1080} height={1920} fps={shortFps} durationInFrames={shortFrames} defaultProps={{ index: 2 }} />
 
-      {/* LONG-FORM ENGINE: documentary finance renderer. */}
-      <Composition id="FinanceLong" component={FinanceLong} width={1920} height={1080} fps={longFps} durationInFrames={Math.round(longDuration * longFps)} />
+      <Composition id="Shorts1" component={ShortsEngine} width={1080} height={1920} fps={shortFps} durationInFrames={shortFrames(0)} defaultProps={{ index: 0 }} />
+      <Composition id="Shorts2" component={ShortsEngine} width={1080} height={1920} fps={shortFps} durationInFrames={shortFrames(1)} defaultProps={{ index: 1 }} />
+      <Composition id="Shorts3" component={ShortsEngine} width={1080} height={1920} fps={shortFps} durationInFrames={shortFrames(2)} defaultProps={{ index: 2 }} />
+
+      <Composition id="FinanceLong" component={FinanceLong} width={1920} height={1080} fps={longFps} durationInFrames={Math.max(1, Math.round(longDuration * longFps))} />
 
       <Composition id="VoxExplain" component={VoxShort} {...dims} />
       <Composition id="VoxWide" component={VoxShort} width={1920} height={1080} fps={dims.fps} durationInFrames={dims.durationInFrames} />
