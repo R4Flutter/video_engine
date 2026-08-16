@@ -30,6 +30,13 @@ const overlayArg = arg("--overlay", null);
 
 const script = JSON.parse(readFileSync(scriptPath, "utf8"));
 const overlay = overlayArg ? JSON.parse(readFileSync(resolve(root, overlayArg), "utf8")) : undefined;
+const effectiveScript = overlay
+  ? {
+      ...script,
+      title: overlay.project?.title ?? script.title,
+      beats: script.beats.map((b) => overlay.beats?.[b.n] ? { ...b, ...overlay.beats[b.n] } : b),
+    }
+  : script;
 
 const { buildShortPlan } = await import(
   pathToFileURL(join(root, "video/src/director/plan.ts")).href
@@ -40,7 +47,7 @@ const { assetForBeat, assetIssuesForScript } = await import(
 
 const { plan, warnings, issues, qc } = buildShortPlan(script, overlay);
 
-const assetIssues = assetIssuesForScript(script);
+const assetIssues = assetIssuesForScript(effectiveScript);
 for (const issue of assetIssues) warnings.push(`assets: ${issue}`);
 
 // Keep the runtime's existing footage.json contract populated for backwards
@@ -48,14 +55,14 @@ for (const issue of assetIssues) warnings.push(`assets: ${issue}`);
 // is written into director-plan.json. The renderer no longer has an independent
 // interpretation of what “footage” means.
 const footageMap = {};
-for (const beat of script.beats) {
+for (const beat of effectiveScript.beats) {
   const asset = assetForBeat(beat);
-  if (asset?.type === "video" || asset?.type === "image") {
-    plan.beats.find((b) => b.n === beat.n).assetId = asset.id;
-    plan.beats.find((b) => b.n === beat.n).assetPath = asset.path;
-    plan.beats.find((b) => b.n === beat.n).assetType = asset.type;
-    footageMap[String(beat.n)] = asset.path;
-  }
+  const directed = plan.beats.find((b) => b.n === beat.n);
+  if (!directed || !asset) continue;
+  directed.assetId = asset.id;
+  directed.assetPath = asset.path;
+  directed.assetType = asset.type;
+  if (asset.type === "video" || asset.type === "image") footageMap[String(beat.n)] = asset.path;
 }
 
 mkdirSync(dirname(outPath), { recursive: true });
