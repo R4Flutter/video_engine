@@ -1,11 +1,12 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { pathToFileURL } from "node:url";
-import { join } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { dirname, join } from "node:path";
 
-const root = new URL("../..", import.meta.url).pathname.replace(/^\//, "").replace(/%20/g, " ");
-const base = `file:///${root.replace(/\\/g, "/")}`;
-const { runLongFormQC } = await import(`${base}/video/src/director/qc/LongFormQC.ts`);
+const root = join(dirname(fileURLToPath(import.meta.url)), "../..");
+const { runLongFormQC } = await import(
+  pathToFileURL(join(root, "video/src/director/qc/LongFormQC.ts")).href
+);
 
 const syntheticPlan = (duration = 120) => ({
   version: "short-1.0",
@@ -18,18 +19,7 @@ const syntheticPlan = (duration = 120) => ({
     engine: "finance",
     mode: "SHORT",
   },
-  frameZero: {
-    text: "20.8 MILLION MEMBERS",
-    source: "hook",
-    words: 3,
-    chars: 20,
-    holdFrames: 16,
-    size: "max",
-    glanceable: true,
-    audioSynced: true,
-    hookType: "specificity",
-    timeToClaim: 6,
-  },
+  frameZero: { text: "20.8 MILLION MEMBERS", source: "hook", words: 3, chars: 20, holdFrames: 16, size: "max", glanceable: true, audioSynced: true, hookType: "specificity", timeToClaim: 6 },
   loop: { motif: "20.8", openedAtBeat: 1, closedAtBeat: 4, closes: true, seamless: false },
   sequences: [
     { id: "a", purpose: "hook", beatRange: [1, 2], start: 0, end: 60, openQuestion: "Why?", answer: "Mechanism", emotion: "curiosity" },
@@ -59,22 +49,11 @@ const syntheticPlan = (duration = 120) => ({
   projectedRetention: 0.5,
 });
 
-const curiosity = {
-  openLoop: [true, true, true, true],
-  opened: [0, 2],
-  closed: [1, 3],
-  unresolved: [],
-  longestFlatRun: null,
-};
+const curiosity = { openLoop: [true, true, true, true], opened: [0, 2], closed: [1, 3], unresolved: [], longestFlatRun: null };
 
 test("long-form QC returns all six dimensions", () => {
   const report = runLongFormQC(syntheticPlan(120), curiosity, "Twenty point eight million members.");
-  assert.ok(Object.hasOwn(report.scores, "hook"));
-  assert.ok(Object.hasOwn(report.scores, "pacing"));
-  assert.ok(Object.hasOwn(report.scores, "curiosity"));
-  assert.ok(Object.hasOwn(report.scores, "visualVariety"));
-  assert.ok(Object.hasOwn(report.scores, "audio"));
-  assert.ok(Object.hasOwn(report.scores, "loop"));
+  for (const key of ["hook", "pacing", "curiosity", "visualVariety", "audio", "loop"]) assert.ok(Object.hasOwn(report.scores, key));
   assert.ok(report.projectedRetention >= 0 && report.projectedRetention <= 90);
 });
 
