@@ -1,67 +1,139 @@
-# IMAGE PROMPTS — ILLUSTRATIONS (paper-cut collage, `#F5EFE0` bg)
+# IMAGE ASSET ROUTING — STORY PACK
 
-Generate as 9:16 or square, subject centered, transparent-ready. No text in image.
+This file contains **only user-generation prompts for assets that genuinely require manual generation**. Real-world photographs that can be sourced more professionally from Pexels/Pixabay are listed as stock-routing entries with **no generation prompt**.
 
----
+Read `asset-source-policy.md` before editing this file.
 
-**grace-p1-00_certificate.png** (Hook 0:00 + Payoff 0:55 — THE loop artifact)
-> Paper-cut collage illustration of a 1935 stock certificate, aged cream paper,
-> ornate engraved border with vignette, "ABBOTT LABORATORIES" in vintage serif
-> lettering, "3 SHARES" typed, fountain-pen signature line, small red seal,
-> one corner slightly curled, soft paper-cast shadow, flat layering, charcoal
-> ink outlines, muted sepia palette, isolated on cream #F5EFE0 background,
-> centered, generous padding, no text artifacts beyond the certificate's own
-> typography, paper texture visible.
+## REAL_STOCK — DO NOT GENERATE
 
-**grace-p2-00_coupons.png** (Hook 0:00 right side + Escalation 0:38 close-up)
-> Paper-cut collage illustration of a stack of mid-century newspaper coupon
-> clippings, jagged scissor-cut edges, yellowed newsprint, one coupon on top
-> with a bold "$0.25 OFF" circle, a pair of vintage steel scissors beside the
-> stack, soft paper shadows, charcoal ink outlines, muted 1950s palette,
-> isolated on cream #F5EFE0 background, centered, generous padding.
+These visuals should be obtained as real photographs from Pexels/Pixabay because authenticity and natural photographic detail are more valuable than a synthetic recreation.
 
-**grace-p3-08_receipt.png** (Pivot 0:08 — the $180 artifact)
-> Paper-cut collage illustration of a 1935 handwritten brokerage receipt,
-> small receipt book open, "$180.00" written in fountain-pen ink, dated
-> "1935", ledger lines, a rubber stamp pad and stamp resting at the corner,
-> soft paper-cast shadow, charcoal outlines, sepia palette, isolated on cream
-> #F5EFE0, centered, generous padding.
+### grace-p5-38_house.jpg
+- Source: `REAL_STOCK`
+- Provider: `PEXELS_OR_PIXABAY`
+- Stock query: `1950s modest American suburban house exterior archival`
+- Purpose: escalation / lived-reality establishing shot
+- Generation prompt: `NONE`
 
-**grace-p4-15_dividend.png** (Mechanism 0:15)
-> Paper-cut collage illustration of a small green dividend check being pulled
-> from a cream envelope, perforated check edge, vintage bank styling, a single
-> share certificate waiting below it, soft paper shadows, charcoal outlines,
-> muted green and cream palette, isolated on cream #F5EFE0, centered, padding.
+### grace-p6-38_coat.jpg
+- Source: `REAL_STOCK`
+- Provider: `PEXELS_OR_PIXABAY`
+- Stock query: `worn vintage wool coat on wooden hanger close up`
+- Purpose: escalation / material evidence of modest living
+- Generation prompt: `NONE`
 
-**grace-p5-38_house.png** (Escalation 0:38)
-> Paper-cut collage illustration of a tiny modest mid-century American
-> one-bedroom house, small front yard, picket fence, single window with warm
-> light, flat paper-cut layers, charcoal ink outlines, muted 1950s suburb
-> palette (olive, brick red, navy), soft paper-cast shadow, isolated on cream
-> #F5EFE0 background, centered, generous padding, no people.
+### grace-p7-38_table.jpg
+- Source: `REAL_STOCK`
+- Provider: `PEXELS_OR_PIXABAY`
+- Stock query: `1950s American kitchen woman clipping newspaper coupons`
+- Purpose: escalation / human-life supporting cut
+- Generation prompt: `NONE`
 
-**grace-p6-38_coat.png** (Escalation 0:38 cut 2)
-> Paper-cut collage illustration of a secondhand wool overcoat on a wooden
-> hanger, patched elbow, slightly frayed cuff, muted brown-grey palette,
-> charcoal outlines, flat paper-cut style, soft paper shadow, isolated on
-> cream #F5EFE0, centered, generous padding.
+## USER_GENERATED_MANUAL — GENERATE THESE
 
-**grace-p7-38_table.png** (Escalation 0:38 cut 3 — optional)
-> Paper-cut collage illustration of an elderly woman's hands clipping coupons
-> at a 1950s Formica kitchen table, white coffee cup, scissors mid-snip,
-> faceless silhouette (no facial features), apron, flat paper-cut layers,
-> charcoal outlines, muted warm palette, soft shadows, isolated on cream
-> #F5EFE0, centered, generous padding.
-
-**grace-p8-48_vault.png** (Reveal 0:48)
-> Paper-cut collage illustration of an open safe-deposit box, the 1935 stock
-> certificate visible inside, heavy brass vault door slightly ajar behind it,
-> dramatic soft light from the box, flat paper-cut layers, charcoal outlines,
-> sepia + gold palette, soft paper-cast shadow, isolated on cream #F5EFE0,
-> centered, generous padding.
+These assets need exact story-specific artifact design, controlled composition, isolated compositing, or custom evidence treatment that generic stock cannot reliably provide.
 
 ---
 
-**Consistency rules:** same cream background, same charcoal line weight, same
-paper texture, same muted palette across ALL images — the video cuts between
-them every 2-4s, so style drift reads as a glitch.
+### grace-p1-00_certificate.png
+
+Source: `USER_GENERATED_MANUAL`
+Provider: `EXTERNAL_IMAGE_GENERATOR`
+Beat: `0:00 + 0:55`
+Purpose: `hero evidence artifact / recurring reveal object`
+Format: `PNG`
+Dimensions: `2048x1536`
+Transparency: `REAL ALPHA`
+Priority: `P0`
+
+Prompt:
+Create a photorealistic isolated historical stock-certificate artifact for a 1930s American financial document, aged warm-cream archival paper with authentic fine engraving, subtle paper fibers, slightly softened corners, restrained historical printing imperfections, a believable engraved border, small period-appropriate corporate wording and signature areas, one small period ink stamp/seal, natural shallow paper curl, and physically realistic paper thickness. The document must read as a genuine photographed physical artifact rather than an illustration or graphic design. Three-quarter overhead camera view, document centered and fully visible, slight perspective but no distortion, soft directional archival-studio light from upper left, realistic contact shadow under the paper, neutral dark transparent surroundings for clean compositing. Preserve generous transparent padding around the document. No modern typography, no invented brand logo, no decorative collage, no hands, no extra objects.
+
+Negative prompt:
+cartoon, paper-cut, flat vector, illustration, CGI, plastic paper, synthetic HDR, excessive sepia, fake parchment, collage, multiple documents, hands, modern office objects, watermark, random large typography, illegible scribble overload, checkerboard background, white matte, hard halo, clipped edges
+
+---
+
+### grace-p2-00_coupons.png
+
+Source: `USER_GENERATED_MANUAL`
+Provider: `EXTERNAL_IMAGE_GENERATOR`
+Beat: `0:00 + 0:38`
+Purpose: `custom period coupon artifact / close-up evidence layer`
+Format: `PNG`
+Dimensions: `2048x2048`
+Transparency: `REAL ALPHA`
+Priority: `P1`
+
+Prompt:
+Create a photorealistic isolated stack of mid-century American newspaper coupon clippings as a physical archival artifact. Use naturally aged off-white newsprint, slightly uneven cut edges, authentic paper fibers, subtle folds and handling wear, restrained period print registration, one top coupon with a clearly readable simple discount circle, and a few partially visible clippings beneath it. The stack should look physically handled and photographed, not digitally illustrated. Three-quarter overhead view, centered composition, slight natural overlap between papers, soft directional studio light, realistic contact shadows between layers, subtle depth from paper thickness, generous transparent padding, no background surface. The visual should be believable enough to serve as a documentary evidence insert while avoiding invented recognizable brands.
+
+Negative prompt:
+paper-cut, vector, cartoon, illustration, CGI, fake parchment, modern typography, recognizable modern brands, collage sheet, excessive text, hands, scissors, background table, watermark, checkerboard, white matte, hard outline, neon colors, perfect sterile paper
+
+---
+
+### grace-p3-08_receipt.png
+
+Source: `USER_GENERATED_MANUAL`
+Provider: `EXTERNAL_IMAGE_GENERATOR`
+Beat: `0:08`
+Purpose: `hero financial evidence artifact`
+Format: `PNG`
+Dimensions: `2048x1536`
+Transparency: `REAL ALPHA`
+Priority: `P0`
+
+Prompt:
+Create a photorealistic isolated 1930s American brokerage receipt as a physical paper artifact, photographed from a slightly elevated three-quarter angle. Use warm off-white accounting paper with authentic fine fibers, a faintly yellowed age tone, printed ledger lines, period-appropriate typewritten transaction fields, restrained fountain-pen handwriting, a believable date field for 1935, and a clearly legible transaction amount of $180.00 integrated naturally into the document. Include subtle folds, edge wear, small ink inconsistencies and realistic paper thickness. No modern design language. Soft directional archival light, subtle natural shadow beneath the paper, fully visible document with generous transparent padding, clean real alpha background.
+
+Negative prompt:
+illustration, paper-cut, vector, cartoon, CGI, modern receipt, thermal-paper receipt, modern fonts, fake logo, excessive handwriting, illegible gibberish, multiple receipts, hands, desk, watermark, checkerboard, white matte, hard halo, plastic texture
+
+---
+
+### grace-p4-15_dividend.png
+
+Source: `USER_GENERATED_MANUAL`
+Provider: `EXTERNAL_IMAGE_GENERATOR`
+Beat: `0:15`
+Purpose: `mechanism artifact / dividend payment visual`
+Format: `PNG`
+Dimensions: `2048x2048`
+Transparency: `REAL ALPHA`
+Priority: `P1`
+
+Prompt:
+Create a photorealistic isolated vintage dividend-payment artifact from a 1930s American financial setting: a cream paper dividend check partially pulled from a plain period envelope, with a small period share certificate placed behind it. Use authentic paper fibers, restrained aging, subtle folds, realistic ink printing, believable perforated check edge, physically accurate paper thickness, and natural wear. Compose the objects as a small coherent evidence set with the check dominant and the certificate secondary. Three-quarter overhead product-photography angle, soft warm archival light, realistic contact shadows, transparent background with true alpha, generous padding, no table or room background. The result must look like a real photographed physical artifact.
+
+Negative prompt:
+paper-cut, flat vector, cartoon, illustration, CGI, plastic paper, modern banking check, modern logo, excessive sepia, fantasy typography, extra documents, hands, desk, watermark, checkerboard, white matte, hard outline, floating objects
+
+---
+
+### grace-p8-48_vault.png
+
+Source: `USER_GENERATED_MANUAL`
+Provider: `EXTERNAL_IMAGE_GENERATOR`
+Beat: `0:48`
+Purpose: `reveal artifact / final evidence composition`
+Format: `PNG`
+Dimensions: `2048x2048`
+Transparency: `REAL ALPHA`
+Priority: `P0`
+
+Prompt:
+Create a photorealistic isolated archival evidence composition showing an open early-20th-century safe-deposit box with the previously described historical certificate visible inside. The box must be physically plausible: brushed and slightly aged brass or darkened metal, realistic hinge construction, subtle scratches, authentic interior lining, and believable thickness. Place the certificate naturally inside the compartment rather than floating. Use a dramatic but physically realistic directional light entering from the upper left, with restrained warm highlights and deep natural shadows. Three-quarter front camera angle, object centered, enough transparent padding for animation, realistic contact shadows and occlusion, no room or vault background. The composition must look like a high-end documentary macro photograph of a real physical artifact, not an illustration.
+
+Negative prompt:
+paper-cut, vector, cartoon, CGI, fantasy treasure chest, glowing magic light, excessive gold, floating certificate, impossible geometry, modern safe, hands, people, background room, watermark, checkerboard, white matte, hard halo, plastic materials
+
+---
+
+## GENERATION RULE
+
+**Generate only the five `USER_GENERATED_MANUAL` assets above.**
+
+Do **not** generate the three `REAL_STOCK` assets. Search Pexels/Pixabay and use real photography for those shots.
+
+The manual assets deliberately use photorealistic physical-artifact language rather than the previous paper-cut treatment so the finished edit can read as a professional documentary rather than an AI illustration slideshow.
