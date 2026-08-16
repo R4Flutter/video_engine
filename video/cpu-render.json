@@ -1,0 +1,8 @@
+{
+  "profile": "cpu-16gb-longform",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "concurrency": 2,
+  "description": "Safe local profile for 16 GB RAM CPU rendering. Favor bounded Chromium concurrency and deterministic 1080p output over maximum throughput."
+}
