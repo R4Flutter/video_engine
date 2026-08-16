@@ -8,7 +8,7 @@
   "dependencies": {
     "@remotion/cli": "4.0.506",
     "@remotion/google-fonts": "^4.0.506",
-    "@remotion/tailwind-v4": "^4.0.506",
+    "@remotion/tailwind-v4": "4.0.506",
     "lucide-react": "^1.28.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
@@ -37,7 +37,7 @@
     "story:qc": "node ../tools/story-qc.mjs --strict",
     "story:gate": "node ../tools/story-qc.mjs --strict",
     "qc": "node --experimental-strip-types ../tools/qc.mjs",
-    "gate": "node ../tools/story-qc.mjs --strict && node --experimental-strip-types ../tools/qc.mjs --strict",
+    "gate": "npm run direct && node ../tools/story-qc.mjs --strict && node --experimental-strip-types ../tools/qc.mjs --strict",
     "test:director": "node --experimental-strip-types --test ../tools/tests/director.test.mjs && node --experimental-strip-types --test ../tools/tests/assets.test.mjs",
     "voice": "..\\.venv-tts\\Scripts\\python.exe ../tools/voice.py",
     "align": "python ../tools/align.py && node ../tools/lipsync.mjs",
