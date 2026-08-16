@@ -1,5 +1,5 @@
-// The composition. It reads script.json and stages it — no episode-specific
-// JSX lives here, so a new script.md renders without touching this file.
+// The finance composition. Long-form finance episodes use the documentary cold-open
+// treatment; shorter finance episodes keep the legacy frame-zero hook.
 import React from "react";
 import { AbsoluteFill, Sequence, useVideoConfig } from "remotion";
 import { Backdrop } from "./elements";
@@ -9,18 +9,15 @@ import voice from "./voice.json";
 import { MODULES } from "./scenes";
 import { impactAt, Soundtrack, usePlanCamera } from "./staging";
 import { FrameZeroCard } from "./Hook";
+import { LongFormColdOpen } from "./LongFormColdOpen";
 
-/** The gold flash and the shake are cued off the spoken word, not off a frame
- *  number, so they stay on the beat when the read changes. */
 const IMPACT = impactAt("payoff", /million/i);
 
 export const FinanceShort: React.FC = () => {
   const { fps } = useVideoConfig();
-  // The camera comes from the director plan now: intent per beat, and beat one
-  // holds. The old per-module table lived here and could disagree with the
-  // plan, which meant two places to change one decision.
-  const { scale, shake } = usePlanCamera(IMPACT);
   const total = script.durationInSeconds;
+  const isLongForm = total >= 120;
+  const { scale, shake } = usePlanCamera(IMPACT);
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#06181C" }}>
@@ -44,18 +41,18 @@ export const FinanceShort: React.FC = () => {
         })}
       </AbsoluteFill>
 
-      <TextTrack cues={script.texts} total={total} />
+      {/* The long-form cold open owns Beat 1 typography. The legacy text track
+          is intentionally disabled for long-form so two independent systems
+          cannot place contradictory text over the same narration. */}
+      <TextTrack cues={isLongForm ? [] : script.texts} total={total} />
       <CaptionTrack
         beats={voice.beats}
         skip={(n) => n === 1 || script.beats.find((b) => b.n === n)?.module === "outro"}
       />
 
-      {/* Above everything: the complete hook on frame one. It lifts once it
-          has been read, and the stage has been animating underneath the whole
-          time — so nothing is paused and nothing is lost. */}
-      <FrameZeroCard />
+      {isLongForm ? <LongFormColdOpen /> : <FrameZeroCard />}
 
-      <Soundtrack impact={IMPACT} />
+      <Soundtrack impact={IMPACT} longForm={isLongForm} />
     </AbsoluteFill>
   );
 };
