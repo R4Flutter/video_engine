@@ -16,8 +16,9 @@ Read, in order when present:
 4. `DIRECTOR.md`
 5. `prompt/README.md`
 6. `prompt/visual-bible.md`
-7. existing story-specific prompt files
-8. existing assets in `video/public/` when available
+7. `prompt/asset-source-policy.md`
+8. existing story-specific prompt files
+9. existing assets in `video/public/` when available
 
 Never assume the previous episode's art style is the next episode's style.
 
@@ -49,7 +50,31 @@ Examples:
 - “The company operated in 17 countries” → map
 - “The CEO opened the app” → UI mockup + device subject
 
-## STEP 3 — DECOMPOSE, DO NOT COLLAGE
+## STEP 3 — CHOOSE THE SOURCE BEFORE WRITING A PROMPT
+
+Every visual asset must receive a source classification before any prompt is written. Read `prompt/asset-source-policy.md` as the authoritative source-routing contract.
+
+Use exactly one primary source value for image assets:
+
+- `REAL_STOCK` → real photograph acquired from Pexels/Pixabay. **Do not write a generation prompt.** Write only a concrete stock query/routing entry.
+- `USER_GENERATED_MANUAL` → user must generate/provide the image. **Write the complete standalone production prompt.**
+- `EXTERNAL_BRAND_ASSET` → official/licensed brand artwork. **Do not fabricate trademarks with AI.**
+- `AUTO_STOCK` → engine-owned video/B-roll. **Do not write a video-generation prompt.**
+
+Decision rule:
+
+1. If a believable real photograph can communicate the visual without requiring exact custom composition → `REAL_STOCK`.
+2. If the asset is story-specific, evidence-like, transparent, graphical, UI-based, map-based, or requires exact composition → `USER_GENERATED_MANUAL`.
+3. If authenticity is a factual requirement, never invent an AI image and present it as archival evidence.
+4. When real stock and generated approximation are both acceptable, prefer `REAL_STOCK`.
+
+### CRITICAL OUTPUT RULE
+
+**Only `USER_GENERATED_MANUAL` assets receive executable generation prompts.**
+
+Do not waste prompt text on stock photographs. A stock entry must say `Generation prompt: NONE` and contain `Stock query: ...`.
+
+## STEP 4 — DECOMPOSE, DO NOT COLLAGE
 
 If three independent visuals will make the edit stronger, create three assets.
 
@@ -57,9 +82,9 @@ Never solve three assets by generating one giant collage.
 
 Every production asset must be independently placeable, animatable, replaceable, and re-used.
 
-## STEP 4 — WRITE THE ACTUAL PROMPT
+## STEP 5 — WRITE THE ACTUAL PROMPT
 
-Each prompt must be standalone and generator-ready.
+For `USER_GENERATED_MANUAL` assets, each prompt must be standalone and generator-ready.
 
 Never write:
 
@@ -67,12 +92,15 @@ Never write:
 
 Write the complete scene/object description, composition, medium, lighting, material, camera, negative space, dimensions, alpha rule, and failure conditions.
 
-## STEP 5 — FORCE PRODUCTION DETAILS
+For `REAL_STOCK` assets, do not write a generation prompt. Write a concise, searchable stock query with subject + place/era/action when relevant.
+
+## STEP 6 — FORCE PRODUCTION DETAILS
 
 For every image include:
 
 - filename
 - category
+- source
 - beat
 - purpose
 - type
@@ -81,8 +109,8 @@ For every image include:
 - aspect ratio
 - transparency
 - generation priority
-- full prompt
-- negative prompt
+- prompt only when source is `USER_GENERATED_MANUAL`
+- stock query only when source is `REAL_STOCK`
 - editor placement
 - consistency group
 
@@ -93,8 +121,10 @@ For B-roll also include:
 - camera movement
 - physical action
 - loopability if useful
+- `source: AUTO_STOCK`
+- no generation prompt
 
-## STEP 6 — REALISM GATE
+## STEP 7 — REALISM GATE
 
 Before writing the final pack, reject prompts that accidentally turn a realistic asset into an illustration.
 
@@ -110,7 +140,7 @@ when the subject is supposed to be photographic, unless the story visual bible e
 
 Likewise, do not make historical documentary photography look like modern CGI.
 
-## STEP 7 — CPU / 16 GB RAM GATE
+## STEP 8 — CPU / 16 GB RAM GATE
 
 The local machine is a 16 GB RAM CPU-only system.
 
@@ -118,13 +148,11 @@ Therefore the prompt pack must not depend on local heavyweight generation or pro
 
 The local pipeline should remain:
 
-`read → plan → prompt → manifest → validate → organize → Remotion/FFmpeg render`
-
-Do not introduce mandatory local diffusion, video models, frame interpolation, or large embeddings.
+`read → plan → source-route → prompt only manual assets → manifest → validate → organize → Remotion/FFmpeg render`
 
 Generation can happen externally; the repo remains lightweight.
 
-## STEP 8 — P0 COVERAGE
+## STEP 9 — P0 COVERAGE
 
 Before finishing, ensure P0 assets exist for:
 
@@ -135,7 +163,7 @@ Before finishing, ensure P0 assets exist for:
 - payoff
 - final CTA / closing visual when useful
 
-## STEP 9 — FINAL OUTPUT
+## STEP 10 — FINAL OUTPUT
 
 Generate or update only the category files actually needed.
 
@@ -145,6 +173,7 @@ Typical pack:
 prompt/
 ├── README.md
 ├── AGENT.md
+├── asset-source-policy.md
 ├── visual-bible.md
 ├── subjects.md
 ├── archive.md
@@ -155,21 +184,24 @@ prompt/
 ├── logos.md
 ├── ui-mockups.md
 ├── maps.md
-├── misc.md
-└── manifest.md
+└── misc.md
 ```
 
-## STEP 10 — SELF-CRITIQUE
+Never create a generation prompt for `REAL_STOCK` or `AUTO_STOCK`.
+
+## STEP 11 — SELF-CRITIQUE
 
 Before returning the prompt pack, ask:
 
 1. Would an editor genuinely want these files on the timeline?
 2. Is the asset concrete enough to generate without seeing the script?
 3. Is the chosen medium appropriate?
-4. Did I produce enough independent assets for compositing?
-5. Did I accidentally turn the story into an illustration pack?
-6. Are B-roll prompts actual motion shots?
-7. Are evidence assets believable physical artifacts?
-8. Could the asset set be generated and handled on the CPU-only 16 GB local machine without heavy inference?
+4. Is the source classification correct?
+5. Did I avoid generating a stock-replaceable real photograph?
+6. Did I produce enough independent assets for compositing?
+7. Did I accidentally turn the story into an illustration pack?
+8. Are B-roll needs routed to AUTO_STOCK?
+9. Are evidence assets believable physical artifacts?
+10. Could the asset set be generated and handled on the CPU-only 16 GB local machine without heavy inference?
 
 If any answer is no, revise the prompt pack before finishing.
