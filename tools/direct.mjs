@@ -7,11 +7,12 @@
 //        [--quiet]
 //
 // Reads script.json (and an optional hand-written overlay of editorial notes),
-// runs the deterministic director and writes the ShortPlan that the renderer
-// and the QC both consume.
+// runs the deterministic director, resolves every physical asset requirement,
+// and writes the ShortPlan that the renderer and QC consume.
 //
-// Validation failures are printed but the plan is still written — a director
-// should report, not refuse. `npm run qc` is the gate.
+// Asset resolution is fail-closed: a required footage/document/image reference
+// without a real file is a hard error. We never silently replace editorial
+// footage with PaperBG.
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -33,11 +34,39 @@ const overlay = overlayArg ? JSON.parse(readFileSync(resolve(root, overlayArg), 
 const { buildShortPlan } = await import(
   pathToFileURL(join(root, "video/src/director/plan.ts")).href
 );
+const { assetForBeat, assetIssuesForScript } = await import(
+  pathToFileURL(join(root, "video/src/director/assets.ts")).href
+);
 
 const { plan, warnings, issues, qc } = buildShortPlan(script, overlay);
 
+const assetIssues = assetIssuesForScript(script);
+for (const issue of assetIssues) warnings.push(`assets: ${issue}`);
+
+// Keep the runtime's existing footage.json contract populated for backwards
+// compatibility, but derive it from the same canonical asset resolution that
+// is written into director-plan.json. The renderer no longer has an independent
+// interpretation of what “footage” means.
+const footageMap = {};
+for (const beat of script.beats) {
+  const asset = assetForBeat(beat);
+  if (asset?.type === "video" || asset?.type === "image") {
+    plan.beats.find((b) => b.n === beat.n).assetId = asset.id;
+    plan.beats.find((b) => b.n === beat.n).assetPath = asset.path;
+    plan.beats.find((b) => b.n === beat.n).assetType = asset.type;
+    footageMap[String(beat.n)] = asset.path;
+  }
+}
+
 mkdirSync(dirname(outPath), { recursive: true });
 writeFileSync(outPath, JSON.stringify(plan, null, 2));
+writeFileSync(join(root, "video/src/footage.json"), JSON.stringify(footageMap, null, 2) + "\n");
+
+if (assetIssues.length) {
+  console.error(`ASSET GATE FAILED — ${assetIssues.length} unresolved required asset(s)`);
+  for (const issue of assetIssues) console.error(`  ✗ ${issue}`);
+  process.exit(2);
+}
 
 if (has("--quiet")) {
   console.log(`WROTE      ${outPath}`);
@@ -56,6 +85,7 @@ console.log(
   `  format   ${plan.project.width}x${plan.project.height}@${plan.project.fps} · ${plan.project.durationInSeconds}s · ${plan.beats.length} beats · ${plan.project.engine}`,
 );
 console.log(``);
+console.log(`ASSETS     ${Object.keys(footageMap).length} resolved physical asset(s)`);
 console.log(`FRAME ZERO`);
 console.log(`  text     "${fz.text}"`);
 console.log(
@@ -97,4 +127,5 @@ for (const [k, v] of Object.entries(qc.scores)) {
 console.log(`  ${"OVERALL".padEnd(14)} ${bar(qc.score / 10, 20)} ${qc.score}/10`);
 console.log(``);
 console.log(`WROTE      ${outPath}`);
+console.log(`           resolved assets written to video/src/footage.json`);
 console.log(`           run "npm run qc" for the findings and what to do about them`);
