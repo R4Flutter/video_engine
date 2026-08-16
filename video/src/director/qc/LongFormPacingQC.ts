@@ -1,158 +1,160 @@
-// LongFormPacingQC: format-aware pacing for long-form documentary edits.
+// LongFormPacingQC: production pacing gate for long-form documentaries.
 //
-// This is intentionally separate from the Shorts/feed pacing model.
-// It evaluates whether a long-form documentary changes meaningfully over time,
-// not whether every frame changes every few seconds.
+// IMPORTANT: this is not a Shorts/feed model.
+// It evaluates editorial progression, not a fixed cut-per-second cadence.
+// The score is comparative QA for versions of the same long-form project.
 import type { QcFinding, ShortPlan } from "../types.ts";
 import { clamp } from "../util.ts";
 
-const SOFT_GAP = 8;
-const MED_GAP = 12;
-const HIGH_GAP = 18;
-const SOFT_LONG_BEAT = 30;
-const HIGH_LONG_BEAT = 45;
-const LOW_EVENT_DENSITY = 0.75; // meaningful events / minute
-const STRONG_EVENT_DENSITY = 1.25;
+const LONG_FORM_SECONDS = 120;
+const REVIEW_GAP = 10;
+const HIGH_GAP = 16;
+const CRITICAL_GAP = 22;
+const REVIEW_BEAT = 32;
+const HIGH_BEAT = 48;
+const STRONG_EVENT_DENSITY = 1.1;
+const MIN_EVENT_DENSITY = 0.55;
 
-const isLongForm = (plan: ShortPlan) => plan.project.durationInSeconds >= 120;
+const isLongForm = (plan: ShortPlan) => plan.project.durationInSeconds >= LONG_FORM_SECONDS;
 
-const eventCountsByBeat = (plan: ShortPlan) => {
-  const map = new Map<number, number>();
-  for (const e of plan.attentionEvents) map.set(e.beat, (map.get(e.beat) ?? 0) + 1);
-  return map;
-};
+const meaningfulTypes = new Set([
+  "TEXT_CHANGE",
+  "NUMBER_REVEAL",
+  "OBJECT_ENTRY",
+  "CAMERA_PUNCH",
+  "ANNOTATION_DRAW",
+  "QUESTION",
+  "REVEAL",
+  "CONTRADICTION",
+  "PAYOFF",
+  "PATTERN_INTERRUPT",
+  "SFX_ACCENT",
+]);
 
-const meaningfulEventCount = (plan: ShortPlan, beatNumber: number) => {
-  const meaningful = new Set([
-    "TEXT_CHANGE",
-    "NUMBER_REVEAL",
-    "OBJECT_ENTRY",
-    "CAMERA_PUNCH",
-    "ANNOTATION_DRAW",
-    "QUESTION",
-    "REVEAL",
-    "CONTRADICTION",
-    "PAYOFF",
-    "PATTERN_INTERRUPT",
-    "SFX_ACCENT",
-  ]);
-  return plan.attentionEvents.filter((e) => e.beat === beatNumber && meaningful.has(e.type)).length;
-};
+const meaningfulEventsForBeat = (plan: ShortPlan, beatNumber: number) =>
+  plan.attentionEvents.filter((e) => e.beat === beatNumber && meaningfulTypes.has(e.type));
+
+const nonSilenceEvents = (plan: ShortPlan) =>
+  plan.attentionEvents.filter((e) => meaningfulTypes.has(e.type)).sort((a, b) => a.at - b.at);
 
 /**
  * Long-form pacing score 0..10.
  *
- * The score rewards meaningful editorial progression and only penalizes holds
- * that lack an information, visual, emotional, or structural reason.
+ * A documentary may hold a photograph, document, chart or B-roll shot for
+ * several seconds. A hold is only a problem when the story also stops moving.
+ * We therefore judge:
+ *   1) unexplained state gaps,
+ *   2) long beats with no internal progression,
+ *   3) chapter/sequence rhythm,
+ *   4) global meaningful-event cadence.
+ *
+ * No penalty exists for total runtime, average beat length, or 2–6 second
+ * "dead frame" rules inherited from the Shorts model.
  */
 export const runLongFormPacingQC = (plan: ShortPlan): { findings: QcFinding[]; score: number } => {
   const findings: QcFinding[] = [];
   let score = 10;
-  const eventCounts = eventCountsByBeat(plan);
-
   const flag = (f: QcFinding, penalty: number) => {
     findings.push(f);
     score -= penalty;
   };
 
-  // A long-form film may legitimately hold a frame. Penalize only when a
-  // long gap has no staged information and no beat-level narrative purpose.
-  const sorted = [...plan.attentionEvents].sort((a, b) => a.at - b.at);
-  let last = 0;
-  for (const e of sorted) {
-    const gap = e.at - last;
-    if (gap > HIGH_GAP) {
+  const events = nonSilenceEvents(plan);
+
+  // 1. State-change cadence. Thresholds are intentionally generous for
+  // documentary evidence holds; they are review gates, not cut targets.
+  let previous = 0;
+  for (const e of events) {
+    const gap = e.at - previous;
+    if (gap >= CRITICAL_GAP) {
       flag({
-        at: last,
+        at: previous,
         level: "warn",
         severity: "HIGH",
-        rule: "longform-dead-zone",
-        message: `${gap.toFixed(1)}s without a meaningful editorial event`,
-        reason: "a long-form hold is acceptable only when the narration/evidence continues to progress.",
-        fix: "stage an evidence reveal, state change, question, graphic update, or cut earlier.",
-      }, 1.3);
-    } else if (gap > MED_GAP) {
+        rule: "longform-critical-gap",
+        message: `${gap.toFixed(1)}s without a meaningful visual/information event`,
+        reason: "the edit provides no visible or structural progression for a long stretch.",
+        fix: "stage a real evidence reveal, visual-state change, question, or sequence turn; do not add decorative motion.",
+      }, 1.2);
+    } else if (gap >= HIGH_GAP) {
       flag({
-        at: last,
+        at: previous,
         level: "warn",
         severity: "MED",
-        rule: "longform-slow-zone",
+        rule: "longform-long-gap",
         message: `${gap.toFixed(1)}s between meaningful editorial events`,
-        reason: "the viewer should receive a visible or narrative change before a long uninterrupted stretch becomes inert.",
-        fix: "add a meaningful internal reveal or change visual state.",
+        reason: "a long-form hold can work, but a prolonged gap should be justified by strong evidence or emotion.",
+        fix: "review the hold; keep it only if the narration/evidence is genuinely advancing.",
       }, 0.6);
-    } else if (gap > SOFT_GAP) {
+    } else if (gap >= REVIEW_GAP) {
       flag({
-        at: last,
+        at: previous,
         level: "info",
         severity: "LOW",
-        rule: "longform-hold",
-        message: `${gap.toFixed(1)}s between meaningful events`,
-        reason: "acceptable for evidence or cinematic holds, but review the shot for visual purpose.",
-        fix: "no change required if the frame is carrying evidence or emotion.",
-      }, 0.2);
+        rule: "longform-review-gap",
+        message: `${gap.toFixed(1)}s between meaningful editorial events`,
+        reason: "review flag only; a documentary evidence or emotional hold can legitimately live here.",
+        fix: "no change required if the frame is carrying evidence or emotional weight.",
+      }, 0.15);
     }
-    last = e.at;
+    previous = e.at;
   }
-  const tail = plan.project.durationInSeconds - last;
-  if (tail > HIGH_GAP) {
+
+  const tail = plan.project.durationInSeconds - previous;
+  if (tail >= CRITICAL_GAP) {
     flag({
-      at: last,
+      at: previous,
       level: "warn",
       severity: "HIGH",
-      rule: "longform-tail-gap",
-      message: `${tail.toFixed(1)}s after the last meaningful event`,
-      reason: "the ending must resolve rather than drift.",
-      fix: "strengthen the final payoff/callback or add a deliberate closing event.",
+      rule: "longform-ending-gap",
+      message: `${tail.toFixed(1)}s after the last meaningful editorial event`,
+      reason: "the ending should resolve into a deliberate payoff/callback rather than drift.",
+      fix: "strengthen the closing evidence/payoff or create one explicit final event.",
     }, 1.0);
   }
 
-  // Beat structure: long beats are allowed when they contain staged internal
-  // events or have a defensible documentary purpose.
+  // 2. Long beats: allowed, but internal progression is required when a beat
+  // becomes long enough that a single visual state is unlikely to carry it.
   for (const b of plan.beats) {
     const len = b.end - b.start;
-    const events = meaningfulEventCount(plan, b.n);
-    const strategy = b.narrative.purpose;
-    if (len > HIGH_LONG_BEAT && events === 0) {
+    const internal = meaningfulEventsForBeat(plan, b.n).length;
+    if (len >= HIGH_BEAT && internal === 0) {
       flag({
         at: b.start,
         beat: b.n,
         level: "warn",
         severity: "HIGH",
         rule: "unstaged-longform-beat",
-        message: `${len.toFixed(1)}s beat without an internal editorial event`,
-        reason: `the beat is ${strategy} but has no staged visual/narrative change inside it.`,
-        fix: "add one or more meaningful internal reveals, or split the beat at a real narrative transition.",
-      }, 1.2);
-    } else if (len > SOFT_LONG_BEAT && events === 0) {
+        message: `${len.toFixed(1)}s beat with no internal editorial event`,
+        reason: "this beat is long enough that one visual state carrying one thought needs a compelling documentary justification.",
+        fix: "add a meaningful internal reveal or split only at a genuine narrative transition.",
+      }, 1.0);
+    } else if (len >= REVIEW_BEAT && internal === 0) {
       flag({
         at: b.start,
         beat: b.n,
         level: "info",
         severity: "MED",
-        rule: "longform-review-beat",
-        message: `${len.toFixed(1)}s beat with no staged internal event`,
-        reason: "long-form can sustain a single visual, but this beat deserves editorial review.",
-        fix: "add a staged reveal only where it serves the narration.",
-      }, 0.5);
+        rule: "review-longform-beat",
+        message: `${len.toFixed(1)}s beat with no internal editorial event`,
+        reason: "review whether the narration and evidence are enough to sustain a single visual state.",
+        fix: "add an internal reveal only when it improves understanding or anticipation.",
+      }, 0.35);
     }
   }
 
-  // Event density is evaluated globally, not against Shorts-style 2–4s cuts.
+  // 3. Meaningful-event cadence is a health signal, not a Shorts target.
   const minutes = Math.max(1, plan.project.durationInSeconds / 60);
-  const meaningfulEvents = plan.attentionEvents.filter((e) =>
-    !["SILENCE"].includes(e.type)
-  ).length;
-  const density = meaningfulEvents / minutes;
-  if (density < LOW_EVENT_DENSITY) {
+  const density = events.length / minutes;
+  if (density < MIN_EVENT_DENSITY) {
     flag({
       at: -1,
       level: "warn",
       severity: "HIGH",
       rule: "low-longform-event-density",
       message: `${density.toFixed(2)} meaningful events/minute`,
-      reason: "long-form needs a visible or narrative progression cadence even when shots are held.",
-      fix: "increase meaningful reveals, evidence changes, questions, or sequence turns rather than adding decorative motion.",
+      reason: "the edit may contain large stretches where neither the visual state nor the information state advances.",
+      fix: "add semantic reveals, evidence changes, questions or sequence turns—not decorative camera motion.",
     }, 1.0);
   } else if (density < STRONG_EVENT_DENSITY) {
     flag({
@@ -161,36 +163,29 @@ export const runLongFormPacingQC = (plan: ShortPlan): { findings: QcFinding[]; s
       severity: "LOW",
       rule: "moderate-longform-event-density",
       message: `${density.toFixed(2)} meaningful events/minute`,
-      reason: "healthy range for a documentary hold-based edit, but more chapter-level progression can still help.",
+      reason: "acceptable documentary cadence; inspect chapter transitions and the longest holds.",
       fix: "no automatic change required.",
-    }, 0.15);
+    }, 0.1);
   }
 
-  // Chapter/sequence turns: reward purposeful structure.
-  const sequenceIds = new Set(plan.beats.map((b) => b.sequenceId));
-  const sequenceCount = sequenceIds.size;
-  if (sequenceCount >= 6) score += 0.5;
-  else if (sequenceCount < 4) {
+  // 4. Sequence rhythm. Major phases should have explicit chapter turns.
+  const sequenceIds = [...new Set(plan.beats.map((b) => b.sequenceId).filter(Boolean))];
+  if (sequenceIds.length < 5) {
     flag({
       at: -1,
       level: "warn",
       severity: "MED",
-      rule: "weak-chapter-rhythm",
-      message: `${sequenceCount} editorial sequences across ${plan.beats.length} beats`,
-      reason: "long-form retention benefits from clear chapter-level turns and changing questions.",
-      fix: "ensure the director recognizes major narrative phases and resets visual language between them.",
+      rule: "weak-sequence-rhythm",
+      message: `${sequenceIds.length} editorial sequences across ${plan.beats.length} beats`,
+      reason: "a 19-minute documentary benefits from clear chapter-level turns rather than one continuous explanatory block.",
+      fix: "ensure major narrative phases reset their question, visual grammar or evidence mode.",
     }, 0.5);
+  } else if (sequenceIds.length >= 8) {
+    score += 0.35;
   }
-
-  // Protect cinematic/documentary holds from the old Shorts model.
-  // No penalties for total runtime or average beat length in long-form mode.
 
   return { findings, score: Number(clamp(score, 0, 10).toFixed(1)) };
 };
 
-export const runFormatAwarePacingQC = (plan: ShortPlan) => {
-  if (isLongForm(plan)) return runLongFormPacingQC(plan);
-  // LongFormPacingQC is intentionally only selected for long-form projects.
-  // The legacy short-form implementation remains the caller's responsibility.
-  return null;
-};
+export const runFormatAwarePacingQC = (plan: ShortPlan) =>
+  isLongForm(plan) ? runLongFormPacingQC(plan) : null;
