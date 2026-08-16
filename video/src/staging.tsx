@@ -1,7 +1,7 @@
-// The parts of a composition that don't care what the visual language is:
+// The parts of a composition that don't care about the visual language:
 // music, narration, SFX and the director camera. Long-form finance gets one
-// intentional exception: Beat 1 VO waits until the visual contradiction has
-// landed, so the renderer can honor a true visual-first documentary opener.
+// intentional exception: Beat 1 opens in true room silence before the evidence
+// ladder begins, while short-form behavior remains unchanged.
 import React from "react";
 import {
   Audio,
@@ -26,8 +26,6 @@ const ramp = (x: number, from: [number, number], to: [number, number]) =>
   interpolate(x, from, to, { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
 export const NARRATION = voice.beats.filter((b) => b.file && b.words.length > 0);
-
-const SPEECH = NARRATION.map((b) => [b.start, b.start + b.words[b.words.length - 1].end] as const);
 
 const PLANNED_BED = SFX_CUES.length > 0 || bedLevel(0) !== 0.4 || bedLevel(1) !== bedLevel(0);
 
@@ -81,8 +79,6 @@ export const usePlanCamera = (impact: number, strength = 1.1) => {
   return { scale, shake };
 };
 
-/** Narration, music bed and SFX. In long-form mode Beat 1 begins after the
- * visual-first opening hold; all later takes retain their original timings. */
 export const Soundtrack: React.FC<{ impact: number; longForm?: boolean }> = ({ impact, longForm = false }) => {
   const { fps } = useVideoConfig();
   const total = script.durationInSeconds;
@@ -91,10 +87,10 @@ export const Soundtrack: React.FC<{ impact: number; longForm?: boolean }> = ({ i
     return Number.isFinite(db) && db !== 0 ? Math.pow(10, db / 20) : 1;
   })();
 
-  const speech = NARRATION.map((b) => {
-    const start = longForm && b.n === 1 ? LONGFORM_HOOK_VO_DELAY : b.start;
-    return { beat: b, start };
-  });
+  const speech = NARRATION.map((b) => ({
+    beat: b,
+    start: longForm && b.n === 1 ? LONGFORM_HOOK_VO_DELAY : b.start,
+  }));
   const speechWindows = speech.map((x) => [x.start, x.start + x.beat.words[x.beat.words.length - 1].end] as const);
 
   return (
@@ -111,7 +107,10 @@ export const Soundtrack: React.FC<{ impact: number; longForm?: boolean }> = ({ i
         volume={(f) => {
           const t = f / fps;
           const bed = PLANNED_BED ? bedLevel(t) : ramp(t, [impact - 1, impact], [BED, SWELL]);
-          const edges = ramp(t, [0, 0.15], [0, 1]) * ramp(t, [total - 1.2, total], [1, 0]);
+          const introEdge = longForm
+            ? ramp(t, [LONGFORM_HOOK_VO_DELAY - 0.1, LONGFORM_HOOK_VO_DELAY + 0.35], [0, 1])
+            : ramp(t, [0, 0.15], [0, 1]);
+          const edges = introEdge * ramp(t, [total - 1.2, total], [1, 0]);
           const duck = Math.min(
             1,
             ...speechWindows.map(([a, b]) =>
@@ -124,13 +123,15 @@ export const Soundtrack: React.FC<{ impact: number; longForm?: boolean }> = ({ i
         }}
       />
 
-      {(SFX_CUES.length ? SFX_CUES : script.sfx).flatMap((cue) =>
-        cue.files.map((file) => (
-          <Sequence key={`${cue.at}-${file}`} from={Math.round(cue.at * fps)}>
-            <Audio src={staticFile(`audio/${file}`)} volume={() => 0.5 * master} />
-          </Sequence>
-        )),
-      )}
+      {(SFX_CUES.length ? SFX_CUES : script.sfx)
+        .filter((cue) => !longForm || cue.at >= LONGFORM_HOOK_VO_DELAY)
+        .flatMap((cue) =>
+          cue.files.map((file) => (
+            <Sequence key={`${cue.at}-${file}`} from={Math.round(cue.at * fps)}>
+              <Audio src={staticFile(`audio/${file}`)} volume={() => 0.5 * master} />
+            </Sequence>
+          )),
+        )}
     </>
   );
 };
