@@ -1,18 +1,20 @@
 import React from "react";
 import { AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import manifest from "./shorts-manifest.json";
-import { MODULES } from "./scenes";
+import { LONGFORM_MODULES, StrictFallback } from "./LongFormScenes";
 
 const SHORTS = manifest.shorts ?? [];
 
-function Caption({ words }: { words: Array<{ w: string; start: number; end: number }> }) {
+type Word = { w: string; start: number; end: number };
+
+function Caption({ words }: { words: Word[] }) {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = frame / fps;
   const active = words.filter((w) => t >= w.start && t < w.end).slice(-1)[0];
   if (!active) return null;
   return (
-    <div style={{ position: "absolute", left: 70, right: 70, bottom: 150, display: "flex", justifyContent: "center", zIndex: 30 }}>
+    <div style={{ position: "absolute", left: 70, right: 70, bottom: 150, display: "flex", justifyContent: "center", zIndex: 30, pointerEvents: "none" }}>
       <div style={{ background: "rgba(0,0,0,.72)", borderRadius: 16, padding: "14px 22px", color: "white", fontSize: 54, fontWeight: 800, lineHeight: 1.05, textAlign: "center", textShadow: "0 2px 10px rgba(0,0,0,.5)" }}>
         {active.w}
       </div>
@@ -26,16 +28,29 @@ function OneShort({ index }: { index: number }) {
   if (!short) return <AbsoluteFill style={{ background: "#080808" }} />;
   const beats = short.beats ?? [];
   const allWords = beats.flatMap((b) => b.words ?? []);
+
   return (
     <AbsoluteFill style={{ background: "#080808", overflow: "hidden" }}>
       {beats.map((beat) => {
-        const Scene = MODULES[beat.module] ?? MODULES.footage ?? MODULES.kinetic;
-        const from = Math.round(beat.start * fps);
-        const dur = Math.max(1, Math.round((beat.end - beat.start) * fps));
+        const Scene = LONGFORM_MODULES[beat.module] ?? StrictFallback;
+        const from = Math.round(Number(beat.start) * fps);
+        const dur = Math.max(1, Math.round((Number(beat.end) - Number(beat.start)) * fps));
+        const sceneBeat = {
+          ...beat,
+          start: Number(beat.start),
+          end: Number(beat.end),
+          visual: {
+            ...(beat.visual ?? {}),
+            module: beat.module,
+            assetPath: beat.visual?.assetPath ?? beat.visual?.asset ?? beat.visual?.footage ?? undefined,
+          },
+          typography: beat.typography ?? { text: beat.text ?? beat.reveal ?? "" },
+          narrative: beat.narrative ?? { reveal: beat.reveal ?? beat.payoff ?? "" },
+        };
         return (
           <Sequence key={`${index}-${beat.n}`} from={from} durationInFrames={dur}>
             <AbsoluteFill>
-              <Scene dur={dur} />
+              <Scene beat={sceneBeat} />
               {beat.audio ? <Audio src={staticFile(beat.audio)} /> : null}
             </AbsoluteFill>
           </Sequence>
