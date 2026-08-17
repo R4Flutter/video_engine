@@ -1,0 +1,17 @@
+[
+  {
+    "sourceId": "reference-001",
+    "title": "Finance/business documentary reference",
+    "niche": "business",
+    "durationSeconds": 1200,
+    "patterns": {
+      "hook": ["open on a concrete contradiction or consequence", "complete first-frame claim"],
+      "pacing": ["semantic change rather than arbitrary cuts", "long holds contain staged reveals"],
+      "visualGrammar": ["evidence -> specific B-roll -> data -> consequence", "new chapter gets a visual reset"],
+      "evidence": ["show the document/UI/number when the claim is made"],
+      "transitions": ["hard cut by default", "J/L cuts when audio should carry continuity"],
+      "sound": ["reduce music before reversals", "use silence selectively"],
+      "payoff": ["answer the active question, then open the next one"]
+    }
+  }
+]
