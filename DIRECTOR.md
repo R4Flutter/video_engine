@@ -1,10 +1,10 @@
 # The director
 
-This repository now has two editorial modes: **SHORTS** and **LONGFORM_19M**. They must never share retention assumptions.
+This repository has two editorial modes: **SHORTS** and **LONGFORM_19M**. They must never share retention assumptions.
 
 For **The Company That Sells You Nothing**, the production mode is **LONGFORM_19M** and `prompt/editing-director-19m.md` is the controlling editorial specification.
 
-The Shorts rules described later in this document remain available for actual short-form episodes, but they do **not** override the 19-minute director. In particular, long-form is not allowed to inherit Shorts constraints such as constant caption pressure, mandatory rapid visual changes, loop-oriented endings, or a global hold/punch rhythm.
+The Shorts rules described later in this document remain available for actual short-form episodes, but they do **not** override the 19-minute director. Long-form is not allowed to inherit Shorts constraints such as constant caption pressure, mandatory rapid visual changes, loop-oriented endings, or a global hold/punch rhythm.
 
 ## Long-form authority
 
@@ -46,17 +46,17 @@ video/src/script.json + voice.json
    ├─ footage (Pexels + Pixabay)
    ├─ direct
    ├─ story-qc + qc
-   └─ VoxWide (1920×1080)
+   └─ LongFormDocumentary (1920×1080)
             │
             ▼
-       out/vox.mp4
+       out/longform.mp4
 ```
 
 The 19-minute episode should be run with:
 
 ```console
 cd video
-npm run episode:vox
+npm run episode:longform
 ```
 
 ### Quality gate
