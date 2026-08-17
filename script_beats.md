@@ -24,6 +24,7 @@
 | **Camera** | hold |
 | **Music** | quiet |
 | **Silence** | post |
+| **Footage** | empty gym interior, dim lighting, rows of treadmills, lone person |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | IMMEDIATE |
 
@@ -136,6 +137,7 @@
 | **Camera** | push |
 | **Music** | swell |
 | **Silence** | post |
+| **Footage** | vintage advertisements, 1990s magazine ads, subscription fine print |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | PROGRESSIVE |
 
@@ -152,6 +154,8 @@
 | **Camera** | settle |
 | **Music** | quiet |
 | **Silence** | none |
+| **Footage** | gym interior, exercise machines, bright lights |
+| **J-Cut** | 1 |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | IMMEDIATE |
 
@@ -200,6 +204,7 @@
 | **Camera** | settle |
 | **Music** | drop |
 | **Silence** | pre |
+| **Footage** | person walking past gym entrance, not going in |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | PROGRESSIVE |
 
@@ -281,6 +286,7 @@
 | **Camera** | push |
 | **Music** | quiet |
 | **Silence** | pre |
+| **Footage** | 1990s gym interior, retro exercise equipment, neon lighting |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | PROGRESSIVE |
 
@@ -297,6 +303,8 @@
 | **Camera** | settle |
 | **Music** | quiet |
 | **Silence** | none |
+| **Footage** | federal documents, investigation file, courtroom |
+| **L-Cut** | 1 |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | SEQUENTIAL |
 
@@ -313,6 +321,7 @@
 | **Camera** | settle |
 | **Music** | quiet |
 | **Silence** | none |
+| **Footage** | stack of complaint letters, government office building |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | SEQUENTIAL |
 
@@ -329,6 +338,7 @@
 | **Camera** | push |
 | **Music** | drop |
 | **Silence** | pre |
+| **Footage** | contract document close-up, signature line, fine print |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | HIDDEN_THEN_REVEAL |
 
@@ -361,6 +371,7 @@
 | **Camera** | settle |
 | **Music** | quiet |
 | **Silence** | post |
+| **Footage** | modern gym entrance, front desk, membership card |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | SEQUENTIAL |
 
@@ -377,6 +388,7 @@
 | **Camera** | settle |
 | **Music** | drop |
 | **Silence** | pre |
+| **Footage** | person at gym front desk, cancelling membership, paperwork |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | PROGRESSIVE |
 
@@ -393,6 +405,7 @@
 | **Camera** | push |
 | **Music** | quiet |
 | **Silence** | pre |
+| **J-Cut** | 1 |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | COUNTER_REVEAL |
 
@@ -441,6 +454,7 @@
 | **Camera** | push |
 | **Music** | swell |
 | **Silence** | none |
+| **Footage** | modern gym, rows of machines, empty treadmill |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | PROGRESSIVE |
 
@@ -457,6 +471,7 @@
 | **Camera** | settle |
 | **Music** | quiet |
 | **Silence** | none |
+| **Footage** | software box, CD-ROM, old computer monitor, retail shelf |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | SEQUENTIAL |
 
@@ -473,6 +488,7 @@
 | **Camera** | settle |
 | **Music** | hold |
 | **Silence** | none |
+| **L-Cut** | 1 |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | SEQUENTIAL |
 
@@ -505,6 +521,7 @@
 | **Camera** | push |
 | **Music** | swell |
 | **Silence** | post |
+| **Footage** | angry internet forum, news headlines, petition |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | PROGRESSIVE |
 
@@ -537,6 +554,7 @@
 | **Camera** | settle |
 | **Music** | drop |
 | **Silence** | pre |
+| **J-Cut** | 1 |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | HIDDEN_THEN_REVEAL |
 
@@ -553,6 +571,7 @@
 | **Camera** | push |
 | **Music** | swell |
 | **Silence** | post |
+| **Footage** | person typing on laptop, subscription website |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | PROGRESSIVE |
 
@@ -569,6 +588,7 @@
 | **Camera** | settle |
 | **Music** | quiet |
 | **Silence** | none |
+| **Footage** | television remote on sofa, streaming apps on screen |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | IMMEDIATE |
 
@@ -585,6 +605,7 @@
 | **Camera** | settle |
 | **Music** | quiet |
 | **Silence** | none |
+| **Footage** | cable box, television, remote control, tangled cables |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | SEQUENTIAL |
 
@@ -617,6 +638,7 @@
 | **Camera** | push |
 | **Music** | quiet |
 | **Silence** | pre / post |
+| **L-Cut** | 1 |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | COUNTER_REVEAL |
 
@@ -681,6 +703,7 @@
 | **Camera** | push |
 | **Music** | quiet |
 | **Silence** | pre |
+| **Footage** | federal building columns, courthouse, online shopping checkout |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | PROGRESSIVE |
 
@@ -697,6 +720,8 @@
 | **Camera** | push |
 | **Music** | swell |
 | **Silence** | none |
+| **Footage** | credit card statement, bank account app, subscription charges |
+| **J-Cut** | 1 |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | SEQUENTIAL |
 
@@ -713,6 +738,7 @@
 | **Camera** | push |
 | **Music** | swell |
 | **Silence** | none |
+| **Footage** | computer screen with form, mouse clicking, website menu |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | SEQUENTIAL |
 
@@ -745,6 +771,8 @@
 | **Camera** | settle |
 | **Music** | quiet |
 | **Silence** | none |
+| **Footage** | antique book pages, library stacks, epic manuscript |
+| **L-Cut** | 1 |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | SEQUENTIAL |
 
@@ -761,6 +789,7 @@
 | **Camera** | settle |
 | **Music** | quiet |
 | **Silence** | pre |
+| **Footage** | federal courthouse, judge's gavel, settlement document |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | SEQUENTIAL |
 
@@ -793,6 +822,7 @@
 | **Camera** | pull |
 | **Music** | quiet |
 | **Silence** | none |
+| **Footage** | contract fine print, magnifying glass, legal document |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | SEQUENTIAL |
 
@@ -809,6 +839,7 @@
 | **Camera** | settle |
 | **Music** | quiet |
 | **Silence** | post |
+| **J-Cut** | 1 |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | SEQUENTIAL |
 
@@ -841,6 +872,7 @@
 | **Camera** | push |
 | **Music** | quiet |
 | **Silence** | pre |
+| **Footage** | government document, gavel, law books |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | IMMEDIATE |
 
@@ -889,6 +921,7 @@
 | **Camera** | punch |
 | **Music** | drop |
 | **Silence** | pre |
+| **Footage** | federal courthouse, court ruling document, gavel |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | HIDDEN_THEN_REVEAL |
 
@@ -905,6 +938,8 @@
 | **Camera** | settle |
 | **Music** | quiet |
 | **Silence** | none |
+| **Footage** | law books, regulatory analysis, government building |
+| **J-Cut** | 1 |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | SEQUENTIAL |
 
@@ -953,6 +988,7 @@
 | **Camera** | settle |
 | **Music** | quiet |
 | **Silence** | post |
+| **Footage** | phone call, customer service line, cancellation website |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | SEQUENTIAL |
 
@@ -986,6 +1022,7 @@
 | **Camera** | hold |
 | **Music** | quiet |
 | **Silence** | post |
+| **Footage** | empty gym interior, dim lighting, single treadmill |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | IMMEDIATE |
 
@@ -1018,6 +1055,7 @@
 | **Camera** | settle |
 | **Music** | quiet |
 | **Silence** | none |
+| **L-Cut** | 1 |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | PROGRESSIVE |
 
@@ -1050,6 +1088,7 @@
 | **Camera** | settle |
 | **Music** | quiet |
 | **Silence** | none |
+| **Footage** | bank statements, phone with banking app, receipts |
 | **Caption mode** | EMPHASIS |
 | **Reveal mode** | SEQUENTIAL |
 

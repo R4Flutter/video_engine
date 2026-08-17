@@ -126,7 +126,7 @@ export const Soundtrack: React.FC<{ impact: number; longForm?: boolean }> = ({ i
       {(SFX_CUES.length ? SFX_CUES : script.sfx)
         .filter((cue) => !longForm || cue.at >= LONGFORM_HOOK_VO_DELAY)
         .flatMap((cue) =>
-          cue.files.map((file) => (
+          cue.files.map((file: string) => (
             <Sequence key={`${cue.at}-${file}`} from={Math.round(cue.at * fps)}>
               <Audio src={staticFile(`audio/${file}`)} volume={() => 0.5 * master} />
             </Sequence>

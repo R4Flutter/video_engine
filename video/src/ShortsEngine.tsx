@@ -3,7 +3,9 @@ import { AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame, useVideoCon
 import manifest from "./shorts-manifest.json";
 import { LONGFORM_MODULES, StrictFallback } from "./LongFormScenes";
 
-const SHORTS = manifest.shorts ?? [];
+type ShortBeat = { n: number; start?: string | number; end?: string | number; module?: string; text?: string; reveal?: string; payoff?: string; audio?: string; words?: { w: string; start: number; end: number }[]; visual?: { assetPath?: string; asset?: string; footage?: string }; typography?: { text?: string }; narrative?: { reveal?: string } };
+type Short = { duration?: string | number; beats?: ShortBeat[] };
+const SHORTS = (manifest as { shorts?: Short[] }).shorts ?? [];
 
 type Word = { w: string; start: number; end: number };
 
@@ -32,7 +34,7 @@ function OneShort({ index }: { index: number }) {
   return (
     <AbsoluteFill style={{ background: "#080808", overflow: "hidden" }}>
       {beats.map((beat) => {
-        const Scene = LONGFORM_MODULES[beat.module] ?? StrictFallback;
+        const Scene = LONGFORM_MODULES[beat.module ?? "stat"] ?? StrictFallback;
         const from = Math.round(Number(beat.start) * fps);
         const dur = Math.max(1, Math.round((Number(beat.end) - Number(beat.start)) * fps));
         const sceneBeat = {

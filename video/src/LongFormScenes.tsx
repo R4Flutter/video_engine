@@ -1,7 +1,27 @@
 import React from "react";
 import { AbsoluteFill, Img, OffthreadVideo, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 
-export type LongFormBeat = any;
+export type LongFormBeat = {
+  n: number;
+  name?: string;
+  start?: number;
+  end?: number;
+  narrative?: { purpose?: string; question?: string; reveal?: string };
+  visual?: { module?: string; text?: string; reveal?: string; camera?: string; footage?: string | null; asset?: string | null; assetPath?: string | null };
+  typography?: { text?: string; emphasisWords?: string[] };
+  footage?: string | null;
+  asset?: string | null;
+  assetPath?: string | null;
+  render?: {
+    sequence?: { index?: number; fromSeconds?: number; durationSeconds?: number };
+    scene?: { kind?: string; module?: string };
+    media?: { src?: string | null; fit?: string; muted?: boolean; loop?: boolean };
+    typography?: { text?: string; enabled?: boolean };
+    motion?: { camera?: string; revealMode?: string; internalChangeAt?: number[]; deterministic?: boolean };
+    audio?: { music?: string; silence?: string; sfx?: string; jcut?: number; lcut?: number };
+    transition?: string;
+  };
+};
 const C = { bg: "#11110F", paper: "#F4F1EA", ink: "#171714", muted: "#6A675F", accent: "#D4A73C", line: "#C9C2B6" };
 const textOf = (b: LongFormBeat) => b?.render?.typography?.text || b?.typography?.text || b?.visual?.reveal || b?.narrative?.reveal || b?.narrative?.question || b?.name || "";
 const mediaOf = (b: LongFormBeat) => b?.render?.media?.src || b?.visual?.assetPath || b?.visual?.asset || b?.visual?.footage || b?.footage || b?.assetPath || b?.asset || "";
@@ -10,14 +30,17 @@ export const MediaLayer: React.FC<{ beat: LongFormBeat }> = ({ beat }) => {
   const media = mediaOf(beat); if (!media) return null;
   const src = String(media).replace(/^assets[\\/]/, "assets/").replace(/\\/g, "/");
   const isVideo = /\.(mp4|webm|mov|m4v)$/i.test(src);
-  return isVideo ? <OffthreadVideo src={staticFile(src)} muted={beat?.render?.media?.muted ?? true} loop={beat?.render?.media?.loop ?? true} startFrom={0} style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:beat?.render?.media?.fit === "contain" ? "contain" : "cover" }} /> : <Img src={staticFile(src)} style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:beat?.render?.media?.fit === "contain" ? "contain" : "cover" }} />;
+  return isVideo ? <OffthreadVideo src={staticFile(src)} muted={beat?.render?.media?.muted ?? true} startFrom={0} style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:beat?.render?.media?.fit === "contain" ? "contain" : "cover" }} /> : <Img src={staticFile(src)} style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:beat?.render?.media?.fit === "contain" ? "contain" : "cover" }} />;
 };
 const Vignette: React.FC = () => <AbsoluteFill style={{ background: "radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,.68) 100%)" }} />;
 
 export const FootageScene: React.FC<{ beat: LongFormBeat }> = ({ beat }) => {
   const frame = useCurrentFrame(); const { fps } = useVideoConfig();
   const dur = Math.max(1, Number(beat?.render?.sequence?.durationSeconds ?? (Number(beat.end) - Number(beat.start))));
-  const p = frame / Math.max(1, dur * fps); const scale = interpolate(p, [0,1], [1.02,1.07], { extrapolateLeft:"clamp", extrapolateRight:"clamp" });
+  const p = frame / Math.max(1, dur * fps);
+  const changes = Array.isArray(beat?.render?.motion?.internalChangeAt) ? beat.render.motion.internalChangeAt.map((c: number) => c / Math.max(1, dur)) : [];
+  const step = changes.filter((c: number) => p >= c).length;
+  const scale = interpolate(p, [0, 1], [1.02, 1.07], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) + Math.min(6, step) * 0.008;
   return <AbsoluteFill style={{ background:C.bg }}><AbsoluteFill style={{ transform:`scale(${scale})`, transformOrigin:"50% 50%" }}><MediaLayer beat={beat} /></AbsoluteFill><Vignette /></AbsoluteFill>;
 };
 

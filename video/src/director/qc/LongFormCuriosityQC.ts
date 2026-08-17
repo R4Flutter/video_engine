@@ -118,7 +118,7 @@ export const runLongFormCuriosityQC = (
     }, 0.45);
   }
 
-  const openFlags = curiosity.openLoop.map(Boolean);
+  const openFlags = curiosity.openLoop.map((o) => (o ? 1 : 0));
   if (runLength(openFlags) >= Math.max(MAX_OPEN_CHAPTERS_WITHOUT_TURN, 4)) {
     // This is informational: a long chain of open loops is often exactly right,
     // but it should contain at least one answer inside the chain.

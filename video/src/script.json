@@ -1,5 +1,5 @@
 {
-  "source": "../script_beats.md",
+  "source": "script_beats.md",
   "title": "The Company That Sells You Nothing",
   "engine": "finance",
   "fps": 30,
@@ -27,7 +27,8 @@
       "music": "quiet",
       "silence": "post",
       "captionMode": "EMPHASIS",
-      "revealMode": "IMMEDIATE"
+      "revealMode": "IMMEDIATE",
+      "footage": "empty gym interior, dim lighting, rows of treadmills, lone person"
     },
     {
       "n": 2,
@@ -47,7 +48,8 @@
       "music": "quiet",
       "silence": "pre",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": ""
     },
     {
       "n": 3,
@@ -67,7 +69,8 @@
       "music": "quiet",
       "silence": "pre",
       "captionMode": "EMPHASIS",
-      "revealMode": "COUNTER_REVEAL"
+      "revealMode": "COUNTER_REVEAL",
+      "footage": ""
     },
     {
       "n": 4,
@@ -87,7 +90,8 @@
       "music": "drop",
       "silence": "pre",
       "captionMode": "EMPHASIS",
-      "revealMode": "HIDDEN_THEN_REVEAL"
+      "revealMode": "HIDDEN_THEN_REVEAL",
+      "footage": ""
     },
     {
       "n": 5,
@@ -107,7 +111,8 @@
       "music": "quiet",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": ""
     },
     {
       "n": 6,
@@ -127,7 +132,8 @@
       "music": "quiet",
       "silence": "pre",
       "captionMode": "EMPHASIS",
-      "revealMode": "COUNTER_REVEAL"
+      "revealMode": "COUNTER_REVEAL",
+      "footage": ""
     },
     {
       "n": 7,
@@ -147,7 +153,8 @@
       "music": "drop",
       "silence": "pre",
       "captionMode": "EMPHASIS",
-      "revealMode": "COUNTER_REVEAL"
+      "revealMode": "COUNTER_REVEAL",
+      "footage": ""
     },
     {
       "n": 8,
@@ -167,7 +174,8 @@
       "music": "swell",
       "silence": "post",
       "captionMode": "EMPHASIS",
-      "revealMode": "PROGRESSIVE"
+      "revealMode": "PROGRESSIVE",
+      "footage": "vintage advertisements, 1990s magazine ads, subscription fine print"
     },
     {
       "n": 9,
@@ -187,7 +195,9 @@
       "music": "quiet",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "IMMEDIATE"
+      "revealMode": "IMMEDIATE",
+      "jcut": 1,
+      "footage": "gym interior, exercise machines, bright lights"
     },
     {
       "n": 10,
@@ -207,7 +217,8 @@
       "music": "hold",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": ""
     },
     {
       "n": 11,
@@ -227,7 +238,8 @@
       "music": "hold",
       "silence": "post",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": ""
     },
     {
       "n": 12,
@@ -247,7 +259,8 @@
       "music": "drop",
       "silence": "pre",
       "captionMode": "EMPHASIS",
-      "revealMode": "PROGRESSIVE"
+      "revealMode": "PROGRESSIVE",
+      "footage": "person walking past gym entrance, not going in"
     },
     {
       "n": 13,
@@ -267,7 +280,8 @@
       "music": "quiet",
       "silence": "post",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": ""
     },
     {
       "n": 14,
@@ -288,7 +302,8 @@
       "silence": "pre / post",
       "sfx": "stamp",
       "captionMode": "EMPHASIS",
-      "revealMode": "HIDDEN_THEN_REVEAL"
+      "revealMode": "HIDDEN_THEN_REVEAL",
+      "footage": ""
     },
     {
       "n": 15,
@@ -308,7 +323,8 @@
       "music": "quiet",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": ""
     },
     {
       "n": 16,
@@ -328,7 +344,8 @@
       "music": "swell",
       "silence": "post",
       "captionMode": "EMPHASIS",
-      "revealMode": "PROGRESSIVE"
+      "revealMode": "PROGRESSIVE",
+      "footage": ""
     },
     {
       "n": 17,
@@ -348,7 +365,8 @@
       "music": "quiet",
       "silence": "pre",
       "captionMode": "EMPHASIS",
-      "revealMode": "PROGRESSIVE"
+      "revealMode": "PROGRESSIVE",
+      "footage": "1990s gym interior, retro exercise equipment, neon lighting"
     },
     {
       "n": 18,
@@ -368,7 +386,9 @@
       "music": "quiet",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "lcut": 1,
+      "footage": "federal documents, investigation file, courtroom"
     },
     {
       "n": 19,
@@ -388,7 +408,8 @@
       "music": "quiet",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": "stack of complaint letters, government office building"
     },
     {
       "n": 20,
@@ -408,7 +429,8 @@
       "music": "drop",
       "silence": "pre",
       "captionMode": "EMPHASIS",
-      "revealMode": "HIDDEN_THEN_REVEAL"
+      "revealMode": "HIDDEN_THEN_REVEAL",
+      "footage": "contract document close-up, signature line, fine print"
     },
     {
       "n": 21,
@@ -428,7 +450,8 @@
       "music": "drop",
       "silence": "pre / post",
       "captionMode": "EMPHASIS",
-      "revealMode": "HIDDEN_THEN_REVEAL"
+      "revealMode": "HIDDEN_THEN_REVEAL",
+      "footage": ""
     },
     {
       "n": 22,
@@ -448,7 +471,8 @@
       "music": "quiet",
       "silence": "post",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": "modern gym entrance, front desk, membership card"
     },
     {
       "n": 23,
@@ -468,7 +492,8 @@
       "music": "drop",
       "silence": "pre",
       "captionMode": "EMPHASIS",
-      "revealMode": "PROGRESSIVE"
+      "revealMode": "PROGRESSIVE",
+      "footage": "person at gym front desk, cancelling membership, paperwork"
     },
     {
       "n": 24,
@@ -488,7 +513,9 @@
       "music": "quiet",
       "silence": "pre",
       "captionMode": "EMPHASIS",
-      "revealMode": "COUNTER_REVEAL"
+      "revealMode": "COUNTER_REVEAL",
+      "jcut": 1,
+      "footage": ""
     },
     {
       "n": 25,
@@ -508,7 +535,8 @@
       "music": "quiet",
       "silence": "post",
       "captionMode": "EMPHASIS",
-      "revealMode": "COUNTER_REVEAL"
+      "revealMode": "COUNTER_REVEAL",
+      "footage": ""
     },
     {
       "n": 26,
@@ -528,7 +556,8 @@
       "music": "swell",
       "silence": "post",
       "captionMode": "EMPHASIS",
-      "revealMode": "PROGRESSIVE"
+      "revealMode": "PROGRESSIVE",
+      "footage": ""
     },
     {
       "n": 27,
@@ -548,7 +577,8 @@
       "music": "swell",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "PROGRESSIVE"
+      "revealMode": "PROGRESSIVE",
+      "footage": "modern gym, rows of machines, empty treadmill"
     },
     {
       "n": 28,
@@ -568,7 +598,8 @@
       "music": "quiet",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": "software box, CD-ROM, old computer monitor, retail shelf"
     },
     {
       "n": 29,
@@ -588,7 +619,9 @@
       "music": "hold",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "lcut": 1,
+      "footage": ""
     },
     {
       "n": 30,
@@ -608,7 +641,8 @@
       "music": "drop",
       "silence": "pre",
       "captionMode": "EMPHASIS",
-      "revealMode": "HIDDEN_THEN_REVEAL"
+      "revealMode": "HIDDEN_THEN_REVEAL",
+      "footage": ""
     },
     {
       "n": 31,
@@ -628,7 +662,8 @@
       "music": "swell",
       "silence": "post",
       "captionMode": "EMPHASIS",
-      "revealMode": "PROGRESSIVE"
+      "revealMode": "PROGRESSIVE",
+      "footage": "angry internet forum, news headlines, petition"
     },
     {
       "n": 32,
@@ -648,7 +683,8 @@
       "music": "quiet",
       "silence": "pre / post",
       "captionMode": "EMPHASIS",
-      "revealMode": "COUNTER_REVEAL"
+      "revealMode": "COUNTER_REVEAL",
+      "footage": ""
     },
     {
       "n": 33,
@@ -668,7 +704,9 @@
       "music": "drop",
       "silence": "pre",
       "captionMode": "EMPHASIS",
-      "revealMode": "HIDDEN_THEN_REVEAL"
+      "revealMode": "HIDDEN_THEN_REVEAL",
+      "jcut": 1,
+      "footage": ""
     },
     {
       "n": 34,
@@ -688,7 +726,8 @@
       "music": "swell",
       "silence": "post",
       "captionMode": "EMPHASIS",
-      "revealMode": "PROGRESSIVE"
+      "revealMode": "PROGRESSIVE",
+      "footage": "person typing on laptop, subscription website"
     },
     {
       "n": 35,
@@ -708,7 +747,8 @@
       "music": "quiet",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "IMMEDIATE"
+      "revealMode": "IMMEDIATE",
+      "footage": "television remote on sofa, streaming apps on screen"
     },
     {
       "n": 36,
@@ -728,7 +768,8 @@
       "music": "quiet",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": "cable box, television, remote control, tangled cables"
     },
     {
       "n": 37,
@@ -748,7 +789,8 @@
       "music": "swell",
       "silence": "post",
       "captionMode": "EMPHASIS",
-      "revealMode": "PROGRESSIVE"
+      "revealMode": "PROGRESSIVE",
+      "footage": ""
     },
     {
       "n": 38,
@@ -768,7 +810,9 @@
       "music": "quiet",
       "silence": "pre / post",
       "captionMode": "EMPHASIS",
-      "revealMode": "COUNTER_REVEAL"
+      "revealMode": "COUNTER_REVEAL",
+      "lcut": 1,
+      "footage": ""
     },
     {
       "n": 39,
@@ -788,7 +832,8 @@
       "music": "quiet",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "PROGRESSIVE"
+      "revealMode": "PROGRESSIVE",
+      "footage": ""
     },
     {
       "n": 40,
@@ -808,7 +853,8 @@
       "music": "hold",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": ""
     },
     {
       "n": 41,
@@ -828,7 +874,8 @@
       "music": "swell",
       "silence": "post",
       "captionMode": "EMPHASIS",
-      "revealMode": "PROGRESSIVE"
+      "revealMode": "PROGRESSIVE",
+      "footage": ""
     },
     {
       "n": 42,
@@ -848,7 +895,8 @@
       "music": "quiet",
       "silence": "pre",
       "captionMode": "EMPHASIS",
-      "revealMode": "PROGRESSIVE"
+      "revealMode": "PROGRESSIVE",
+      "footage": "federal building columns, courthouse, online shopping checkout"
     },
     {
       "n": 43,
@@ -868,7 +916,9 @@
       "music": "swell",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "jcut": 1,
+      "footage": "credit card statement, bank account app, subscription charges"
     },
     {
       "n": 44,
@@ -888,7 +938,8 @@
       "music": "swell",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": "computer screen with form, mouse clicking, website menu"
     },
     {
       "n": 45,
@@ -908,7 +959,8 @@
       "music": "drop",
       "silence": "pre / post",
       "captionMode": "EMPHASIS",
-      "revealMode": "HIDDEN_THEN_REVEAL"
+      "revealMode": "HIDDEN_THEN_REVEAL",
+      "footage": ""
     },
     {
       "n": 46,
@@ -928,7 +980,9 @@
       "music": "quiet",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "lcut": 1,
+      "footage": "antique book pages, library stacks, epic manuscript"
     },
     {
       "n": 47,
@@ -948,7 +1002,8 @@
       "music": "quiet",
       "silence": "pre",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": "federal courthouse, judge's gavel, settlement document"
     },
     {
       "n": 48,
@@ -968,7 +1023,8 @@
       "music": "drop",
       "silence": "pre / post",
       "captionMode": "EMPHASIS",
-      "revealMode": "COUNTER_REVEAL"
+      "revealMode": "COUNTER_REVEAL",
+      "footage": ""
     },
     {
       "n": 49,
@@ -988,7 +1044,8 @@
       "music": "quiet",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": "contract fine print, magnifying glass, legal document"
     },
     {
       "n": 50,
@@ -1008,7 +1065,9 @@
       "music": "quiet",
       "silence": "post",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "jcut": 1,
+      "footage": ""
     },
     {
       "n": 51,
@@ -1028,7 +1087,8 @@
       "music": "quiet",
       "silence": "post",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": ""
     },
     {
       "n": 52,
@@ -1048,7 +1108,8 @@
       "music": "quiet",
       "silence": "pre",
       "captionMode": "EMPHASIS",
-      "revealMode": "IMMEDIATE"
+      "revealMode": "IMMEDIATE",
+      "footage": "government document, gavel, law books"
     },
     {
       "n": 53,
@@ -1068,7 +1129,8 @@
       "music": "quiet",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": ""
     },
     {
       "n": 54,
@@ -1088,7 +1150,8 @@
       "music": "swell",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": ""
     },
     {
       "n": 55,
@@ -1108,7 +1171,8 @@
       "music": "drop",
       "silence": "pre",
       "captionMode": "EMPHASIS",
-      "revealMode": "HIDDEN_THEN_REVEAL"
+      "revealMode": "HIDDEN_THEN_REVEAL",
+      "footage": "federal courthouse, court ruling document, gavel"
     },
     {
       "n": 56,
@@ -1128,7 +1192,9 @@
       "music": "quiet",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "jcut": 1,
+      "footage": "law books, regulatory analysis, government building"
     },
     {
       "n": 57,
@@ -1148,7 +1214,8 @@
       "music": "drop",
       "silence": "pre / post",
       "captionMode": "EMPHASIS",
-      "revealMode": "HIDDEN_THEN_REVEAL"
+      "revealMode": "HIDDEN_THEN_REVEAL",
+      "footage": ""
     },
     {
       "n": 58,
@@ -1168,7 +1235,8 @@
       "music": "quiet",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": ""
     },
     {
       "n": 59,
@@ -1188,7 +1256,8 @@
       "music": "quiet",
       "silence": "post",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": "phone call, customer service line, cancellation website"
     },
     {
       "n": 60,
@@ -1208,7 +1277,8 @@
       "music": "drop",
       "silence": "pre",
       "captionMode": "EMPHASIS",
-      "revealMode": "PROGRESSIVE"
+      "revealMode": "PROGRESSIVE",
+      "footage": ""
     },
     {
       "n": 61,
@@ -1229,7 +1299,8 @@
       "music": "quiet",
       "silence": "post",
       "captionMode": "EMPHASIS",
-      "revealMode": "IMMEDIATE"
+      "revealMode": "IMMEDIATE",
+      "footage": "empty gym interior, dim lighting, single treadmill"
     },
     {
       "n": 62,
@@ -1249,7 +1320,8 @@
       "music": "quiet",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": ""
     },
     {
       "n": 63,
@@ -1269,7 +1341,9 @@
       "music": "quiet",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "PROGRESSIVE"
+      "revealMode": "PROGRESSIVE",
+      "lcut": 1,
+      "footage": ""
     },
     {
       "n": 64,
@@ -1289,7 +1363,8 @@
       "music": "quiet",
       "silence": "pre",
       "captionMode": "EMPHASIS",
-      "revealMode": "COUNTER_REVEAL"
+      "revealMode": "COUNTER_REVEAL",
+      "footage": ""
     },
     {
       "n": 65,
@@ -1309,7 +1384,8 @@
       "music": "quiet",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "SEQUENTIAL"
+      "revealMode": "SEQUENTIAL",
+      "footage": "bank statements, phone with banking app, receipts"
     },
     {
       "n": 66,
@@ -1329,7 +1405,8 @@
       "music": "quiet",
       "silence": "none",
       "captionMode": "EMPHASIS",
-      "revealMode": "IMMEDIATE"
+      "revealMode": "IMMEDIATE",
+      "footage": ""
     },
     {
       "n": 67,
@@ -1349,7 +1426,8 @@
       "music": "drop",
       "silence": "post",
       "captionMode": "EMPHASIS",
-      "revealMode": "HIDDEN_THEN_REVEAL"
+      "revealMode": "HIDDEN_THEN_REVEAL",
+      "footage": ""
     }
   ],
   "texts": [],

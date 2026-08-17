@@ -37,7 +37,6 @@ export const runLongFormHookQC = (
   };
 
   const first = plan.beats[0];
-  const introBeats = plan.beats.filter((b) => b.start < INTRO_WINDOW);
   const introEvents = plan.attentionEvents
     .filter((e) => e.at < INTRO_WINDOW && meaningful.has(e.type))
     .sort((a, b) => a.at - b.at);

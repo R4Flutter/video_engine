@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Sequence, useVideoConfig } from "remotion";
 import director from "./director-plan.json";
-import { LONGFORM_MODULES, StrictFallback } from "./LongFormScenes";
+import { LONGFORM_MODULES, StrictFallback, type LongFormBeat } from "./LongFormScenes";
 import { LongFormColdOpen } from "./LongFormColdOpen";
 import { impactAt, Soundtrack } from "./staging";
 
@@ -14,7 +14,7 @@ export const FinanceLong: React.FC = () => {
   const impact = impactAt("payoff", /million/i);
   return (
     <AbsoluteFill style={{ background: "#F4F1EA" }}>
-      {beats.map((beat: any) => {
+      {beats.map((beat: LongFormBeat) => {
         const render = beat.render;
         if (!render?.scene?.module || !render?.sequence) return null;
         const Scene = LONGFORM_MODULES[String(render.scene.module)] ?? StrictFallback;

@@ -9,7 +9,8 @@ import shortsManifest from "./shorts-manifest.json";
 const longDuration = Number(director?.project?.durationInSeconds || script.durationInSeconds);
 const longFps = Number(director?.project?.fps || script.fps);
 const shortFps = 30;
-const shortDurations = (shortsManifest.shorts ?? []).map((s) => Math.max(1, Math.ceil(Number(s.duration || 1) * shortFps)));
+const shortsManifestData = shortsManifest as { shorts?: { duration?: string | number }[] };
+const shortDurations = (shortsManifestData.shorts ?? []).map((s) => Math.max(1, Math.ceil(Number(s.duration || 1) * shortFps)));
 const shortFrames = (index: number) => shortDurations[index] ?? 1;
 
 export const RemotionRoot: React.FC = () => (

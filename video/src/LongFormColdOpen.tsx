@@ -2,6 +2,7 @@ import React from "react";
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import director from "./director-plan.json";
 import { theme } from "./theme";
+import type { LongFormBeat } from "./LongFormScenes";
 
 const OPEN_HOLD = Number(director?.coldOpen?.visualFirstSeconds ?? 3.5);
 const EVIDENCE_START = Number(director?.coldOpen?.evidenceStartSeconds ?? 3.5);
@@ -17,7 +18,7 @@ export const LongFormColdOpen: React.FC<{ enabled?: boolean }> = ({ enabled = tr
   const t = frame / fps;
   const beats = director?.beats || [];
   const selected = director?.coldOpen?.selected || {};
-  const evidence = beats.slice(0, 3).map((b: any) => ({
+  const evidence = beats.slice(0, 3).map((b: LongFormBeat) => ({
     text: nums(b?.narrative?.reveal || b?.visual?.text || b?.name || "")[0] || b?.visual?.text || b?.name || "",
     sub: b?.visual?.text && nums(b.visual.text).length ? String(b.visual.text).replace(nums(b.visual.text)[0], "").replace(/[|/]/g, " ").trim() : "EVIDENCE",
   })).filter(x => x.text).slice(0, 3).map((x, i) => ({ ...x, at: EVIDENCE_START + i * EVIDENCE_STEP }));
@@ -25,7 +26,10 @@ export const LongFormColdOpen: React.FC<{ enabled?: boolean }> = ({ enabled = tr
   const claimIn = Math.max(CLAIM_MIN, EVIDENCE_START + evidence.length * EVIDENCE_STEP);
   const claimOut = Math.min(30, claimIn + 10);
   if (t < OPEN_HOLD) return null;
-  const active = evidence.findLast(x => t >= x.at && t < x.at + EVIDENCE_STEP);
+  let active: (typeof evidence)[number] | undefined;
+  for (let i = evidence.length - 1; i >= 0; i--) {
+    if (t >= evidence[i].at && t < evidence[i].at + EVIDENCE_STEP) { active = evidence[i]; break; }
+  }
   const showClaim = t >= claimIn && t <= claimOut;
   if (!active && !showClaim) return null;
   const evidenceOpacity = active ? interpolate(t, [active.at, active.at + 0.35], [0,1], { extrapolateLeft:"clamp", extrapolateRight:"clamp", easing:Easing.out(Easing.cubic) }) : 0;

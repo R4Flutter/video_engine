@@ -7,9 +7,27 @@
 // Everything here is defensive. A plan field that is missing falls back to
 // what the composition did before the director existed — a script that
 // predates all of this still renders exactly as it always did.
-import plan from "./director-plan.json";
+import planJson from "./director-plan.json";
 
-export type PlanBeat = (typeof plan.beats)[number];
+type PlanDocument = {
+  project?: { title?: string; durationInSeconds?: number; fps?: number; engine?: string };
+  frameZero?: { text?: string; holdFrames?: number; words?: number; size?: string };
+  audioEvents?: { kind?: string; at?: number; value?: number | string }[];
+  beats?: {
+    n: number;
+    start?: number;
+    narrative?: { purpose?: string };
+    motion?: { camera?: { intent?: string } };
+    audio?: {
+      silence?: { at: number; dur: number }[];
+      sfx?: { at: number; files: string[] }[];
+    };
+  }[];
+};
+
+const plan = planJson as unknown as PlanDocument;
+
+export type PlanBeat = (NonNullable<typeof plan.beats>)[number];
 
 export const PLAN = plan;
 export const FPS = plan.project?.fps ?? 30;
@@ -67,7 +85,7 @@ export const bedLevel = (t: number): number => {
   const events = plan.audioEvents ?? [];
   let level = 0.4;
   for (const e of events) {
-    if (e.kind === "music_level" && e.at <= t && typeof e.value === "number") level = e.value;
+    if (e.kind === "music_level" && typeof e.at === "number" && e.at <= t && typeof e.value === "number") level = e.value;
   }
   for (const b of plan.beats ?? []) {
     for (const s of b.audio?.silence ?? []) {

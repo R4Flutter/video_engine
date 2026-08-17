@@ -24,7 +24,7 @@ import { assembleTimeline } from "./timeline/TimelinePlanner.ts";
 import { validateTimeline } from "./timeline/TimelineValidator.ts";
 import { runRetentionQC } from "./qc/RetentionQC.ts";
 
-type DirectResult = {
+export type DirectResult = {
   plan: ShortPlan;
   warnings: string[];
   issues: ReturnType<typeof validateTimeline>;

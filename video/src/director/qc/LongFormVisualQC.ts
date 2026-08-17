@@ -9,7 +9,6 @@ import { clamp } from "../util.ts";
 
 const MAX_MODULE_SHARE = 0.42;
 const HIGH_MODULE_RUN = 3;
-const REVIEW_MODULE_RUN = 2;
 const MAX_TEXT_CHARS = 54;
 const MIN_DISTINCT_MODULES = 5;
 const MIN_EVIDENCE_EVENTS = 8;

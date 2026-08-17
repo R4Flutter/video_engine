@@ -23,7 +23,6 @@ export const CAPTION_BY_MODULE: Record<string, CaptionMode> = {
 
 export const visualFor = (b: ScriptBeat, facts: BeatFacts, engine: "vox"|"finance", isFirst: boolean, frameZeroHold: number): VisualDecision => {
   const purpose = isFirst ? "CLAIM" : visualPurposeFor(b);
-  const longForm = false;
   const explicit = b.module && knownModule(b.module) ? b.module : undefined;
   const fallback = (MODULE_BY_PURPOSE[purpose][engine] ?? [])[0] ?? "evidence";
   const module = explicit ?? fallback;
@@ -38,7 +37,7 @@ export const directVisuals = (script: Script, facts: BeatFacts[], frameZeroHold:
   const base = script.beats.map((b, i) => {
     const purpose = i === 0 && !longForm ? "CLAIM" : (i === 0 ? "CLAIM" : visualPurposeFor(b));
     const requested = b.module;
-    const hasMedia = Boolean(b.footage || b.source || b.visual || (b as any).asset || (b as any).assetPath);
+    const hasMedia = Boolean(b.footage || b.source || b.visual || (b as ScriptBeat & { asset?: string; assetPath?: string }).asset || (b as ScriptBeat & { asset?: string; assetPath?: string }).assetPath);
     const module = longForm
       ? normalizeLongFormModule(requested, purpose, hasMedia)
       : (requested && knownModule(requested) ? requested : (MODULE_BY_PURPOSE[purpose][engine] ?? [])[0] ?? "coinDrop");

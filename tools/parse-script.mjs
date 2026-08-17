@@ -150,6 +150,8 @@ for (const m of md.matchAll(BEAT_RE)) {
     }
   }
 
+  // Search terms for tools/fetch-footage.py, not read by the renderer.
+  beat.footage = rows["footage"] ?? "";
   if (engine === "vox") {
     // What a vox module stages beyond the narration. Every one is optional —
     // a beat that declares none of them still renders.
@@ -172,8 +174,6 @@ for (const m of md.matchAll(BEAT_RE)) {
     // Who said it. The quote module prints this under the clipping; every other
     // module ignores it, so a script can carry a citation without using one.
     beat.source = rows["source"] ?? "";
-    // Search terms for tools/fetch-footage.py, not read by the renderer.
-    beat.footage = rows["footage"] ?? "";
   }
   beats.push(beat);
 }
