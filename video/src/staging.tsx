@@ -1,7 +1,5 @@
-// The parts of a composition that don't care about the visual language:
-// music, narration, SFX and the director camera. Long-form finance gets one
-// intentional exception: Beat 1 opens in true room silence before the evidence
-// ladder begins, while short-form behavior remains unchanged.
+// Shared audio staging. Long-form no longer delays the opening narration:
+// the retention contract requires the first voice + visual promise at frame 0.
 import React from "react";
 import {
   Audio,
@@ -20,7 +18,7 @@ import { bedLevel, cameraMove, SFX_CUES } from "./plan";
 const BED = 0.4;
 const SWELL = 0.58;
 const DUCK = 0.34;
-const LONGFORM_HOOK_VO_DELAY = 3.5;
+const LONGFORM_HOOK_VO_DELAY = 0;
 
 const ramp = (x: number, from: [number, number], to: [number, number]) =>
   interpolate(x, from, to, { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
@@ -108,7 +106,7 @@ export const Soundtrack: React.FC<{ impact: number; longForm?: boolean }> = ({ i
           const t = f / fps;
           const bed = PLANNED_BED ? bedLevel(t) : ramp(t, [impact - 1, impact], [BED, SWELL]);
           const introEdge = longForm
-            ? ramp(t, [LONGFORM_HOOK_VO_DELAY - 0.1, LONGFORM_HOOK_VO_DELAY + 0.35], [0, 1])
+            ? ramp(t, [0, 0.18], [0, 1])
             : ramp(t, [0, 0.15], [0, 1]);
           const edges = introEdge * ramp(t, [total - 1.2, total], [1, 0]);
           const duck = Math.min(
@@ -124,7 +122,7 @@ export const Soundtrack: React.FC<{ impact: number; longForm?: boolean }> = ({ i
       />
 
       {(SFX_CUES.length ? SFX_CUES : script.sfx)
-        .filter((cue) => !longForm || cue.at >= LONGFORM_HOOK_VO_DELAY)
+        .filter((cue) => !longForm || cue.at >= 0)
         .flatMap((cue) =>
           cue.files.map((file) => (
             <Sequence key={`${cue.at}-${file}`} from={Math.round(cue.at * fps)}>
