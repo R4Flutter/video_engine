@@ -5,7 +5,7 @@
   "scripts":{
     "dev":"remotion studio","build":"remotion bundle","upgrade":"remotion upgrade","lint":"eslint src && tsc","doctor":"node ../tools/project-doctor.mjs","check":"npm run doctor && node ../tools/check.mjs && npm run test:director && npm run test:longform && npm run preflight:longform",
     "prompt:check":"python ../tools/check-prompt-system.py",
-    "script":"node ../tools/check.mjs && node ../tools/parse-script.mjs ../script_beats.md src/script.json && npm run direct",
+    "script":"node ../tools/check.mjs && node ../tools/parse-script.mjs ../script_beats.md src/script.json",
     "direct":"node ../tools/direct.mjs --script video/src/script.json",
     "retention":"node --experimental-strip-types ../tools/retention-score.mjs",
     "qc":"node ../tools/qc.mjs",
