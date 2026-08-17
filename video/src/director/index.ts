@@ -1,4 +1,4 @@
-// The director's public surface. tools/direct.mjs imports buildShortPlan
+// The director's public surface. tools/direct.mjs imports buildLongFormPlan
 // through Node's type stripping; Remotion imports the types; tests import the
 // modules. One source of truth for the whole editorial layer.
 export * from "./types.ts";
@@ -32,4 +32,4 @@ export { runVisualQC } from "./qc/VisualQC.ts";
 export { runAudioQC } from "./qc/AudioQC.ts";
 export { runLoopQC } from "./qc/LoopQC.ts";
 export { runRetentionQC, blockers } from "./qc/RetentionQC.ts";
-export { buildShortPlan, type DirectResult } from "./plan.ts";
+export { buildLongFormPlan, type DirectResult } from "./plan.ts";

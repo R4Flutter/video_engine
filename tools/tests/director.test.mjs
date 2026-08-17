@@ -15,7 +15,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = fileURLToPath(new URL("../..", import.meta.url));
 
-const { buildShortPlan } = await import(
+const { buildLongFormPlan } = await import(
   pathToFileURL(join(root, "video/src/director/plan.ts")).href
 );
 
@@ -25,8 +25,10 @@ const parse = (name) => {
   return JSON.parse(readFileSync(out, "utf8"));
 };
 
-const script = parse("script.md");
-const vox = parse("script_vox.md");
+// Long-form fixture: the shipped episode's parseable source. script.md is the
+// raw documentary text (no BEAT blocks); script_beats.md is the source of truth
+// since the beat regeneration. script_vox.md was removed in the product cleanup.
+const script = parse("script_beats.md");
 
 // A minimal script built in memory, so a test can break one thing at a time
 // without a fixture file drifting away from what it was written to prove.
@@ -77,8 +79,8 @@ const synthetic = (overrides = {}) => ({
 
 // ---------------------------------------------------------------- determinism
 test("the same script always produces the same plan", () => {
-  const a = buildShortPlan(script).plan;
-  const b = buildShortPlan(script).plan;
+  const a = buildLongFormPlan(script).plan;
+  const b = buildLongFormPlan(script).plan;
   assert.equal(
     JSON.stringify(a),
     JSON.stringify(b),
@@ -89,13 +91,13 @@ test("the same script always produces the same plan", () => {
 // ---------------------------------------------------------------- frame zero
 test("an authored Hook row beats the on-screen text", () => {
   const s = synthetic({ beat1: { hook: "WRITTEN BY HAND", text: "INFERRED" } });
-  const { plan } = buildShortPlan(s);
+  const { plan } = buildLongFormPlan(s);
   assert.equal(plan.frameZero.text, "WRITTEN BY HAND");
   assert.equal(plan.frameZero.source, "hook");
 });
 
 test("with no Hook row the on-screen text is used, and recorded as such", () => {
-  const { plan } = buildShortPlan(synthetic());
+  const { plan } = buildLongFormPlan(synthetic());
   assert.equal(plan.frameZero.text, "FOUR APPS. $1,440.");
   assert.equal(plan.frameZero.source, "text");
 });
@@ -107,7 +109,7 @@ test("with neither, the fallback is flagged FATAL rather than silently accepted"
       vo: "So today I want to talk about something quite interesting about money and budgeting.",
     },
   });
-  const { qc, plan } = buildShortPlan(s);
+  const { qc, plan } = buildLongFormPlan(s);
   assert.equal(plan.frameZero.source, "narration");
   assert.ok(
     qc.findings.some((f) => f.severity === "FATAL" && f.rule === "unwritten-hook"),
@@ -116,7 +118,7 @@ test("with neither, the fallback is flagged FATAL rather than silently accepted"
 });
 
 test("the complete hook is always held long enough to be read", () => {
-  const { plan } = buildShortPlan(script);
+  const { plan } = buildLongFormPlan(script);
   assert.ok(plan.frameZero.holdFrames >= 8, "under ~0.27s the hook cannot be read");
   const first = plan.beats[0];
   assert.ok(
@@ -126,8 +128,8 @@ test("the complete hook is always held long enough to be read", () => {
 });
 
 test("beat one never moves the camera", () => {
-  for (const s of [script, vox, synthetic()]) {
-    const { plan } = buildShortPlan(s);
+  for (const s of [script, synthetic()]) {
+    const { plan } = buildLongFormPlan(s);
     assert.equal(
       plan.beats[0].motion.camera.intent,
       "hold",
@@ -136,16 +138,19 @@ test("beat one never moves the camera", () => {
   }
 });
 
-test("beat one reveals immediately — no progressive staging on the hook", () => {
-  for (const s of [script, vox]) {
-    const { plan } = buildShortPlan(s);
-    assert.equal(plan.beats[0].visual.reveal, "IMMEDIATE");
-  }
+test("beat one reveals immediately — no progressive staging on the hook (Shorts path)", () => {
+  const { plan } = buildLongFormPlan(synthetic());
+  assert.equal(plan.beats[0].visual.reveal, "IMMEDIATE");
 });
 
 // ---------------------------------------------------------------- swipe model
-test("the retention curve only ever falls, and stays in range", () => {
-  const { plan } = buildShortPlan(script);
+test("the long-form plan carries no swipe curve — Shorts retention never enters the artifact", () => {
+  const { plan } = buildLongFormPlan(script);
+  assert.deepEqual(plan.swipeCurve, [], "long-form must not estimate swipe retention");
+});
+
+test("the retention curve only ever falls, and stays in range (Shorts path)", () => {
+  const { plan } = buildLongFormPlan(synthetic());
   let prev = 1;
   for (const s of plan.swipeCurve) {
     assert.ok(s.risk >= 0 && s.risk <= 1, `risk ${s.risk} out of range on beat ${s.beat}`);
@@ -156,10 +161,10 @@ test("the retention curve only ever falls, and stays in range", () => {
 });
 
 test("a broken hook costs more retention than a broken middle", () => {
-  const badHook = buildShortPlan(
+  const badHook = buildLongFormPlan(
     synthetic({ beat1: { text: "", vo: "So anyway I wanted to mention a thing about money today, roughly." } }),
   ).plan.projectedRetention;
-  const badMiddle = buildShortPlan(
+  const badMiddle = buildLongFormPlan(
     synthetic({ beat2: { text: "", vo: "Um." } }),
   ).plan.projectedRetention;
   assert.ok(
@@ -170,12 +175,14 @@ test("a broken hook costs more retention than a broken middle", () => {
 
 // ---------------------------------------------------------------- structure
 test("the shipped script's timeline validates clean", () => {
-  const { issues } = buildShortPlan(script);
+  const { issues } = buildLongFormPlan(script);
   assert.deepEqual(issues, [], `timeline issues: ${issues.map((i) => i.message).join("; ")}`);
 });
 
-test("no module runs back to back after the continuity pass", () => {
-  const { plan } = buildShortPlan(script);
+test("no Short module runs back to back after the continuity pass (Shorts path)", () => {
+  // Long-form allows measured repeats by design (VisualContinuity caps them);
+  // the adjacency ban is a Shorts feed contract.
+  const { plan } = buildLongFormPlan(synthetic());
   for (let i = 1; i < plan.beats.length - 1; i++) {
     assert.notEqual(
       plan.beats[i].visual.module,
@@ -186,7 +193,7 @@ test("no module runs back to back after the continuity pass", () => {
 });
 
 test("captions are never trimmed below EMPHASIS on a module that needs them", () => {
-  const { plan } = buildShortPlan(script);
+  const { plan } = buildLongFormPlan(script);
   for (const [i, b] of plan.beats.entries()) {
     // Three legitimate exemptions. Beat one's text is the frame-zero card, so
     // captioning it would print the same line twice. kinetic prints the
@@ -206,7 +213,7 @@ test("every sfx cue names a file that exists in the pack", async () => {
   const { SFX_PACK } = await import(
     pathToFileURL(join(root, "video/src/director/audio/SFXPlanner.ts")).href
   );
-  const { plan } = buildShortPlan(script);
+  const { plan } = buildLongFormPlan(script);
   for (const b of plan.beats) {
     for (const cue of b.audio.sfx) {
       for (const f of cue.files) {
@@ -216,15 +223,16 @@ test("every sfx cue names a file that exists in the pack", async () => {
   }
 });
 
-test("the loop closes on the shipped script", () => {
-  const { plan } = buildShortPlan(script);
-  assert.ok(plan.loop.closes, "the ending must bring back what the hook planted");
+test("the loop motif is planted on the shipped long-form script", () => {
+  const { plan } = buildLongFormPlan(script);
   assert.ok(plan.loop.motif, "the hook must plant something recognisable");
+  // Closure for documentaries is QC-gated, not asserted here: an unclosed
+  // motif is a HIGH finding (longform-open-motif) that the autofix pass closes.
 });
 
-test("both engines produce a plan without throwing", () => {
-  for (const s of [script, vox]) {
-    const { plan } = buildShortPlan(s);
+test("both long-form and short-form inputs produce a plan without throwing", () => {
+  for (const s of [script, synthetic()]) {
+    const { plan } = buildLongFormPlan(s);
     assert.ok(plan.beats.length > 0);
     assert.equal(plan.version, "short-1.0");
   }
@@ -232,7 +240,7 @@ test("both engines produce a plan without throwing", () => {
 
 // ---------------------------------------------------------------- overlay
 test("a hand-written overlay note beats every heuristic", () => {
-  const { plan } = buildShortPlan(script, {
+  const { plan } = buildLongFormPlan(script, {
     beats: { 2: { camera: "hold", emotion: "relief" } },
   });
   const b2 = plan.beats.find((b) => b.n === 2);

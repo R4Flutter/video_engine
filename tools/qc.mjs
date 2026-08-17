@@ -22,10 +22,10 @@ const strict = process.argv.includes("--strict");
 const scriptPath = resolve(root, arg("--script", "video/src/script.json"));
 const script = JSON.parse(readFileSync(scriptPath, "utf8"));
 
-const { buildShortPlan } = await import(
+const { buildLongFormPlan } = await import(
   pathToFileURL(join(root, "video/src/director/plan.ts")).href
 );
-const { plan, qc } = buildShortPlan(script);
+const { plan, qc } = buildLongFormPlan(script);
 
 const fmt = (s) => {
   if (s < 0) return "  ——";

@@ -57,7 +57,7 @@ export type LoopPlan = { motif: string; openedAtBeat: number; closedAtBeat: numb
 
 export type ShortPlan = {
   version: "short-1.0";
-  project: { title: string; durationInSeconds: number; fps: number; width: number; height: number; engine: string; mode: "SHORT"|"LONG_FORM" };
+  project: { title: string; durationInSeconds: number; fps: number; width: number; height: number; engine: string; mode: "SHORT"|"LONGFORM_DOCUMENTARY" };
   frameZero: FrameZero; loop: LoopPlan; sequences: Sequence[]; beats: DirectedBeat[];
   swipeCurve: SwipeEstimate[]; projectedRetention: number;
   attentionEvents: AttentionEvent[]; audioEvents: AudioEvent[];

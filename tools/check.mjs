@@ -1,4 +1,4 @@
-// Guards the script.md -> script.json contract. Run after editing either the
+// Guards the script_beats.md -> script.json contract. Run after editing the
 // script or the parser:  node tools/check.mjs
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -18,28 +18,25 @@ const parse = (name) => {
   return JSON.parse(readFileSync(out, "utf8"));
 };
 
-const s = parse("script.md");
+// script_beats.md is the parsed source of truth for the long-form episode.
+// script.md is the raw documentary text and deliberately has no BEAT blocks.
+const s = parse("script_beats.md");
 
-assert.equal(s.engine, "finance", "script.md has no vox style header");
-assert.equal(s.width, 1080);
-assert.equal(s.height, 1920);
+assert.equal(s.engine, "finance", "script_beats.md has no finance style header");
+assert.equal(s.width, 1920);
+assert.equal(s.height, 1080);
 assert.equal(s.fps, 30);
-assert.ok(s.durationInSeconds > 0, "the episode has a length");
+assert.ok(s.durationInSeconds >= 120, "the long-form episode must be >= 120s");
 
-// The contract is "every beat maps to a module that exists", not "this
-// episode has these seven modules". The old assertion pinned one script's
-// running order, so editing the script broke the test that was supposed to be
-// guarding the parser.
-const FINANCE_MODULES = new Set([
-  "coinDrop", "coinStack", "investChart", "jarFill", "mountain", "payoff", "outro",
+// Every beat maps to a module the long-form renderer knows. Legacy Shorts
+// modules (coinDrop, coinStack, jarFill, mountain, kinetic) are forbidden.
+const LONGFORM_MODULES = new Set([
+  "footage", "evidence", "archive", "stat", "compare", "chart",
+  "investChart", "timeline", "icon", "quote", "callout", "payoff", "outro",
 ]);
 for (const b of s.beats) {
-  assert.ok(FINANCE_MODULES.has(b.module), `beat ${b.n} staged as unknown module "${b.module}"`);
+  assert.ok(LONGFORM_MODULES.has(b.module), `beat ${b.n} staged as unknown module "${b.module}"`);
 }
-assert.ok(
-  s.beats.every((b, i) => i === 0 || b.module !== s.beats[i - 1].module),
-  "no module may run back to back — two identical frames read as one long beat",
-);
 
 // Beats tile the timeline with no gap and no overlap.
 s.beats.reduce((prev, b) => {
@@ -67,10 +64,9 @@ assert.ok(
   "every `Camera:` row names an intent the planner knows",
 );
 
-// Both timed tables parse row-per-row (a greedy regex silently pairs them up,
-// which yields *fewer* cues than beats — so the count must never fall short).
-assert.ok(s.texts.length >= s.beats.length, "one overlay cue per beat");
-assert.ok(s.sfx.length >= s.beats.length, "one sfx cue per beat");
+// Timed overlay/sfx tables are optional for long-form (the director synthesizes
+// audio and attention events from the editorial rows); when present they must
+// parse row-per-row without losing cues.
 assert.ok(
   s.texts.every((t) => t.at < s.durationInSeconds && t.text),
   "overlay cues land inside the video",
@@ -80,58 +76,12 @@ const known = new Set([
   "chime.wav", "chime-warm.wav", "shimmer.wav", "pop.wav", "tick.wav",
   "riser.wav", "stamp.wav",
 ]);
-const knownSfx = (script) => {
-  for (const cue of script.sfx) {
-    for (const f of cue.files) assert.ok(known.has(f), `unknown sfx asset ${f}`);
-  }
-};
-knownSfx(s);
+for (const cue of s.sfx) {
+  for (const f of cue.files) assert.ok(known.has(f), `unknown sfx asset ${f}`);
+}
 
 // Amounts are grouped the American way wherever they are rendered.
 assert.equal(new Intl.NumberFormat("en-US").format(700000), "700,000");
 assert.equal(new Intl.NumberFormat("en-US").format(10000000), "10,000,000");
 
-// ---------------------------------------------------------------- vox
-// Same parser, second vocabulary: the style header is the only switch.
-const v = parse("script_vox.md");
-
-assert.equal(v.engine, "vox", "script_vox.md must declare a vox style");
-assert.ok(v.durationInSeconds > 0, "the vox episode has a length");
-
-// The contract is "every beat maps to a module that exists", not "this
-// episode has these six modules" — the old assertion pinned one script's
-// running order, so editing the script broke the guard for the parser.
-const VOX_MODULES = new Set([
-  "kinetic", "doodle", "icon", "chart", "compare", "stat",
-  "footage", "callout", "timeline", "quote",
-]);
-for (const b of v.beats) {
-  assert.ok(VOX_MODULES.has(b.module), `vox beat ${b.n} staged as unknown module "${b.module}"`);
-}
-assert.ok(
-  v.beats.every((b, i) => i === 0 || b.module !== v.beats[i - 1].module),
-  "no vox module may run back to back — two identical frames read as one long beat",
-);
-
-// Beats tile the timeline with no gap and no overlap.
-v.beats.reduce((prev, b) => {
-  assert.equal(b.start, prev, `vox beat ${b.n} starts at ${b.start}, expected ${prev}`);
-  assert.ok(b.end > b.start && b.vo, `vox beat ${b.n} needs a duration and narration`);
-  return b.end;
-}, 0);
-
-// FRAME ONE — same guard as the finance engine: the vox film opens on the
-// hook text, so frame one cannot be blank or unreadable.
-const vhook = v.beats[0].hook || v.beats[0].text;
-assert.ok(vhook && vhook.trim(), "vox beat 1 must carry a `Hook:` or `On-screen text` row — frame one cannot be blank");
-assert.ok(vhook.length <= 46, `the vox frame-one hook is ${vhook.length} chars — too long to read in a glance`);
-
-knownSfx(v);
-assert.ok(v.texts.length >= v.beats.length, "one overlay cue per vox beat");
-assert.ok(v.sfx.length >= v.beats.length, "one sfx cue per vox beat");
-assert.ok(
-  v.beats.every((b) => !b.text || b.text === b.text.trim()),
-  "on-screen text is cleaned",
-);
-
-console.log("ok — script.md and script_vox.md both parse into renderable episodes");
+console.log("ok — script_beats.md parses into a long-form finance episode");

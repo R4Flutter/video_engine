@@ -42,7 +42,7 @@ export const assembleTimeline = (i: TimelineInputs): ShortPlan => {
   });
   const swipeCurve = isLongForm ? [] : i.swipe;
   return {
-    version:"short-1.0", project:{title:script.title,durationInSeconds:script.durationInSeconds,fps,width:script.width,height:script.height,engine:script.engine,mode:isLongForm?"LONG_FORM":"SHORT"},
+    version:"short-1.0", project:{title:script.title,durationInSeconds:script.durationInSeconds,fps,width:script.width,height:script.height,engine:script.engine,mode:isLongForm?"LONGFORM_DOCUMENTARY":"SHORT"},
     frameZero:i.frameZero,loop:i.loop,sequences:i.sequences,beats:directed,swipeCurve,projectedRetention:isLongForm?0:(swipeCurve.length?swipeCurve[swipeCurve.length-1].retained:0),
     attentionEvents:i.attentionEvents,audioEvents:i.audioEvents,
     transitions:i.transitions.map((t,idx)=>({t,idx})).filter(({idx})=>idx>0).map(({t,idx})=>({fromBeat:beats[idx-1].n,toBeat:beats[idx].n,at:round2(beats[idx].start),type:t.type,reason:t.reason,frames:t.frames}))

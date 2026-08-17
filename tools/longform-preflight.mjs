@@ -2,8 +2,9 @@
 // Fails before render when generated artifacts are stale, misrouted, or not a genuine documentary plan.
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const root = resolve(new URL("..", import.meta.url).pathname);
+const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const planPath = join(root, "video/src/director-plan.json");
 const scriptPath = join(root, "video/src/script.json");
 const plan = JSON.parse(readFileSync(planPath, "utf8"));
@@ -17,7 +18,7 @@ const width = Number(plan?.project?.width ?? 0); const height = Number(plan?.pro
 const engine = String(plan?.project?.engine ?? "");
 
 if (duration < 120) errors.push(`expected long-form duration >=120s, got ${duration}s`);
-if (mode !== "LONG_FORM") errors.push(`director mode must be LONG_FORM, got ${mode}`);
+if (mode !== "LONGFORM_DOCUMENTARY") errors.push(`director mode must be LONGFORM_DOCUMENTARY, got ${mode}`);
 if (width !== 1920 || height !== 1080) errors.push(`FinanceLong requires 1920x1080, got ${width}x${height}`);
 if (engine !== "finance") errors.push(`FinanceLong requires finance engine, got ${engine || "missing"}`);
 if (script.engine !== "finance") errors.push(`script.json is not the finance source (engine=${script.engine || "missing"})`);
@@ -28,7 +29,7 @@ if (script.title && plan.project.title && script.title !== plan.project.title) e
 if (!Array.isArray(plan.beats) || plan.beats.length < 2) errors.push("director plan has too few beats");
 if (plan.swipeCurve?.length) errors.push("LONG_FORM plan contains swipeCurve data; Shorts retention must never enter the long-form artifact");
 
-const forbidden = new Set(["coinDrop","coinStack","jarFill","mountain","investChart","kinetic"]);
+const forbidden = new Set(["coinDrop","coinStack","jarFill","mountain","kinetic"]);
 for (const b of plan.beats ?? []) if (forbidden.has(b?.visual?.module)) errors.push(`beat ${b.n}: forbidden legacy module ${b.visual.module}`);
 
 const longBeats = (plan.beats ?? []).filter((b) => (Number(b.end) - Number(b.start)) >= 20);

@@ -41,7 +41,7 @@ const mergeOverlay = (script: Script, overlay: DirectorOverlay | undefined): Scr
   };
 };
 
-export const buildShortPlan = (rawScript: Script, overlay?: DirectorOverlay): DirectResult => {
+export const buildLongFormPlan = (rawScript: Script, overlay?: DirectorOverlay): DirectResult => {
   const script = mergeOverlay(rawScript, overlay);
   const beats = script.beats; const fps = script.fps || 30; const warnings: string[] = [];
   const isLongForm = script.durationInSeconds >= 120;

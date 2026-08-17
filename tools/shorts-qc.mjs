@@ -9,7 +9,7 @@ const plan = JSON.parse(fs.readFileSync(path.join(VIDEO, "src", "director-plan.j
 const issues = [];
 const results = [];
 
-if (plan?.project?.mode !== "LONG_FORM" || Number(plan?.project?.durationInSeconds) < 120) {
+if (plan?.project?.mode !== "LONGFORM_DOCUMENTARY" || Number(plan?.project?.durationInSeconds) < 120) {
   issues.push("source director plan is not a valid long-form episode");
 }
 if (manifest?.mode !== "SHORTS_FROM_LONGFORM") issues.push("manifest is not marked SHORTS_FROM_LONGFORM");

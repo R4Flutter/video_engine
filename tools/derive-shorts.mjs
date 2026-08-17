@@ -15,8 +15,8 @@ const plan = readJson(path.join(VIDEO, "src", "director-plan.json"));
 const script = readJson(path.join(VIDEO, "src", "script.json"));
 
 const project = plan.project ?? {};
-if (project.mode !== "LONG_FORM" || Number(project.durationInSeconds) < 120) {
-  throw new Error("Shorts extraction requires a current LONG_FORM director plan (>=120s). Run npm run direct first.");
+if (project.mode !== "LONGFORM_DOCUMENTARY" || Number(project.durationInSeconds) < 120) {
+  throw new Error("Shorts extraction requires a current LONGFORM_DOCUMENTARY director plan (>=120s). Run npm run direct first.");
 }
 if (script.engine !== "finance") throw new Error(`Shorts extraction expected finance source, got ${script.engine}`);
 
