@@ -1,0 +1,20 @@
+/** Production long-form editorial contract. Separate from ShortPlan. */
+export type LongformVisualKind = "EVIDENCE" | "SPECIFIC_BROLL" | "ARCHIVAL" | "UI_RECONSTRUCTION" | "DATA_GRAPHIC" | "DIAGRAM" | "DOCUMENT" | "LOGO_SYSTEM" | "ESTABLISHING" | "TYPOGRAPHY" | "TEXTURE";
+export type LongformEditBeat = {
+  beat:number; start:number; end:number; duration:number; chapterId:string;
+  narrativeJob:string; viewerQuestion:string; nextQuestion:string; payoff:string;
+  visual:{kind:LongformVisualKind; subject:string; action:string; shotSize:"wide"|"medium"|"close"|"macro"|"screen"|"document"; camera:"locked"|"push"|"pull"|"drift"|"punch"|"settle"; changeAt:number[]; maxHold:number; brollQuery:string; evidenceRequired:boolean};
+  typography?:{text:string; role:"hero"|"support"|"source"};
+  audio:{music:"hold"|"swell"|"drop"|"quiet"; silenceBeforeReveal:number; accents:string[]};
+  transition:"cut"|"jcut"|"lcut"|"match"|"contrast"|"dissolve";
+  retention:{risk:number; reward:"information"|"model"|"consequence"|"reversal"|"answer"; fatigueRisk:number; visualResetRequired:boolean};
+};
+export type LongformChapter = {id:string; title:string; start:number; end:number; thesis:string; openingQuestion:string; closingPayoff:string; resetAt:number; beats:number[]};
+export type ReferencePattern = {sourceId:string; title:string; niche:"finance"|"business"|"documentary"|"other"; durationSeconds?:number; patterns:{hook?:string[]; pacing?:string[]; visualGrammar?:string[]; evidence?:string[]; transitions?:string[]; sound?:string[]; payoff?:string[]}};
+export type LongformDirectorPlan = {
+  version:"longform-1.0";
+  project:{title:string; durationInSeconds:number; fps:number; width:number; height:number; engine:string; mode:"LONGFORM_DOCUMENTARY"};
+  editorialThesis:string; chapters:LongformChapter[]; beats:LongformEditBeat[]; referencePatterns:ReferencePattern[];
+  globalBudgets:{maxConsecutiveSameVisualKind:number; maxGenericBrollSeconds:number; maxDecorativeOnlyBeats:number; minimumEvidenceEvents:number; minimumMajorVisualResets:number};
+  qc:{projectedRetention:number; visualChangeRatePerMinute:number; evidenceRatePerMinute:number; unresolvedQuestionCount:number; fatigueWindows:{start:number;end:number;reason:string;fix:string}[]; findings:{severity:"FATAL"|"HIGH"|"MED"|"LOW";at:number;rule:string;message:string;fix:string}[]};
+};
