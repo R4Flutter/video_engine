@@ -1,6 +1,7 @@
 # THE COMPANY THAT SELLS YOU NOTHING — LONG-FORM MASTER SCRIPT v2
 
 **Topic:** Planet Fitness, subscriptions, recurring revenue, cancellation friction, and the economics of products people keep paying for without actively using.
+**Style:** Vox Deep Dive / Investigative Business Documentary
 **Format:** 16:9 YouTube long-form business documentary
 **Target runtime:** 19:14
 **Audience:** viewers who enjoy business stories, consumer psychology, and explainers with a strong narrative mystery
@@ -368,7 +369,7 @@ Every major section has a **mini-hook**, a **proof beat**, and a **forward quest
 
 **On-screen:** A CHOICE, NOT A FORGOTTEN DECISION
 
-**Direction:** Cursor stops. Hard cut to black. No end card. No generic subscribe request. Let the final silence breathe.
+**Direction:** Cursor stops. Hard cut to black. No end card. Let the final silence breathe.
 
 ---
 
