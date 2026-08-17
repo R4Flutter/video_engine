@@ -11,7 +11,7 @@ export const HOOK = {
   holdFrames: plan.frameZero?.holdFrames ?? 0,
   words: plan.frameZero?.words ?? 0,
   size: plan.frameZero?.size ?? "max",
-  engine: plan.project?.engine ?? "finance",
+  engine: plan.project?.engine ?? "longform",
 };
 
 const BY_N: Record<number, PlanBeat> = Object.fromEntries((plan.beats ?? []).map((b) => [b.n, b]));
@@ -28,7 +28,8 @@ const MOVE: Record<string, Record<string, [number, number]>> = {
 
 export const cameraMove = (n: number): [number, number] => {
   const b = beatPlan(n);
-  const table = MOVE[b?.motion?.camera?.intent ? (b.motion.camera.intent === "hold" ? (b.project?.engine ?? "longform") : (b.project?.engine ?? "longform")) : "longform"] ?? MOVE.longform;
+  const engine = plan.project?.engine ?? "longform";
+  const table = MOVE[engine] ?? MOVE.longform;
   return table[b?.motion?.camera?.intent ?? "settle"] ?? [1, 1];
 };
 
