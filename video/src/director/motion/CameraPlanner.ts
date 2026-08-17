@@ -41,9 +41,6 @@ const BY_MODULE: Record<string, CameraIntent> = {
   outro: "pull",
 };
 
-// Long-form camera grammar for the 19:14 documentary. These are deliberately
-// varied so the film breathes: establishing holds, investigative pushes,
-// evidence settles, consequence pulls, and only a few hard-impact punches.
 const LONGFORM_BY_PURPOSE: Record<string, CameraIntent> = {
   hook: "hold",
   turn: "push",
@@ -55,8 +52,6 @@ const LONGFORM_BY_PURPOSE: Record<string, CameraIntent> = {
   cta: "hold",
 };
 
-// Specific story beats get a hand-directed lens move. The beat numbers are
-// stable in script_beats.md for the Company Sells Nothing episode.
 const LONGFORM_BEATS: Record<number, CameraIntent> = {
   1: "hold",
   2: "push",
@@ -100,15 +95,13 @@ const LONGFORM_BEATS: Record<number, CameraIntent> = {
   40: "hold",
 };
 
-const isLongForm = (b: ScriptBeat): boolean =>
-  b.end - b.start >= 600 || Boolean((b as ScriptBeat & { longform?: boolean }).longform);
-
 export const cameraFor = (
   b: ScriptBeat,
   facts: BeatFacts,
   visual: VisualDecision,
   emotion: Emotion,
   isFirst: boolean,
+  isLongFormEpisode = false,
   previous?: CameraIntent,
 ): CameraIntent => {
   if (b.camera) {
@@ -117,13 +110,11 @@ export const cameraFor = (
     if (hit) return hit;
   }
 
-  if (isLongForm(b)) {
+  if (isLongFormEpisode) {
     if (isFirst) return "hold";
     const authored = LONGFORM_BEATS[b.n];
     const base = authored ?? LONGFORM_BY_PURPOSE[facts.purpose] ?? "settle";
 
-    // Avoid accidental rhythm spam. Two identical moves in a row are only
-    // allowed for holds; otherwise rotate to a compatible quieter move.
     if (previous === base && base !== "hold") {
       if (base === "push") return emotion === "relief" ? "pull" : "settle";
       if (base === "pull") return "settle";
@@ -133,7 +124,6 @@ export const cameraFor = (
     return base;
   }
 
-  // Legacy Short behavior stays intact for actual short-form episodes.
   if (isFirst) return "hold";
   if (facts.purpose === "payoff" || facts.purpose === "reveal") return "punch";
   if (emotion === "tension" || emotion === "surprise") return "push";
