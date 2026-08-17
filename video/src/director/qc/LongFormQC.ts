@@ -1,8 +1,8 @@
 // LongFormQC: the production gate for documentary-length edits.
 //
-// This is the only QC coordinator used when a plan is >= 120 seconds.
-// Every dimension has a dedicated long-form implementation. Shorts/feed rules
-// are intentionally isolated to RetentionQC's short path.
+// This coordinator combines craft QC with explicit retention-engineering
+// milestones. Retention signals are comparative QA heuristics, never a promise
+// of YouTube performance.
 import type { CuriosityState } from "../attention/CuriosityEngine.ts";
 import type { QcFinding, QcReport, ShortPlan } from "../types.ts";
 import { clamp } from "../util.ts";
@@ -13,14 +13,16 @@ import { runLongFormVisualQC } from "./LongFormVisualQC.ts";
 import { runLongFormAudioQC } from "./LongFormAudioQC.ts";
 import { runLongFormLoopQC } from "./LongFormLoopQC.ts";
 import { runLongFormCompletionProxy } from "./LongFormCompletionProxy.ts";
+import { runRetentionEngineeringQC } from "./RetentionEngineeringQC.ts";
 
 const WEIGHTS = {
-  hook: 0.22,
-  pacing: 0.24,
-  curiosity: 0.21,
-  visualVariety: 0.12,
-  audio: 0.08,
-  loop: 0.13,
+  hook: 0.20,
+  pacing: 0.21,
+  curiosity: 0.18,
+  visualVariety: 0.11,
+  audio: 0.07,
+  loop: 0.10,
+  retentionEngineering: 0.13,
 };
 
 const ORDER = { FATAL: 0, HIGH: 1, MED: 2, LOW: 3, undefined: 4 } as const;
@@ -73,6 +75,7 @@ export const runLongFormQC = (
   const visual = runLongFormVisualQC(plan);
   const audio = runLongFormAudioQC(plan);
   const loop = runLongFormLoopQC(plan);
+  const retention = runRetentionEngineeringQC(plan);
 
   findings.push(
     ...hook.findings,
@@ -81,6 +84,7 @@ export const runLongFormQC = (
     ...visual.findings,
     ...audio.findings,
     ...loop.findings,
+    ...retention.findings,
   );
 
   const scores = {
@@ -90,6 +94,7 @@ export const runLongFormQC = (
     visualVariety: visual.score,
     audio: audio.score,
     loop: loop.score,
+    retentionEngineering: retention.score,
   };
 
   const craft =
@@ -98,14 +103,12 @@ export const runLongFormQC = (
     scores.curiosity * WEIGHTS.curiosity +
     scores.visualVariety * WEIGHTS.visualVariety +
     scores.audio * WEIGHTS.audio +
-    scores.loop * WEIGHTS.loop;
+    scores.loop * WEIGHTS.loop +
+    scores.retentionEngineering * WEIGHTS.retentionEngineering;
 
   const projectedRetention = runLongFormCompletionProxy(plan, curiosity, scores);
   const completionScore = clamp(projectedRetention / 0.5, 0, 1) * 10;
-
-  // Completion is deliberately a minority term. The proxy is useful for
-  // comparing cuts; it must never dominate the craft/QC judgment.
-  const score = Number(clamp(craft * 0.78 + completionScore * 0.22, 0, 10).toFixed(1));
+  const score = Number(clamp(craft * 0.82 + completionScore * 0.18, 0, 10).toFixed(1));
 
   return {
     video: {
