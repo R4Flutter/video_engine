@@ -1,9 +1,6 @@
 // LongFormHookQC: production hook QA for long-form documentaries.
-//
-// Unlike the Shorts hook gate, this does not require a complete claim in the
-// first three seconds. It evaluates the first 30 seconds as a designed
-// sequence: expectation match, contradiction/proof progression, narration/
-// overlay alignment, and time-to-first-meaningful-payoff.
+// The opening is judged as an actual retention sequence: immediate promise,
+// second confirmation, early contradiction, and concrete claim latency.
 import type { QcFinding, ShortPlan } from "../types.ts";
 import { clamp } from "../util.ts";
 
@@ -12,6 +9,9 @@ const MAX_CLAIM_LATENCY = 12;
 const HARD_CLAIM_LATENCY = 20;
 const MAX_SILENT_HOLD = 4;
 const MAX_OPENING_TEXT = 42;
+const FIRST_EVENT_DEADLINE = 2;
+const SECOND_EVENT_DEADLINE = 5;
+const FIRST_QUESTION_DEADLINE = 5;
 
 const meaningful = new Set([
   "TEXT_CHANGE",
@@ -56,33 +56,38 @@ export const runLongFormHookQC = (
   }
 
   if (fz.text.trim() && fz.audioSynced) {
-    // Good: visual and spoken framing reinforce each other.
+    // Visual and spoken framing reinforce each other.
   } else if (fz.text.trim()) {
     flag({ at: 0, beat: 1, level: "warn", severity: "MED", rule: "opening-desync", message: "opening visual claim differs from the first spoken line", reason: "mismatched claims make the viewer reconcile two messages at once.", fix: "make the visual a concise subset of the first spoken claim, unless the mismatch is an intentional visual contradiction." }, 0.6);
   }
 
   const firstEventAt = introEvents.find((e) => e.at >= 0)?.at ?? Infinity;
-  if (!Number.isFinite(firstEventAt) || firstEventAt > 6) {
-    flag({ at: 0, beat: 1, level: "warn", severity: "HIGH", rule: "late-first-event", message: "no meaningful editorial event lands in the first 6s", reason: "the long-form intro can breathe, but the audience still needs visible or narrative progression quickly.", fix: "stage the first evidence, contradiction, number, or question earlier." }, 1.2);
+  if (!Number.isFinite(firstEventAt) || firstEventAt > FIRST_EVENT_DEADLINE) {
+    flag({ at: 0, beat: 1, level: "warn", severity: "HIGH", rule: "late-first-event", message: `no meaningful editorial event lands by ${FIRST_EVENT_DEADLINE}s`, reason: "the opening must begin progressing immediately; a long-form breath cannot become a dead cold open.", fix: "stage PATTERN_INTERRUPT, CONTRADICTION, NUMBER_REVEAL, or OBJECT_ENTRY at frame 0–2s." }, 1.2);
+  }
+
+  const secondEvent = introEvents.find((e) => e.at > FIRST_EVENT_DEADLINE && e.at <= SECOND_EVENT_DEADLINE);
+  if (!secondEvent) {
+    flag({ at: 2, beat: 1, level: "warn", severity: "HIGH", rule: "late-second-event", message: "no second meaningful opening event lands by 5s", reason: "the first visual promise should be confirmed before the audience settles into exposition.", fix: "add a NUMBER_REVEAL or OBJECT_ENTRY while preserving the same visual subject; prefer a motivated push over an arbitrary cut." }, 0.9);
   }
 
   const firstContradiction = introEvents.find((e) => e.type === "CONTRADICTION" || e.type === "NUMBER_REVEAL" || e.type === "QUESTION");
-  if (!firstContradiction || firstContradiction.at > 10) {
-    flag({ at: 0, level: "warn", severity: "MED", rule: "late-contradiction", message: "the opening contradiction/question arrives late", reason: "a long-form intro still benefits from a clear tension point before orientation becomes exposition.", fix: "move an existing contradiction, number, or question earlier without changing narration." }, 0.7);
+  if (!firstContradiction || firstContradiction.at > FIRST_QUESTION_DEADLINE) {
+    flag({ at: 0, level: "warn", severity: "MED", rule: "late-contradiction", message: `opening contradiction/question arrives after ${FIRST_QUESTION_DEADLINE}s`, reason: "the curiosity gap should widen early rather than waiting for explanatory exposition.", fix: "surface the strongest existing contradiction, number or question by ~5s." }, 0.7);
   }
 
   const firstPayoff = introEvents.find((e) => e.type === "REVEAL" || e.type === "PAYOFF");
   const claimTime = firstPayoff?.at ?? (plan.beats.find((b) => b.narrative.purpose === "reveal" || b.narrative.purpose === "payoff")?.start ?? Infinity);
   if (!Number.isFinite(claimTime) || claimTime > MAX_CLAIM_LATENCY) {
-    flag({ at: 0, level: "warn", severity: claimTime > HARD_CLAIM_LATENCY ? "HIGH" : "MED", rule: "longform-late-claim", message: `opening payoff/claim is not visually staged until ${Number.isFinite(claimTime) ? claimTime.toFixed(1) : "late"}s`, reason: "the first 30 seconds should deliver a concrete reason to keep watching, while leaving the larger mechanism unresolved.", fix: "stage the strongest existing evidence/reveal earlier; do not invent a new narration line." }, claimTime > HARD_CLAIM_LATENCY ? 1.4 : 0.7);
+    flag({ at: 0, level: "warn", severity: claimTime > HARD_CLAIM_LATENCY ? "HIGH" : "MED", rule: "longform-late-claim", message: `opening payoff/claim is not visually staged until ${Number.isFinite(claimTime) ? claimTime.toFixed(1) : "late"}s`, reason: "the first 30 seconds should deliver a concrete reason to keep watching while leaving the larger mechanism unresolved.", fix: "stage the strongest existing evidence/reveal earlier; do not invent a new narration line." }, claimTime > HARD_CLAIM_LATENCY ? 1.4 : 0.7);
   }
 
-  const silentTail = plan.beats
+  const silentTail = introBeats
     .filter((b) => b.start < INTRO_WINDOW)
     .map((b) => ({ b, events: introEvents.filter((e) => e.beat === b.n) }))
     .filter(({ b, events }) => b.end - b.start > MAX_SILENT_HOLD && events.length === 0);
   for (const { b } of silentTail) {
-    flag({ at: b.start, beat: b.n, level: "warn", severity: "MED", rule: "intro-unstaged-hold", message: `${(b.end - b.start).toFixed(1)}s opening beat without internal event`, reason: "long-form can hold, but the opening deserves more deliberate staging than a single static state for an extended stretch.", fix: "add a meaningful internal visual/evidence state or end the beat at a real transition." }, 0.4);
+    flag({ at: b.start, beat: b.n, level: "warn", severity: "MED", rule: "intro-unstaged-hold", message: `${(b.end - b.start).toFixed(1)}s opening beat without internal event`, reason: "the opening deserves deliberate progression rather than one static state for an extended stretch.", fix: "add a meaningful internal visual/evidence state or end the beat at a real transition." }, 0.4);
   }
 
   if (!firstVo.trim()) {

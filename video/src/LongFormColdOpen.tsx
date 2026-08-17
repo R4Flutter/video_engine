@@ -1,23 +1,14 @@
 import React from "react";
-import { AbsoluteFill, Easing, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Img, Video, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { mediaUrl, resolveAsset } from "./AssetResolver";
 import { theme } from "./theme";
-import voice from "./voice.json";
-
-const OPEN_HOLD = 3.5;
-const EVIDENCE_START = 3.5;
-const EVIDENCE_STEP = 2;
-const CLAIM_MIN = 18;
-
-const firstBeatVoice = () => voice.beats.find((b) => b.n === 1 && b.words.length > 0);
 
 /**
- * Long-form finance cold open:
- * 0–3.5s   visual contradiction only; no text, no voice, no title.
- * 3.5–9.5s evidence ladder; one number at a time.
- * 18–30s    interpretive hook claim; one designed claim, not a title card.
- *
- * Renderer-level on purpose: the legacy FrameZeroCard is a Shorts treatment
- * and must not run during a long-form documentary opener.
+ * Retention contract:
+ * 0–2s  contradiction + first voice
+ * 2–5s  same visual subject + second meaningful confirmation
+ * 5–12s widen the curiosity gap / first concrete claim
+ * No blank frame, no delayed narration, no logo/title-card intro.
  */
 export const LongFormColdOpen: React.FC<{ enabled?: boolean }> = ({ enabled = true }) => {
   const frame = useCurrentFrame();
@@ -25,107 +16,66 @@ export const LongFormColdOpen: React.FC<{ enabled?: boolean }> = ({ enabled = tr
   if (!enabled) return null;
 
   const t = frame / fps;
-  const evidence = [
-    { at: EVIDENCE_START, text: "20.8M", sub: "MEMBERS" },
-    { at: EVIDENCE_START + EVIDENCE_STEP, text: "2,896", sub: "CLUBS" },
-    { at: EVIDENCE_START + EVIDENCE_STEP * 2, text: "7,200", sub: "MEMBERS / CLUB" },
-  ];
+  const gym = resolveAsset({
+    name: "empty gym 4am",
+    visual: { module: "footage" },
+    narrative: { question: "capacity" },
+  });
+  const gymSrc = mediaUrl(gym);
+  const density = resolveAsset({
+    name: "20.8M members 2,896 clubs 7,200",
+    visual: { module: "stat" },
+    typography: { text: "20.8M MEMBERS" },
+    narrative: { reveal: "membership density" },
+  });
+  const densitySrc = mediaUrl(density);
 
-  // Anchor the claim to the existing recording when its wording is present;
-  // otherwise keep the authored 18s minimum. We never regenerate or retime VO.
-  const voiceWords = firstBeatVoice()?.words ?? [];
-  const hookStartWord = voiceWords.find((w) => /customer|shows|ideal|problem/i.test(w.w));
-  const claimIn = hookStartWord ? Math.max(CLAIM_MIN, hookStartWord.start + 3.5) : CLAIM_MIN;
-  const claimOut = Math.min(30, claimIn + 12);
-
-  if (t < OPEN_HOLD) return null;
-
-  const activeEvidence = evidence.findLast((x) => t >= x.at && t < x.at + EVIDENCE_STEP);
-  const showClaim = t >= claimIn && t <= claimOut;
-  if (!activeEvidence && !showClaim) return null;
-
-  const evidenceAt = activeEvidence?.at ?? claimIn;
-  const evidenceOpacity = activeEvidence
-    ? interpolate(t, [evidenceAt, evidenceAt + 0.35], [0, 1], {
-        extrapolateLeft: "clamp",
-        extrapolateRight: "clamp",
-        easing: Easing.out(Easing.cubic),
-      })
-    : 0;
-
-  const claimOpacity = showClaim
-    ? interpolate(t, [claimIn, claimIn + 0.25, claimOut - 0.4, claimOut], [0, 1, 1, 0], {
-        extrapolateLeft: "clamp",
-        extrapolateRight: "clamp",
-      })
-    : 0;
+  const metric = t < 2.2 ? "20.8M" : t < 3.6 ? "2,896" : "7,200";
+  const label = t < 2.2 ? "MEMBERS" : t < 3.6 ? "CLUBS" : "MEMBERS / CLUB";
+  const metricIn = interpolate(t, [0, 0.22], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const confirmation = interpolate(t, [2, 2.2, 3.45, 3.65], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const ratioIn = interpolate(t, [3.55, 3.85], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const claimIn = interpolate(t, [4.5, 4.8], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const claimOut = interpolate(t, [10.8, 11.3], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   return (
-    <AbsoluteFill style={{ pointerEvents: "none" }}>
-      {activeEvidence ? (
-        <AbsoluteFill
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            opacity: evidenceOpacity,
-            padding: `0 ${width * 0.1}px`,
-          }}
-        >
-          <div
-            style={{
-              fontFamily: theme.font,
-              fontWeight: 900,
-              fontSize: Math.min(150, width * 0.14),
-              lineHeight: 0.9,
-              letterSpacing: "-0.04em",
-              color: theme.color.text,
-              textAlign: "center",
-            }}
-          >
-            {activeEvidence.text}
-          </div>
-          <div
-            style={{
-              marginTop: 18,
-              fontFamily: theme.font,
-              fontWeight: 800,
-              fontSize: Math.max(28, width * 0.036),
-              letterSpacing: "0.12em",
-              color: theme.color.gold,
-              textAlign: "center",
-            }}
-          >
-            {activeEvidence.sub}
-          </div>
-        </AbsoluteFill>
+    <AbsoluteFill style={{ background: "#11110F", pointerEvents: "none" }}>
+      {gymSrc ? (
+        /\.(mp4|webm|mov|m4v)$/i.test(gymSrc) ? (
+          <Video
+            src={staticFile(gymSrc)}
+            muted
+            loop
+            startFrom={0}
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        ) : (
+          <Img src={staticFile(gymSrc)} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+        )
       ) : null}
 
-      {showClaim ? (
-        <AbsoluteFill
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            padding: `0 ${width * 0.09}px`,
-            opacity: claimOpacity,
-          }}
-        >
-          <div
-            style={{
-              fontFamily: theme.font,
-              fontWeight: 900,
-              fontSize: Math.min(102, width * 0.09),
-              lineHeight: 0.95,
-              letterSpacing: "-0.03em",
-              color: theme.color.text,
-              textAlign: "center",
-              maxWidth: width * 0.86,
-            }}
-          >
-            THE CUSTOMER WHO NEVER SHOWS UP
-            <div style={{ color: theme.color.gold, marginTop: 18 }}>IS NOT THE PROBLEM</div>
-          </div>
-        </AbsoluteFill>
+      <AbsoluteFill style={{ background: "linear-gradient(180deg, rgba(0,0,0,.16), rgba(0,0,0,.62))" }} />
+
+      <div style={{ position: "absolute", left: "8%", bottom: "10%", opacity: metricIn }}>
+        <div style={{ fontFamily: theme.vox.font, fontSize: Math.min(132, width * 0.105), fontWeight: 900, lineHeight: 0.86, letterSpacing: "-.05em", color: "white" }}>{metric}</div>
+        <div style={{ marginTop: 14, fontFamily: theme.vox.font, fontSize: Math.min(24, width * 0.020), fontWeight: 800, letterSpacing: ".16em", color: theme.color.gold }}>{label}</div>
+      </div>
+
+      {densitySrc ? (
+        <div style={{ position: "absolute", right: "7%", top: "10%", width: "31%", opacity: ratioIn }}>
+          <Img src={staticFile(densitySrc)} style={{ width: "100%", height: "auto", objectFit: "contain", filter: "drop-shadow(0 18px 35px rgba(0,0,0,.35))" }} />
+        </div>
       ) : null}
+
+      <div style={{ position: "absolute", left: "8%", right: "8%", top: "45%", opacity: confirmation, transform: `translateY(${(1 - confirmation) * 12}px)` }}>
+        <div style={{ fontFamily: theme.vox.font, fontSize: Math.min(44, width * 0.036), fontWeight: 800, color: "white", letterSpacing: "-.02em" }}>2,896 CLUBS.</div>
+      </div>
+
+      <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", padding: `0 ${width * 0.10}px`, opacity: claimIn * claimOut }}>
+        <div style={{ maxWidth: "82%", fontFamily: theme.vox.font, fontWeight: 900, fontSize: Math.min(90, width * 0.072), lineHeight: 0.96, letterSpacing: "-.04em", color: "white", textAlign: "center", textShadow: "0 8px 34px rgba(0,0,0,.72)" }}>
+          MOST OF THE PEOPLE PAYING FOR THE GYM AREN'T THERE.
+        </div>
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };
