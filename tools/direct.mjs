@@ -1,5 +1,7 @@
 // Long-form production director front door.
 // This finance branch intentionally routes only through the standalone long-form engine.
+// Default: editorial beam search (--variants N, default 32) over the deterministic
+// director, gate-filtered, argmax-selected. --variants 1 restores the single-plan path.
 import { readFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -10,16 +12,20 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const arg = (name, fallback = null) => { const i = process.argv.indexOf(`--${name}`); return i >= 0 ? process.argv[i + 1] : fallback; };
 const scriptPath = resolve(root, arg("script", "video/src/script.json"));
 const outPath = resolve(root, arg("out", "video/src/director-plan.json"));
+const variants = Number(arg("variants", "32")) || 1;
+const seed = Number(arg("seed", "20260817")) || 20260817;
 const script = JSON.parse(readFileSync(scriptPath, "utf8"));
 assertLongformScript(script);
 const node = process.execPath;
 
-for (const step of [
-  ["LongFormDirector", [resolve(root, "tools/longform-director.mjs"), "--script", scriptPath, "--out", outPath, "--references", resolve(root, "yt_engine/reference-patterns.json")]],
-  ["LongFormAutofix", [resolve(root, "tools/longform-autofix.mjs")]],
-]) {
-  const r = spawnSync(node, step[1], { cwd: root, stdio: "inherit" });
-  if (r.status !== 0) process.exit(r.status ?? 1);
+const steps = variants > 1
+  ? [["EditorialBeam", [resolve(root, "tools/engine/search.mjs"), "--script", scriptPath, "--out", outPath, "--variants", String(variants), "--seed", String(seed)]]]
+  : [["LongFormDirector", [resolve(root, "tools/longform-director.mjs"), "--script", scriptPath, "--out", outPath, "--references", resolve(root, "yt_engine/reference-patterns.json")]]];
+steps.push(["LongFormAutofix", [resolve(root, "tools/longform-autofix.mjs")]]);
+
+for (const [name, argv] of steps) {
+  const r = spawnSync(node, argv, { cwd: root, stdio: "inherit" });
+  if (r.status !== 0) { console.error(`[${name}] failed (${r.status})`); process.exit(r.status ?? 1); }
 }
 
 mkdirSync(dirname(outPath), { recursive: true });

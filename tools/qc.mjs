@@ -10,7 +10,9 @@ const scriptPath = resolve(root, "video/src/script.json");
 const plan = JSON.parse(readFileSync(planPath, "utf8"));
 const script = JSON.parse(readFileSync(scriptPath, "utf8"));
 
-const gates = { hook: 8.5, narrative: 8.0, curiosity: 8.0, pacing: 7.0, visualHierarchy: 8.0, visualVariety: 8.0, evidence: 8.0, broll: 7.0, audio: 7.0, transitions: 7.0, payoff: 8.0, continuity: 8.0 };
+import { GATES, gateFailures } from "./longform-gates.mjs";
+
+const gates = GATES;
 const findings = [];
 const scores = plan.qc?.scores || {};
 const add = (severity, rule, message, fix) => findings.push({ severity, rule, message, fix });
@@ -26,15 +28,8 @@ if (!Array.isArray(plan.coldOpen?.candidates) || plan.coldOpen.candidates.length
 if (Number(plan.coldOpen?.selected?.score || 0) < 8.5) add("HIGH", "cold_open_score", `Selected cold open scored ${plan.coldOpen?.selected?.score ?? 0}/10.`, "Generate/score stronger candidates before rendering.");
 if (!Array.isArray(plan.beats) || plan.beats.length < 20) add("HIGH", "beat_density", `Only ${plan.beats?.length ?? 0} directed beats for a long-form episode.`, "Increase meaningful narrative/visual state changes.");
 
-for (const [key, threshold] of Object.entries(gates)) {
-  const value = Number(scores[key]);
-  if (!Number.isFinite(value)) add("FATAL", `missing_score_${key}`, `Missing ${key} score.`, "Regenerate the long-form QC data.");
-  else if (value < threshold) add("HIGH", `score_${key}`, `${key}=${value.toFixed(1)} below ${threshold.toFixed(1)} gate.`, `Repair ${key} weaknesses before render.`);
-}
-
 const metrics = plan.qc?.metrics || {};
-if (Number(metrics.visualChangesPerMinute || 0) < 5) add("HIGH", "visual_change_rate", `Only ${Number(metrics.visualChangesPerMinute || 0).toFixed(1)} semantic visual changes/minute.`, "Increase meaningful visual state changes, not decorative transitions.");
-if (Number(metrics.evidenceEventsPerMinute || 0) < 1.5) add("MED", "evidence_density", `Only ${Number(metrics.evidenceEventsPerMinute || 0).toFixed(1)} evidence events/minute.`, "Add documents, UI, numbers, archival evidence or concrete physical proof where claims are made.");
+findings.push(...gateFailures(scores, metrics));
 
 const blockers = findings.filter(f => f.severity === "FATAL");
 const failingGates = findings.filter(f => ["FATAL", "HIGH"].includes(f.severity));

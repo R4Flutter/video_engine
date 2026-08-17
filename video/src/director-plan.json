@@ -15,7 +15,7 @@
       "id": "co-1",
       "archetype": "contradiction",
       "claim": "20.8 MILLION MEMBERS. But the room is still mostly empty.",
-      "question": "How can a gym support this many members?",
+      "question": "Why does this business model work?",
       "score": 10
     },
     "candidates": [
@@ -23,7 +23,7 @@
         "id": "co-1",
         "archetype": "contradiction",
         "claim": "20.8 MILLION MEMBERS. But the room is still mostly empty.",
-        "question": "How can a gym support this many members?",
+        "question": "Why does this business model work?",
         "score": 10
       },
       {
@@ -5673,6 +5673,13 @@
     }
   ],
   "referencePatterns": [],
+  "search": {
+    "tag": "baseline",
+    "seed": 20260817,
+    "dials": {
+      "tag": "baseline"
+    }
+  },
   "qc": {
     "scores": {
       "hook": 10,
@@ -5686,10 +5693,11 @@
       "audio": 10,
       "transitions": 10,
       "payoff": 10,
-      "continuity": 10
+      "continuity": 10,
+      "retention": 10
     },
     "score": 10,
-    "projectedCompletion": 0.65,
+    "projectedCompletion": 0.9,
     "findings": [],
     "blockers": [],
     "metrics": {
@@ -5700,8 +5708,416 @@
       "assetSeedCount": 0,
       "jlCuts": 11,
       "moduleCount": 9,
-      "maxModuleShare": 0.25
+      "maxModuleShare": 0.25,
+      "retentionResidual": 0.068,
+      "retentionWorstBeat": -0.0166,
+      "retentionSentences": 238,
+      "retentionStagedBeats": 34
     },
+    "retentionBeats": [
+      {
+        "beat": 1,
+        "heat": 0.2411,
+        "staged": true,
+        "score": 0.3397
+      },
+      {
+        "beat": 32,
+        "heat": 0.2051,
+        "staged": true,
+        "score": 0.3037
+      },
+      {
+        "beat": 48,
+        "heat": 0.1912,
+        "staged": true,
+        "score": 0.2898
+      },
+      {
+        "beat": 3,
+        "heat": 0.1893,
+        "staged": true,
+        "score": 0.2879
+      },
+      {
+        "beat": 51,
+        "heat": 0.1733,
+        "staged": true,
+        "score": 0.2719
+      },
+      {
+        "beat": 7,
+        "heat": 0.1711,
+        "staged": true,
+        "score": 0.2697
+      },
+      {
+        "beat": 47,
+        "heat": 0.1712,
+        "staged": true,
+        "score": 0.2697
+      },
+      {
+        "beat": 2,
+        "heat": 0.1605,
+        "staged": true,
+        "score": 0.2591
+      },
+      {
+        "beat": 29,
+        "heat": 0.1321,
+        "staged": true,
+        "score": 0.2306
+      },
+      {
+        "beat": 19,
+        "heat": 0.1254,
+        "staged": true,
+        "score": 0.224
+      },
+      {
+        "beat": 5,
+        "heat": 0.1249,
+        "staged": true,
+        "score": 0.2235
+      },
+      {
+        "beat": 46,
+        "heat": 0.1227,
+        "staged": true,
+        "score": 0.2212
+      },
+      {
+        "beat": 38,
+        "heat": 0.1102,
+        "staged": true,
+        "score": 0.2087
+      },
+      {
+        "beat": 30,
+        "heat": 0.1046,
+        "staged": true,
+        "score": 0.2032
+      },
+      {
+        "beat": 55,
+        "heat": 0.0998,
+        "staged": true,
+        "score": 0.1983
+      },
+      {
+        "beat": 6,
+        "heat": 0.0928,
+        "staged": true,
+        "score": 0.1914
+      },
+      {
+        "beat": 24,
+        "heat": 0.0896,
+        "staged": true,
+        "score": 0.1882
+      },
+      {
+        "beat": 13,
+        "heat": 0.0851,
+        "staged": true,
+        "score": 0.1837
+      },
+      {
+        "beat": 61,
+        "heat": 0.078,
+        "staged": true,
+        "score": 0.1766
+      },
+      {
+        "beat": 10,
+        "heat": 0.0767,
+        "staged": true,
+        "score": 0.1752
+      },
+      {
+        "beat": 22,
+        "heat": 0.0731,
+        "staged": true,
+        "score": 0.1716
+      },
+      {
+        "beat": 18,
+        "heat": 0.0575,
+        "staged": true,
+        "score": 0.156
+      },
+      {
+        "beat": 39,
+        "heat": 0.0572,
+        "staged": true,
+        "score": 0.1558
+      },
+      {
+        "beat": 40,
+        "heat": 0.0564,
+        "staged": true,
+        "score": 0.1549
+      },
+      {
+        "beat": 50,
+        "heat": 0.054,
+        "staged": true,
+        "score": 0.1525
+      },
+      {
+        "beat": 64,
+        "heat": 0.0363,
+        "staged": true,
+        "score": 0.1348
+      },
+      {
+        "beat": 8,
+        "heat": 0.1342,
+        "staged": false,
+        "score": 0.1342
+      },
+      {
+        "beat": 65,
+        "heat": 0.0303,
+        "staged": true,
+        "score": 0.1288
+      },
+      {
+        "beat": 15,
+        "heat": 0.0172,
+        "staged": true,
+        "score": 0.1158
+      },
+      {
+        "beat": 45,
+        "heat": 0.1158,
+        "staged": false,
+        "score": 0.1158
+      },
+      {
+        "beat": 58,
+        "heat": 0.1157,
+        "staged": false,
+        "score": 0.1157
+      },
+      {
+        "beat": 63,
+        "heat": 0.0102,
+        "staged": true,
+        "score": 0.1088
+      },
+      {
+        "beat": 49,
+        "heat": 0.1053,
+        "staged": false,
+        "score": 0.1053
+      },
+      {
+        "beat": 28,
+        "heat": 0.0984,
+        "staged": false,
+        "score": 0.0984
+      },
+      {
+        "beat": 25,
+        "heat": -0.0041,
+        "staged": true,
+        "score": 0.0944
+      },
+      {
+        "beat": 26,
+        "heat": 0.094,
+        "staged": false,
+        "score": 0.094
+      },
+      {
+        "beat": 14,
+        "heat": 0.0907,
+        "staged": false,
+        "score": 0.0907
+      },
+      {
+        "beat": 11,
+        "heat": -0.0126,
+        "staged": true,
+        "score": 0.0859
+      },
+      {
+        "beat": 4,
+        "heat": 0.0848,
+        "staged": false,
+        "score": 0.0848
+      },
+      {
+        "beat": 42,
+        "heat": 0.0824,
+        "staged": false,
+        "score": 0.0824
+      },
+      {
+        "beat": 54,
+        "heat": -0.0172,
+        "staged": true,
+        "score": 0.0814
+      },
+      {
+        "beat": 35,
+        "heat": -0.0174,
+        "staged": true,
+        "score": 0.0812
+      },
+      {
+        "beat": 56,
+        "heat": 0.0811,
+        "staged": false,
+        "score": 0.0811
+      },
+      {
+        "beat": 44,
+        "heat": 0.0745,
+        "staged": false,
+        "score": 0.0745
+      },
+      {
+        "beat": 37,
+        "heat": 0.0683,
+        "staged": false,
+        "score": 0.0683
+      },
+      {
+        "beat": 36,
+        "heat": 0.0657,
+        "staged": false,
+        "score": 0.0657
+      },
+      {
+        "beat": 20,
+        "heat": -0.0356,
+        "staged": true,
+        "score": 0.063
+      },
+      {
+        "beat": 41,
+        "heat": 0.0573,
+        "staged": false,
+        "score": 0.0573
+      },
+      {
+        "beat": 12,
+        "heat": 0.0532,
+        "staged": false,
+        "score": 0.0532
+      },
+      {
+        "beat": 59,
+        "heat": 0.0526,
+        "staged": false,
+        "score": 0.0526
+      },
+      {
+        "beat": 31,
+        "heat": 0.0497,
+        "staged": false,
+        "score": 0.0497
+      },
+      {
+        "beat": 53,
+        "heat": 0.0481,
+        "staged": false,
+        "score": 0.0481
+      },
+      {
+        "beat": 43,
+        "heat": 0.0462,
+        "staged": false,
+        "score": 0.0462
+      },
+      {
+        "beat": 62,
+        "heat": 0.0417,
+        "staged": false,
+        "score": 0.0417
+      },
+      {
+        "beat": 66,
+        "heat": 0.0413,
+        "staged": false,
+        "score": 0.0413
+      },
+      {
+        "beat": 33,
+        "heat": 0.0411,
+        "staged": false,
+        "score": 0.0411
+      },
+      {
+        "beat": 67,
+        "heat": 0.0383,
+        "staged": false,
+        "score": 0.0383
+      },
+      {
+        "beat": 34,
+        "heat": 0.037,
+        "staged": false,
+        "score": 0.037
+      },
+      {
+        "beat": 57,
+        "heat": 0.0359,
+        "staged": false,
+        "score": 0.0359
+      },
+      {
+        "beat": 60,
+        "heat": 0.0336,
+        "staged": false,
+        "score": 0.0336
+      },
+      {
+        "beat": 17,
+        "heat": 0.0186,
+        "staged": false,
+        "score": 0.0186
+      },
+      {
+        "beat": 9,
+        "heat": 0.0091,
+        "staged": false,
+        "score": 0.0091
+      },
+      {
+        "beat": 23,
+        "heat": 0.0083,
+        "staged": false,
+        "score": 0.0083
+      },
+      {
+        "beat": 16,
+        "heat": 0.0021,
+        "staged": false,
+        "score": 0.0021
+      },
+      {
+        "beat": 27,
+        "heat": 0.002,
+        "staged": false,
+        "score": 0.002
+      },
+      {
+        "beat": 52,
+        "heat": 0.0013,
+        "staged": false,
+        "score": 0.0013
+      },
+      {
+        "beat": 21,
+        "heat": -0.0166,
+        "staged": false,
+        "score": -0.0166
+      }
+    ],
     "autofix": {
       "changedFields": 2,
       "iterations": 1,

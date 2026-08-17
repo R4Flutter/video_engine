@@ -8,17 +8,17 @@
 // verbatim port so the features match the training data exactly.
 //
 // Our side: script_beats.md (sentences + beat timings) and director-plan.json
-// (qc.projectedRetention — the longformQC completion proxy, written by
+// (qc.projectedCompletion — the long-form completion proxy, and
+// qc.scores.retention — the 13th director dimension, both written by
 // tools/direct.mjs). Sentence durations are approximated by an even read
 // inside each beat — the same honest estimate align.py's note about word
 // timings describes, and what the render pipeline assumes until a take exists.
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BEATS_MD = join(ROOT, "script_beats.md");
-const SCRIPT_JSON = join(ROOT, "video/src/script.json");
 const MODEL_JSON = "C:/Users/rajna/yt_engine/reports/retention_coefficients.json";
 const MOMENTS_JSON = "C:/Users/rajna/yt_engine/reports/retention_moments.json";
 
@@ -172,12 +172,11 @@ for (const s of sentences) binHeat[Math.min(49, Math.floor(s.rel_pos * 50))].pus
 const ours = binHeat.map((a) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : 0));
 
 let proxy = null;
+let directorRetention = null;
 try {
-  const script = JSON.parse(readFileSync(SCRIPT_JSON, "utf8"));
-  const { buildLongFormPlan } = await import(
-    pathToFileURL(join(ROOT, "video/src/director/plan.ts")).href
-  );
-  proxy = buildLongFormPlan(script).qc.projectedRetention;
+  const plan = JSON.parse(readFileSync(join(ROOT, "video/src/director-plan.json"), "utf8"));
+  proxy = plan.qc?.projectedCompletion ?? null;
+  directorRetention = plan.qc?.scores?.retention ?? null;
 } catch (e) {
   console.error(`  (proxy unavailable: ${e.message})`);
 }
@@ -210,7 +209,8 @@ console.log(`         corpus  ${spark(model.position_curve)}`);
 console.log("");
 
 console.log("RETENTION SCORE");
-console.log(`  completion proxy (longformQC)   ${proxy !== null ? `${proxy.toFixed(1)}% projected reach the final frame` : "n/a (run npm run direct first)"}`);
+console.log(`  completion proxy (long-form model)   ${proxy !== null ? `${(proxy * 100).toFixed(1)}% projected reach the final frame` : "n/a (run npm run direct first)"}`);
+console.log(`  retention dimension (director)       ${directorRetention !== null ? `${directorRetention.toFixed(1)}/10 (gate 8)` : "n/a (run npm run direct first)"}`);
 console.log(`  language residual (yt_engine)   ${meanResidual >= 0 ? "+" : ""}${meanResidual.toFixed(2)}σ vs corpus average sentence at the same position`);
 console.log("");
 console.log("  note: the proxy is comparative QA, not a YouTube forecast. The residual is on");
