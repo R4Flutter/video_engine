@@ -2,13 +2,7 @@
 
 `tools/rendered-frame-qc.mjs` is the pixel-level gate after Remotion rendering.
 
-It samples the actual MP4 with `ffmpeg` at 1 frame/second, downsamples to 64×36 RGB, and checks:
-
-- blank / near-uniform frames;
-- dead dark or bright frames;
-- long visual-monotony runs;
-- long beats with too few meaningful rendered state changes;
-- footage beats that statistically look like text cards.
+It samples the actual MP4 with `ffmpeg` at 1 frame/second, downsamples to 64×36 RGB, and checks blank / near-uniform frames, dead dark or bright frames, long visual-monotony runs, long beats with too few meaningful rendered state changes, and footage beats that statistically look like text cards.
 
 Reports:
 
