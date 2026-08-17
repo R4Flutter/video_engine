@@ -4,28 +4,45 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const arg = (name, fallback) => { const i = process.argv.indexOf(name); return i >= 0 ? process.argv[i + 1] : fallback; };
-const has = (name) => process.argv.includes(name);
-const scriptPath = resolve(root, arg("--script", "video/src/script.json"));
-const outPath = resolve(root, arg("--out", "video/src/director-plan.json"));
-const overlayArg = arg("--overlay", null);
+const arg = (name, fallback) => { const i = process.argv.indexOf(`--${name}`); return i >= 0 ? process.argv[i + 1] : fallback; };
+const has = (name) => process.argv.includes(`--${name}`) || process.argv.includes(name);
+const scriptPath = resolve(root, arg("script", "video/src/script.json"));
+const outPath = resolve(root, arg("out", "video/src/director-plan.json"));
+const overlayArg = arg("overlay", null);
+const referencePath = resolve(root, arg("references", "yt_engine/reference-patterns.json"));
 const script = JSON.parse(readFileSync(scriptPath, "utf8"));
 const overlay = overlayArg ? JSON.parse(readFileSync(resolve(root, overlayArg), "utf8")) : undefined;
 const { buildShortPlan } = await import(pathToFileURL(join(root, "video/src/director/plan.ts")).href);
-const { plan, warnings, issues, qc } = buildShortPlan(script, overlay);
+const { buildLongformRenderContract } = await import(pathToFileURL(join(root, "tools/longform-render-contract.mjs")).href);
+const { plan: rawPlan, warnings, issues, qc } = buildShortPlan(script, overlay);
+
+// Long-form uses the same proven editorial engines, then passes the resulting
+// plan through a Vidosy-inspired deterministic scene contract. This keeps the
+// AI/director layer responsible for editorial decisions while Remotion gets a
+// strict, serializable execution plan.
+let plan = rawPlan;
+if (plan.project.mode === "LONG_FORM") {
+  let references = [];
+  try { references = JSON.parse(readFileSync(referencePath, "utf8")); } catch { /* optional until yt_engine produces patterns */ }
+  plan = buildLongformRenderContract(plan, Array.isArray(references) ? references : []);
+}
+
 mkdirSync(dirname(outPath), { recursive: true });
 writeFileSync(outPath, JSON.stringify(plan, null, 2));
-if (has("--quiet")) { console.log(`WROTE      ${outPath}`); process.exit(0); }
+if (has("quiet")) { console.log(`WROTE      ${outPath}`); process.exit(0); }
 const bar = (v, width = 24) => { const n = Math.max(0, Math.min(width, Math.round(v * width))); return "█".repeat(n) + "·".repeat(width - n); };
 const isLongForm = plan.project.mode === "LONG_FORM";
 console.log(`DIRECTOR   ${plan.project.title}`);
 console.log(`  mode     ${isLongForm ? "LONG_FORM" : "SHORT"}`);
 console.log(`  format   ${plan.project.width}x${plan.project.height}@${plan.project.fps} · ${plan.project.durationInSeconds}s · ${plan.beats.length} beats · ${plan.project.engine}`);
-console.log(``);
 if (isLongForm) {
+  console.log(``);
   console.log(`LONG-FORM OPENING CONTRACT`);
   console.log(`  renderer   FinanceLong`);
   console.log(`  editorial  visual-first → evidence ladder → delayed interpretation`);
+  console.log(`  execution  Vidosy-inspired deterministic render contract`);
+  console.log(`  scenes     ${plan.renderContract?.sceneCount ?? plan.beats.length}`);
+  console.log(`  references ${plan.renderContract?.referencePatternCount ?? 0}`);
   console.log(``);
   console.log(`COMPLETION  long-form proxy ${qc.projectedRetention.toFixed(1)}% (comparative QA, not YouTube prediction)`);
   console.log(`SEQUENCES   ${plan.sequences.length}`);
