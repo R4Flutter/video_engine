@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, Img, interpolate, staticFile, useVideoConfig } from "remotion";
+import { AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { mediaUrl, resolveAsset } from "./AssetResolver";
 import { theme } from "./theme";
 import voice from "./voice.json";
@@ -9,23 +9,20 @@ const EVIDENCE_START = 3.5;
 const CLAIM_MIN = 18;
 
 export const LongFormColdOpen: React.FC<{ enabled?: boolean }> = ({ enabled = true }) => {
-  const { fps, width } = useVideoConfig(); if (!enabled) return null;
-  const t = useVideoConfig().fps ? (useVideoConfig() as any) : null;
-  return <ColdOpenAtTime time={t ? 0 : 0} />;
-};
-
-const ColdOpenAtTime: React.FC<{ time: number }> = () => {
+  const frame = useCurrentFrame();
   const { fps, width } = useVideoConfig();
-  const t = useCurrentTime(fps);
+  if (!enabled) return null;
+  const t = frame / fps;
+  if (t < OPEN_HOLD) return null;
+
   const firstBeat = voice.beats.find((b) => b.n === 1 && b.words?.length);
   const hookWord = firstBeat?.words?.find((w) => /customer|shows|ideal|problem/i.test(w.w));
   const claimIn = hookWord ? Math.max(CLAIM_MIN, hookWord.start + OPEN_HOLD) : CLAIM_MIN;
   const claimOut = Math.min(30, claimIn + 11);
-  if (t < OPEN_HOLD) return null;
 
   const gym = resolveAsset({ name: "empty gym 4am", visual: { module: "footage" }, narrative: { question: "capacity" } });
   const density = resolveAsset({ name: "20.8M members 2,896 clubs 7,200", visual: { module: "stat" }, typography: { text: "20.8M MEMBERS" }, narrative: { reveal: "membership density" } });
-  const src = mediaUrl(gym); const evidenceSrc = mediaUrl(density);
+  const evidenceSrc = mediaUrl(density);
   const evidenceOpacity = interpolate(t, [EVIDENCE_START, EVIDENCE_START + .35], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const claimOpacity = interpolate(t, [claimIn, claimIn + .25, claimOut - .35, claimOut], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const phase = t < 5.4 ? "members" : t < 7.4 ? "clubs" : "ratio";
@@ -41,9 +38,4 @@ const ColdOpenAtTime: React.FC<{ time: number }> = () => {
     <div style={{ position: "absolute", right: "6%", top: "6%", fontFamily: theme.vox.font, fontSize: 14, letterSpacing: ".14em", color: "rgba(255,255,255,.55)" }}>THE COMPANY THAT SELLS YOU NOTHING</div>
     <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at center, transparent 42%, rgba(0,0,0,.48) 100%)" }} />
   </AbsoluteFill>;
-};
-
-const useCurrentTime = (fps: number) => {
-  const frame = require("remotion").useCurrentFrame();
-  return frame / fps;
 };
