@@ -1,21 +1,8 @@
-// plan.ts: the director's front door. Script in, ShortPlan out.
+// plan.ts: deterministic director front door.
 //
-// Every layer below is deterministic, so the same script plus the same
-// overlay always produces the same plan — the renderer, the QC and the tests
-// all read one artifact and none of them can disagree about the edit.
-//
-// The order matters and is not arbitrary:
-//
-//   1. frame zero    everything else is conditioned on what beat one shows,
-//                    so the hook is planned before anything reads it
-//   2. story         what each beat is for
-//   3. curiosity     where a loop is open — the swipe model's largest term
-//   4. attention     rhythm, emotion, profiles
-//   5. visual        module, reveal, captions (+ variety enforcement)
-//   6. budget        remove whatever is competing
-//   7. motion/audio  camera, reveals, transitions, bed, silence, accents
-//   8. swipe         who leaves, and where
-//   9. assemble      one artifact
+// The same script must always produce the same plan. LONGFORM_19M uses the
+// same data contract as legacy Shorts so Remotion remains backwards compatible,
+// but it changes the assumptions used by attention, camera and retention.
 import type { CameraIntent, DirectorOverlay, Script, ShortPlan } from "./types.ts";
 import { analyzeStory } from "./story/StoryAnalyzer.ts";
 import { planSequences } from "./story/SequencePlanner.ts";
@@ -47,7 +34,6 @@ export type DirectResult = {
   curiosity: CuriosityState;
 };
 
-/** Hand-written notes win over every guess. */
 const mergeOverlay = (script: Script, overlay: DirectorOverlay | undefined): Script => {
   if (!overlay) return script;
   return {
@@ -60,42 +46,50 @@ const mergeOverlay = (script: Script, overlay: DirectorOverlay | undefined): Scr
   };
 };
 
+const isLongFormEpisode = (script: Script): boolean =>
+  script.width >= script.height &&
+  script.durationInSeconds >= 600 &&
+  script.beats.length >= 15;
+
 export const buildShortPlan = (
   rawScript: Script,
   overlay?: DirectorOverlay,
 ): DirectResult => {
   const script = mergeOverlay(rawScript, overlay);
+  const longForm = isLongFormEpisode(script);
   const beats = script.beats;
   const fps = script.fps || 30;
   const warnings: string[] = [];
 
-  // --- 1. frame zero ------------------------------------------------------
+  // Frame zero is still required for long-form, but only as an immediate
+  // title/promise check. The old Shorts rule that nothing may move for the
+  // opening half-second is intentionally not propagated to the whole film.
   const frameZero = planFrameZero(script);
   const holdSeconds = frameZero.holdFrames / fps;
-  if (!frameZero.text) warnings.push("beat 1 has no on-screen hook — frame one will be blank");
-  if (!frameZero.audioSynced) warnings.push("beat 1's on-screen hook does not match its narration");
+  if (!frameZero.text) warnings.push("beat 1 has no opening promise");
+  if (longForm && frameZero.timeToClaim > 8) {
+    warnings.push(`long-form opening claim arrives late at ${frameZero.timeToClaim.toFixed(1)}s`);
+  } else if (!longForm && !frameZero.audioSynced) {
+    warnings.push("beat 1's on-screen hook does not match its narration");
+  }
 
-  // --- 2. story -----------------------------------------------------------
   const facts = analyzeStory(script);
   const emotions = buildEmotionalCurve(script);
   const sequences = planSequences(script, facts, emotions);
 
-  // --- 3. curiosity -------------------------------------------------------
   const curiosity = runCuriosity(script, facts);
-  if (curiosity.longestFlatRun && curiosity.longestFlatRun.seconds >= 5) {
+  if (curiosity.longestFlatRun && curiosity.longestFlatRun.seconds >= (longForm ? 14 : 5)) {
     warnings.push(
       `${curiosity.longestFlatRun.seconds}s with nothing unresolved (beats ${curiosity.longestFlatRun.from}–${curiosity.longestFlatRun.to})`,
     );
   }
 
-  // --- 4. attention -------------------------------------------------------
   const rhythms = beats.map((b) => rhythmFor(b));
   const profiles = beats.map((b, i) =>
     profileFor(b, facts[i], emotions[i], rhythms[i], i === 0),
   );
   const attentionEvents = scheduleAllEvents(script, facts, emotions, rhythms, holdSeconds);
 
-  // --- 5. visual ----------------------------------------------------------
   const {
     decisions: visuals,
     novelty,
@@ -103,8 +97,18 @@ export const buildShortPlan = (
   } = directVisuals(script, facts, frameZero.holdFrames);
   warnings.push(...visualWarnings);
 
-  // --- 6. motion, then budget --------------------------------------------
-  const rawCameras = beats.map((b, i) => cameraFor(b, facts[i], visuals[i], emotions[i], i === 0));
+  const rawCameras = beats.map((b, i) => {
+    const previous = i > 0 ? cameraFor(
+      beats[i - 1],
+      facts[i - 1],
+      visuals[i - 1],
+      emotions[i - 1],
+      i - 1 === 0,
+      longForm,
+    ) : undefined;
+    return cameraFor(b, facts[i], visuals[i], emotions[i], i === 0, longForm, previous);
+  });
+
   const budgeted = beats.map((b, i) => {
     const { camera, captionMode, trimmed } = budgetFor(
       b,
@@ -113,14 +117,12 @@ export const buildShortPlan = (
       visuals[i].captionMode,
     );
     if (trimmed) {
-      // Report only what actually changed. A warning that says "pull→pull" is
-      // noise, and noise in a warnings list trains you to stop reading it.
-      const changes = [];
+      const changes: string[] = [];
       if (camera !== rawCameras[i]) changes.push(`camera ${rawCameras[i]}→${camera}`);
       if (captionMode !== visuals[i].captionMode) {
         changes.push(`captions ${visuals[i].captionMode}→${captionMode}`);
       }
-      warnings.push(`beat ${b.n}: over the motion budget — ${changes.join(", ")}`);
+      if (changes.length) warnings.push(`beat ${b.n}: over motion budget — ${changes.join(", ")}`);
     }
     return { camera: camera as CameraIntent, captionMode };
   });
@@ -141,7 +143,6 @@ export const buildShortPlan = (
     ),
   );
 
-  // --- 7. audio -----------------------------------------------------------
   const audios = beats.map((b, i) => audioFor(b, facts[i], emotions[i], attentionEvents));
   const audioEvents = [
     ...planMusic(beats, facts, emotions),
@@ -149,7 +150,8 @@ export const buildShortPlan = (
     ...planSfx(beats, attentionEvents),
   ].sort((a, z) => a.at - z.at);
 
-  // --- 8. who leaves ------------------------------------------------------
+  // Keep the legacy swipe curve for comparison, but long-form QC treats it as
+  // a diagnostic only. It must never force rapid cuts or CTA behavior.
   const swipe = estimateSwipe({
     beats,
     facts,
@@ -160,7 +162,6 @@ export const buildShortPlan = (
     openLoop: curiosity.openLoop,
   });
 
-  // --- 9. assemble --------------------------------------------------------
   const loop = planLoop(beats);
   const plan = assembleTimeline({
     script,
@@ -186,6 +187,5 @@ export const buildShortPlan = (
   for (const issue of issues) warnings.push(`timeline: ${issue.message}`);
 
   const qc = runRetentionQC(plan, curiosity, beats[0]?.vo ?? "");
-
   return { plan, warnings, issues, qc, curiosity };
 };
