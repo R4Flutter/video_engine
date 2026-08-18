@@ -21,11 +21,11 @@ const node = process.execPath;
 const steps = variants > 1
   ? [["EditorialBeam", [resolve(root, "tools/engine/search.mjs"), "--script", scriptPath, "--out", outPath, "--variants", String(variants), "--seed", String(seed)]]]
   : [["LongFormDirector", [resolve(root, "tools/longform-director.mjs"), "--script", scriptPath, "--out", outPath, "--references", resolve(root, "yt_engine/reference-patterns.json")]]];
-steps.push(["AssetResolver", [resolve(root, "tools/engine/assets.mjs"), "--plan", outPath]]);
 if (!process.argv.includes("--no-audit")) {
   steps.push(["GeminiAuditor", [resolve(root, "tools/engine/auditor.mjs"), "--script", scriptPath, "--plan", outPath]]);
 }
 steps.push(["LongFormAutofix", [resolve(root, "tools/longform-autofix.mjs")]]);
+steps.push(["AssetResolver", [resolve(root, "tools/engine/assets.mjs"), "--plan", outPath]]);
 
 for (const [name, argv] of steps) {
   const r = spawnSync(node, argv, { cwd: root, stdio: "inherit" });

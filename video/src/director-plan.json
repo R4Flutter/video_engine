@@ -278,7 +278,7 @@
           4.4
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/05_BACKGROUNDS/bg_ftc_building.png",
+        "assetPath": "assets/06_BROLL/b01_empty_gym_4am.mp4",
         "footagePlan": "empty gym interior, dim lighting, rows of treadmills, lone person"
       },
       "audio": {
@@ -302,7 +302,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/05_BACKGROUNDS/bg_ftc_building.png",
+          "src": "assets/06_BROLL/b01_empty_gym_4am.mp4",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -358,7 +358,7 @@
           7.7
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g15_final_133_gap.png",
+        "assetPath": "assets/04_GRAPHICS/g01_membership_density.png",
         "footagePlan": ""
       },
       "audio": {
@@ -382,7 +382,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g15_final_133_gap.png",
+          "src": "assets/04_GRAPHICS/g01_membership_density.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -438,7 +438,7 @@
           7.7
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/03_EVIDENCE/adobe_2025_subscription_revenue.png",
+        "assetPath": "assets/04_GRAPHICS/g02_four_percent_math.png",
         "footagePlan": ""
       },
       "audio": {
@@ -462,7 +462,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/03_EVIDENCE/adobe_2025_subscription_revenue.png",
+          "src": "assets/04_GRAPHICS/g02_four_percent_math.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -594,7 +594,7 @@
           6.05
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/03_EVIDENCE/bally_1994_regulatory_document.png",
+        "assetPath": "assets/03_EVIDENCE/cr_subscription_gap_86_219.png",
         "footagePlan": ""
       },
       "audio": {
@@ -618,7 +618,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/03_EVIDENCE/bally_1994_regulatory_document.png",
+          "src": "assets/03_EVIDENCE/cr_subscription_gap_86_219.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -674,7 +674,7 @@
           7.15
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/03_EVIDENCE/bally_contract_recreation.png",
+        "assetPath": "assets/03_EVIDENCE/cr_subscription_gap_86_219.png",
         "footagePlan": ""
       },
       "audio": {
@@ -698,7 +698,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/03_EVIDENCE/bally_contract_recreation.png",
+          "src": "assets/03_EVIDENCE/cr_subscription_gap_86_219.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -754,7 +754,7 @@
           9.35
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/03_EVIDENCE/eighth_circuit_click_to_cancel.png",
+        "assetPath": "assets/04_GRAPHICS/g03_subscription_gap.png",
         "footagePlan": ""
       },
       "audio": {
@@ -778,7 +778,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/03_EVIDENCE/eighth_circuit_click_to_cancel.png",
+          "src": "assets/04_GRAPHICS/g03_subscription_gap.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -834,7 +834,7 @@
           9.35
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g06_ten_dollars_noise.png",
+        "assetPath": "assets/02_ARCHIVE/gym_1980s_health_club.png",
         "footagePlan": "vintage advertisements, 1990s magazine ads, subscription fine print"
       },
       "audio": {
@@ -858,7 +858,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g06_ten_dollars_noise.png",
+          "src": "assets/02_ARCHIVE/gym_1980s_health_club.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -914,7 +914,7 @@
           3.3
         ],
         "evidenceRequired": false,
-        "assetPath": "assets/05_BACKGROUNDS/bg_ftc_building.png",
+        "assetPath": "assets/06_BROLL/b01_empty_gym_4am.mp4",
         "footagePlan": "gym interior, exercise machines, bright lights"
       },
       "audio": {
@@ -938,7 +938,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/05_BACKGROUNDS/bg_ftc_building.png",
+          "src": "assets/06_BROLL/b01_empty_gym_4am.mp4",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -994,7 +994,7 @@
           9.35
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g04_breakage_loop.png",
+        "assetPath": "assets/03_EVIDENCE/planet_fitness_2026_year_end_metrics.png",
         "footagePlan": ""
       },
       "audio": {
@@ -1018,7 +1018,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g04_breakage_loop.png",
+          "src": "assets/03_EVIDENCE/planet_fitness_2026_year_end_metrics.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -1074,7 +1074,7 @@
           7.7
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g06_ten_dollars_noise.png",
+        "assetPath": "assets/04_GRAPHICS/g04_breakage_loop.png",
         "footagePlan": ""
       },
       "audio": {
@@ -1098,7 +1098,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g06_ten_dollars_noise.png",
+          "src": "assets/04_GRAPHICS/g04_breakage_loop.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -1234,7 +1234,7 @@
           6.6
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g10_cable_vs_streaming.png",
+        "assetPath": "assets/04_GRAPHICS/g04_breakage_loop.png",
         "footagePlan": ""
       },
       "audio": {
@@ -1258,7 +1258,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g10_cable_vs_streaming.png",
+          "src": "assets/04_GRAPHICS/g04_breakage_loop.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -1474,7 +1474,7 @@
           4.4
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/03_EVIDENCE/adobe_2013_announcement.png",
+        "assetPath": "assets/04_GRAPHICS/g04_breakage_loop.png",
         "footagePlan": ""
       },
       "audio": {
@@ -1498,7 +1498,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/03_EVIDENCE/adobe_2013_announcement.png",
+          "src": "assets/04_GRAPHICS/g04_breakage_loop.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -1555,7 +1555,7 @@
           16.9
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/05_BACKGROUNDS/bg_ftc_building.png",
+        "assetPath": "assets/06_BROLL/b04_1990s_gym_archive.mp4",
         "footagePlan": "1990s gym interior, retro exercise equipment, neon lighting"
       },
       "audio": {
@@ -1579,7 +1579,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/05_BACKGROUNDS/bg_ftc_building.png",
+          "src": "assets/06_BROLL/b04_1990s_gym_archive.mp4",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -1636,7 +1636,7 @@
           8.25
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g05_contract_vs_friction.png",
+        "assetPath": "assets/03_EVIDENCE/bally_1994_regulatory_document.png",
         "footagePlan": "federal documents, investigation file, courtroom"
       },
       "audio": {
@@ -1660,7 +1660,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g05_contract_vs_friction.png",
+          "src": "assets/03_EVIDENCE/bally_1994_regulatory_document.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -1717,7 +1717,7 @@
           16.25
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/06_BROLL/b12_empty_gym_return.mp4",
+        "assetPath": "assets/06_BROLL/b10_ftc_courthouse.mp4",
         "footagePlan": "stack of complaint letters, government office building"
       },
       "audio": {
@@ -1741,7 +1741,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/06_BROLL/b12_empty_gym_return.mp4",
+          "src": "assets/06_BROLL/b10_ftc_courthouse.mp4",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -1800,7 +1800,7 @@
           22.04
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/06_BROLL/b09_amazon_cancel_flow.mp4",
+        "assetPath": "assets/03_EVIDENCE/bally_1994_regulatory_document.png",
         "footagePlan": "contract document close-up, signature line, fine print"
       },
       "audio": {
@@ -1824,7 +1824,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/06_BROLL/b09_amazon_cancel_flow.mp4",
+          "src": "assets/03_EVIDENCE/bally_1994_regulatory_document.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -1962,7 +1962,7 @@
           9.35
         ],
         "evidenceRequired": false,
-        "assetPath": "assets/01_SUBJECTS/prime-membership-card.png",
+        "assetPath": "assets/01_SUBJECTS/planet-fitness-entrance.png",
         "footagePlan": "modern gym entrance, front desk, membership card"
       },
       "audio": {
@@ -1986,7 +1986,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/01_SUBJECTS/prime-membership-card.png",
+          "src": "assets/01_SUBJECTS/planet-fitness-entrance.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -2042,7 +2042,7 @@
           3.3
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/06_BROLL/b12_empty_gym_return.mp4",
+        "assetPath": "assets/06_BROLL/b05_bally_storefront.mp4",
         "footagePlan": "person at gym front desk, cancelling membership, paperwork"
       },
       "audio": {
@@ -2066,7 +2066,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/06_BROLL/b12_empty_gym_return.mp4",
+          "src": "assets/06_BROLL/b05_bally_storefront.mp4",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -2124,7 +2124,7 @@
           34.2
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g05_contract_vs_friction.png",
+        "assetPath": "assets/04_GRAPHICS/g06_ten_dollars_noise.png",
         "footagePlan": ""
       },
       "audio": {
@@ -2148,7 +2148,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g05_contract_vs_friction.png",
+          "src": "assets/04_GRAPHICS/g06_ten_dollars_noise.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -2206,7 +2206,7 @@
           5.5
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g07_adobe_sawtooth_to_curve.png",
+        "assetPath": "assets/04_GRAPHICS/g06_ten_dollars_noise.png",
         "footagePlan": ""
       },
       "audio": {
@@ -2230,7 +2230,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g07_adobe_sawtooth_to_curve.png",
+          "src": "assets/04_GRAPHICS/g06_ten_dollars_noise.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -2367,7 +2367,7 @@
           11.7
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/06_BROLL/b12_empty_gym_return.mp4",
+        "assetPath": "assets/06_BROLL/b01_empty_gym_4am.mp4",
         "footagePlan": "modern gym, rows of machines, empty treadmill"
       },
       "audio": {
@@ -2391,7 +2391,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/06_BROLL/b12_empty_gym_return.mp4",
+          "src": "assets/06_BROLL/b01_empty_gym_4am.mp4",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -2449,7 +2449,7 @@
           16.25
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/06_BROLL/b05_bally_storefront.mp4",
+        "assetPath": "assets/06_BROLL/b06_photoshop_box_turntable.mp4",
         "footagePlan": "software box, CD-ROM, old computer monitor, retail shelf"
       },
       "audio": {
@@ -2473,7 +2473,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/06_BROLL/b05_bally_storefront.mp4",
+          "src": "assets/06_BROLL/b06_photoshop_box_turntable.mp4",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -2498,7 +2498,7 @@
           "jcut": 0,
           "lcut": 0
         },
-        "transition": "contrast"
+        "transition": "cut"
       }
     },
     {
@@ -2531,7 +2531,7 @@
           13
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g15_final_133_gap.png",
+        "assetPath": "assets/04_GRAPHICS/g07_adobe_sawtooth_to_curve.png",
         "footagePlan": ""
       },
       "audio": {
@@ -2555,7 +2555,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g15_final_133_gap.png",
+          "src": "assets/04_GRAPHICS/g07_adobe_sawtooth_to_curve.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -2614,7 +2614,7 @@
           25.84
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/03_EVIDENCE/adobe_2025_subscription_revenue.png",
+        "assetPath": "assets/03_EVIDENCE/adobe_2013_announcement.png",
         "footagePlan": ""
       },
       "audio": {
@@ -2638,7 +2638,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/03_EVIDENCE/adobe_2025_subscription_revenue.png",
+          "src": "assets/03_EVIDENCE/adobe_2013_announcement.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -2697,7 +2697,7 @@
           16.9
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/06_BROLL/b04_1990s_gym_archive.mp4",
+        "assetPath": "assets/03_EVIDENCE/adobe_2013_announcement.png",
         "footagePlan": "angry internet forum, news headlines, petition"
       },
       "audio": {
@@ -2721,7 +2721,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/06_BROLL/b04_1990s_gym_archive.mp4",
+          "src": "assets/03_EVIDENCE/adobe_2013_announcement.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -2779,7 +2779,7 @@
           13.65
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/03_EVIDENCE/bally_1994_regulatory_document.png",
+        "assetPath": "assets/04_GRAPHICS/g08_adobe_2013_2023_2025.png",
         "footagePlan": ""
       },
       "audio": {
@@ -2803,7 +2803,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/03_EVIDENCE/bally_1994_regulatory_document.png",
+          "src": "assets/04_GRAPHICS/g08_adobe_2013_2023_2025.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -2862,7 +2862,7 @@
           25.84
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/03_EVIDENCE/bally_contract_recreation.png",
+        "assetPath": "assets/04_GRAPHICS/g07_adobe_sawtooth_to_curve.png",
         "footagePlan": ""
       },
       "audio": {
@@ -2886,7 +2886,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/03_EVIDENCE/bally_contract_recreation.png",
+          "src": "assets/04_GRAPHICS/g07_adobe_sawtooth_to_curve.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -2945,7 +2945,7 @@
           12.35
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/01_SUBJECTS/prime-membership-card.png",
+        "assetPath": "assets/06_BROLL/b03_free_trial_checkout.mp4",
         "footagePlan": "person typing on laptop, subscription website"
       },
       "audio": {
@@ -2969,7 +2969,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/01_SUBJECTS/prime-membership-card.png",
+          "src": "assets/06_BROLL/b03_free_trial_checkout.mp4",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -3026,7 +3026,7 @@
           4.95
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g15_final_133_gap.png",
+        "assetPath": "assets/04_GRAPHICS/g09_streaming_stack.png",
         "footagePlan": "television remote on sofa, streaming apps on screen"
       },
       "audio": {
@@ -3050,7 +3050,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g15_final_133_gap.png",
+          "src": "assets/04_GRAPHICS/g09_streaming_stack.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -3108,7 +3108,7 @@
           21.28
         ],
         "evidenceRequired": false,
-        "assetPath": "assets/06_BROLL/b05_bally_storefront.mp4",
+        "assetPath": "assets/06_BROLL/b08_streaming_services_montage.mp4",
         "footagePlan": "cable box, television, remote control, tangled cables"
       },
       "audio": {
@@ -3132,7 +3132,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/06_BROLL/b05_bally_storefront.mp4",
+          "src": "assets/06_BROLL/b08_streaming_services_montage.mp4",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -3273,7 +3273,7 @@
           15.6
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g06_ten_dollars_noise.png",
+        "assetPath": "assets/04_GRAPHICS/g09_streaming_stack.png",
         "footagePlan": ""
       },
       "audio": {
@@ -3297,7 +3297,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g06_ten_dollars_noise.png",
+          "src": "assets/04_GRAPHICS/g09_streaming_stack.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -3355,7 +3355,7 @@
           13.65
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g08_adobe_2013_2023_2025.png",
+        "assetPath": "assets/04_GRAPHICS/g10_cable_vs_streaming.png",
         "footagePlan": ""
       },
       "audio": {
@@ -3379,7 +3379,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g08_adobe_2013_2023_2025.png",
+          "src": "assets/04_GRAPHICS/g10_cable_vs_streaming.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -3604,7 +3604,7 @@
           23.56
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/01_SUBJECTS/prime-membership-card.png",
+        "assetPath": "assets/06_BROLL/b10_ftc_courthouse.mp4",
         "footagePlan": "federal building columns, courthouse, online shopping checkout"
       },
       "audio": {
@@ -3628,7 +3628,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/01_SUBJECTS/prime-membership-card.png",
+          "src": "assets/06_BROLL/b10_ftc_courthouse.mp4",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -3686,7 +3686,7 @@
           8.25
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/03_EVIDENCE/bally_2004_nyag_complaints.png",
+        "assetPath": "assets/04_GRAPHICS/g05_contract_vs_friction.png",
         "footagePlan": "credit card statement, bank account app, subscription charges"
       },
       "audio": {
@@ -3710,7 +3710,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/03_EVIDENCE/bally_2004_nyag_complaints.png",
+          "src": "assets/04_GRAPHICS/g05_contract_vs_friction.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -3767,7 +3767,7 @@
           13.65
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/06_BROLL/b05_bally_storefront.mp4",
+        "assetPath": "assets/06_BROLL/b09_amazon_cancel_flow.mp4",
         "footagePlan": "computer screen with form, mouse clicking, website menu"
       },
       "audio": {
@@ -3791,7 +3791,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/06_BROLL/b05_bally_storefront.mp4",
+          "src": "assets/06_BROLL/b09_amazon_cancel_flow.mp4",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -3925,7 +3925,7 @@
           16.25
         ],
         "evidenceRequired": false,
-        "assetPath": "assets/01_SUBJECTS/prime-membership-card.png",
+        "assetPath": "assets/06_BROLL/b10_ftc_courthouse.mp4",
         "footagePlan": "antique book pages, library stacks, epic manuscript"
       },
       "audio": {
@@ -3949,7 +3949,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/01_SUBJECTS/prime-membership-card.png",
+          "src": "assets/06_BROLL/b10_ftc_courthouse.mp4",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -4006,7 +4006,7 @@
           4.4
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g06_ten_dollars_noise.png",
+        "assetPath": "assets/03_EVIDENCE/amazon_settlement_2_5b.png",
         "footagePlan": "federal courthouse, judge's gavel, settlement document"
       },
       "audio": {
@@ -4030,7 +4030,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g06_ten_dollars_noise.png",
+          "src": "assets/03_EVIDENCE/amazon_settlement_2_5b.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -4086,7 +4086,7 @@
           9.35
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/03_EVIDENCE/ftc_2026_anprm.png",
+        "assetPath": "assets/04_GRAPHICS/g12_amazon_2_5b_split.png",
         "footagePlan": ""
       },
       "audio": {
@@ -4110,7 +4110,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/03_EVIDENCE/ftc_2026_anprm.png",
+          "src": "assets/04_GRAPHICS/g12_amazon_2_5b_split.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -4167,7 +4167,7 @@
           15.6
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/06_BROLL/b10_ftc_courthouse.mp4",
+        "assetPath": "assets/03_EVIDENCE/adobe_doj_2026_settlement.png",
         "footagePlan": "contract fine print, magnifying glass, legal document"
       },
       "audio": {
@@ -4191,7 +4191,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/06_BROLL/b10_ftc_courthouse.mp4",
+          "src": "assets/03_EVIDENCE/adobe_doj_2026_settlement.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -4249,7 +4249,7 @@
           14.3
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g03_subscription_gap.png",
+        "assetPath": "assets/03_EVIDENCE/bally_contract_recreation.png",
         "footagePlan": ""
       },
       "audio": {
@@ -4273,7 +4273,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g03_subscription_gap.png",
+          "src": "assets/03_EVIDENCE/bally_contract_recreation.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -4330,7 +4330,7 @@
           4.95
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g05_contract_vs_friction.png",
+        "assetPath": "assets/04_GRAPHICS/g13_settlement_compare.png",
         "footagePlan": ""
       },
       "audio": {
@@ -4354,7 +4354,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g05_contract_vs_friction.png",
+          "src": "assets/04_GRAPHICS/g13_settlement_compare.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -4410,7 +4410,7 @@
           7.15
         ],
         "evidenceRequired": false,
-        "assetPath": "assets/06_BROLL/b05_bally_storefront.mp4",
+        "assetPath": "assets/06_BROLL/b10_ftc_courthouse.mp4",
         "footagePlan": "government document, gavel, law books"
       },
       "audio": {
@@ -4434,7 +4434,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/06_BROLL/b05_bally_storefront.mp4",
+          "src": "assets/06_BROLL/b10_ftc_courthouse.mp4",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -4492,7 +4492,7 @@
           21.28
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g09_streaming_stack.png",
+        "assetPath": "assets/04_GRAPHICS/g14_click_to_cancel_symmetry.png",
         "footagePlan": ""
       },
       "audio": {
@@ -4516,7 +4516,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g09_streaming_stack.png",
+          "src": "assets/04_GRAPHICS/g14_click_to_cancel_symmetry.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -4574,7 +4574,7 @@
           4.95
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g11_iliad_flow.png",
+        "assetPath": "assets/03_EVIDENCE/ftc_2026_anprm.png",
         "footagePlan": ""
       },
       "audio": {
@@ -4598,7 +4598,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g11_iliad_flow.png",
+          "src": "assets/03_EVIDENCE/ftc_2026_anprm.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -4654,7 +4654,7 @@
           5.5
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g13_settlement_compare.png",
+        "assetPath": "assets/03_EVIDENCE/adobe_doj_2026_settlement.png",
         "footagePlan": "federal courthouse, court ruling document, gavel"
       },
       "audio": {
@@ -4678,7 +4678,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g13_settlement_compare.png",
+          "src": "assets/03_EVIDENCE/adobe_doj_2026_settlement.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -4734,7 +4734,7 @@
           9.35
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g09_streaming_stack.png",
+        "assetPath": "assets/03_EVIDENCE/eighth_circuit_click_to_cancel.png",
         "footagePlan": "law books, regulatory analysis, government building"
       },
       "audio": {
@@ -4758,7 +4758,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g09_streaming_stack.png",
+          "src": "assets/03_EVIDENCE/eighth_circuit_click_to_cancel.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -4782,7 +4782,7 @@
           "jcut": 1,
           "lcut": 0
         },
-        "transition": "contrast"
+        "transition": "cut"
       }
     },
     {
@@ -4898,7 +4898,7 @@
           22.8
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/03_EVIDENCE/amazon_ftc_complaint.png",
+        "assetPath": "assets/03_EVIDENCE/ftc_2026_anprm.png",
         "footagePlan": ""
       },
       "audio": {
@@ -4922,7 +4922,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/03_EVIDENCE/amazon_ftc_complaint.png",
+          "src": "assets/03_EVIDENCE/ftc_2026_anprm.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -4980,7 +4980,7 @@
           8.25
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/06_BROLL/b09_amazon_cancel_flow.mp4",
+        "assetPath": "assets/03_EVIDENCE/ftc_2026_anprm.png",
         "footagePlan": "phone call, customer service line, cancellation website"
       },
       "audio": {
@@ -5004,7 +5004,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/06_BROLL/b09_amazon_cancel_flow.mp4",
+          "src": "assets/03_EVIDENCE/ftc_2026_anprm.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -5140,7 +5140,7 @@
           8.25
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/05_BACKGROUNDS/bg_ftc_building.png",
+        "assetPath": "assets/06_BROLL/b12_empty_gym_return.mp4",
         "footagePlan": "empty gym interior, dim lighting, single treadmill"
       },
       "audio": {
@@ -5164,7 +5164,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/05_BACKGROUNDS/bg_ftc_building.png",
+          "src": "assets/06_BROLL/b12_empty_gym_return.mp4",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -5220,7 +5220,7 @@
           6.6
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/03_EVIDENCE/planet_fitness_2026_year_end_metrics.png",
+        "assetPath": "assets/02_ARCHIVE/bally_1990s_storefront.png",
         "footagePlan": ""
       },
       "audio": {
@@ -5244,7 +5244,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/03_EVIDENCE/planet_fitness_2026_year_end_metrics.png",
+          "src": "assets/02_ARCHIVE/bally_1990s_storefront.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -5300,7 +5300,7 @@
           9.35
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g02_four_percent_math.png",
+        "assetPath": "assets/04_GRAPHICS/g04_breakage_loop.png",
         "footagePlan": ""
       },
       "audio": {
@@ -5324,7 +5324,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g02_four_percent_math.png",
+          "src": "assets/04_GRAPHICS/g04_breakage_loop.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -5381,7 +5381,7 @@
           11.7
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/04_GRAPHICS/g04_breakage_loop.png",
+        "assetPath": "assets/04_GRAPHICS/g15_final_133_gap.png",
         "footagePlan": ""
       },
       "audio": {
@@ -5405,7 +5405,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/04_GRAPHICS/g04_breakage_loop.png",
+          "src": "assets/04_GRAPHICS/g15_final_133_gap.png",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -5463,7 +5463,7 @@
           14.95
         ],
         "evidenceRequired": true,
-        "assetPath": "assets/05_BACKGROUNDS/bg_ftc_building.png",
+        "assetPath": "assets/06_BROLL/b02_bank_statement_scroll.mp4",
         "footagePlan": "bank statements, phone with banking app, receipts"
       },
       "audio": {
@@ -5487,7 +5487,7 @@
           "strict": true
         },
         "media": {
-          "src": "assets/05_BACKGROUNDS/bg_ftc_building.png",
+          "src": "assets/06_BROLL/b02_bank_statement_scroll.mp4",
           "fit": "cover",
           "muted": true,
           "loop": true
@@ -5708,7 +5708,7 @@
       "evidenceEventsPerMinute": 3.05,
       "fatigueWindows": 0,
       "unresolvedQuestions": 66,
-      "assetSeedCount": 0,
+      "assetSeedCount": 55,
       "jlCuts": 11,
       "moduleCount": 9,
       "maxModuleShare": 0.25,
@@ -6120,12 +6120,7 @@
         "staged": false,
         "score": -0.0166
       }
-    ],
-    "autofix": {
-      "changedFields": 2,
-      "iterations": 1,
-      "scope": "timing/visual/motion/transition only; no narrative facts or source claims modified"
-    }
+    ]
   },
   "renderContract": {
     "schema": "longform-render-1",

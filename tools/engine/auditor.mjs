@@ -226,6 +226,7 @@ export async function audit(script, plan, { maxRounds = MAX_ROUNDS, key = null, 
     // Context is rebuilt every round from the CURRENT plan so the auditor
     // judges what it actually patched, never a stale snapshot from round 1.
     const ctx = buildContext(script, currentPlan);
+    const res = await generateJson({ system: SYSTEM, prompt: auditPrompt(ctx), key });
     if (!res.ok) { round.push({ round: r, error: res.reason, detail: res.errors }); status.error = res.reason; status.models = res.errors; break; }
     const v = res.data || {};
     const verdicts = {};

@@ -61,17 +61,18 @@ function beam() {
   const seed = Number(arg("seed", "20260817")) || 20260817;
   run([resolve(root, "tools/engine/search.mjs"), "--script", resolve(root, "video/src/script.json"),
        "--out", planPath, "--variants", String(variants), "--seed", String(seed)]);
-  run([resolve(root, "tools/engine/assets.mjs"), "--plan", planPath]);
   if (!process.argv.includes("--no-audit")) {
     run([resolve(root, "tools/engine/auditor.mjs"), "--script", resolve(root, "video/src/script.json"), "--plan", planPath]);
   }
   run([resolve(root, "tools/longform-autofix.mjs")]);
+  run([resolve(root, "tools/engine/assets.mjs"), "--plan", planPath]);
   run([resolve(root, "tools/qc.mjs"), "--plan", planPath]);
 }
 
 function auditCmd() {
   run([resolve(root, "tools/engine/auditor.mjs"), "--script", resolve(root, "video/src/script.json"), "--plan", planPath]);
   run([resolve(root, "tools/longform-autofix.mjs")]);
+  run([resolve(root, "tools/engine/assets.mjs"), "--plan", planPath]);
   run([resolve(root, "tools/qc.mjs"), "--plan", planPath]);
 }
 
