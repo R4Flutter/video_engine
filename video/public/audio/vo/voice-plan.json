@@ -1,56 +1,605 @@
 [
   {
     "n": 1,
-    "name": "THE HOOK",
-    "spoken": "Your employer will double your money. Most people never take it.",
-    "energy": 0.46,
-    "pace": 0.46,
-    "holdAfter": 0.34,
-    "seconds": 2.94
+    "name": "COLD OPEN / THE EMPTY GYM",
+    "spoken": "Planet Fitness has about twenty point eight million members. It has roughly two thousand eight hundred and ninety-six clubs.",
+    "energy": 0.4,
+    "pace": 0.5,
+    "holdAfter": 0.26,
+    "seconds": 5.981
   },
   {
     "n": 2,
-    "name": "THE TURN",
-    "spoken": "It's the 401k match. Put money in, they match it. A guaranteed hundred percent. Your bank pays zero point zero one.",
-    "energy": 0.48,
-    "pace": 0.46,
-    "holdAfter": 0.3,
-    "seconds": 6.453
-  },
-  {
-    "n": 3,
-    "name": "STEP ONE",
-    "spoken": "Step one. Check your plan. A typical match is four to six percent of your salary.",
-    "energy": 0.42,
-    "pace": 0.49,
-    "holdAfter": 0.24,
-    "seconds": 4.718
-  },
-  {
-    "n": 4,
-    "name": "THE NUMBERS",
-    "spoken": "Sixty thousand a year? The match pays twenty-four hundred. Free.",
+    "name": "THE IMPOSSIBLE RATIO",
+    "spoken": "That's around seven thousand two hundred members per location. A typical gym is twenty thousand square feet, and the fire code puts the maximum occupancy somewhere between two hundred and three hundred and fifty people.",
     "energy": 0.52,
     "pace": 0.42,
     "holdAfter": 0.46,
-    "seconds": 3.12
+    "seconds": 9.703
+  },
+  {
+    "n": 3,
+    "name": "THE FIRE CODE",
+    "spoken": "So if four percent of the members of a single Planet Fitness showed up on the same evening, the fire marshal would close it. If ten percent showed up, the business would not survive the month.",
+    "energy": 0.48,
+    "pace": 0.46,
+    "holdAfter": 0.3,
+    "seconds": 7.704
+  },
+  {
+    "n": 4,
+    "name": "THIS IS THE PRODUCT",
+    "spoken": "This is not a risk the company manages. It's the product.",
+    "energy": 0.76,
+    "pace": 0.34,
+    "holdAfter": 0.5,
+    "seconds": 3.095
   },
   {
     "n": 5,
-    "name": "THE ESCALATION",
-    "spoken": "Skip it for ten years and thirty-eight thousand is gone. Forty? The match alone passes a million.",
-    "energy": 0.44,
-    "pace": 0.47,
-    "holdAfter": 0.32,
-    "seconds": 4.982
+    "name": "THE $86 ESTIMATE",
+    "spoken": "Here's a number that should bother you more than it does. When researchers asked Americans how much they spend every month on subscriptions, the average guess was eighty-six dollars.",
+    "energy": 0.52,
+    "pace": 0.42,
+    "holdAfter": 0.46,
+    "seconds": 7.701
   },
   {
     "n": 6,
-    "name": "THE PAYOFF",
-    "spoken": "The only free money in finance. Check your plan today. And save this for someone leaving theirs.",
-    "energy": 0.46,
+    "name": "THE $219 REALITY",
+    "spoken": "Then they walked the same people through it category by category. Streaming. Music. Cloud storage. The gym. The app you downloaded for a trip in 2023. The real figure was two hundred and nineteen.",
+    "energy": 0.48,
     "pace": 0.46,
-    "holdAfter": 0.34,
-    "seconds": 4.603
+    "holdAfter": 0.3,
+    "seconds": 9.437
+  },
+  {
+    "n": 7,
+    "name": "THE $133 GAP",
+    "spoken": "A hundred and thirty-three dollars a month, sixteen hundred dollars a year, going somewhere they couldn't name. More than half of people underestimate by at least a hundred dollars. Around four in ten are still paying for something they've forgotten they have.",
+    "energy": 0.52,
+    "pace": 0.42,
+    "holdAfter": 0.46,
+    "seconds": 10.511
+  },
+  {
+    "n": 8,
+    "name": "SOMEBODY BUILT IT",
+    "spoken": "That gap is not carelessness. Somebody built it. It took about thirty years, it happened in public, and by the time anyone tried to stop it, it was the default way almost everything in America gets sold. This is how that happened.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.28,
+    "seconds": 10.339
+  },
+  {
+    "n": 9,
+    "name": "START WITH THE GYM",
+    "spoken": "Start with the gym, because the gym is where the model is easiest to see.",
+    "energy": 0.4,
+    "pace": 0.5,
+    "holdAfter": 0.26,
+    "seconds": 3.548
+  },
+  {
+    "n": 10,
+    "name": "FIXED COSTS",
+    "spoken": "A gym has a strange cost structure. The building costs the same whether one person walks in or a thousand do. The machines cost the same. The lease, the lights, the insurance, the staff at the desk — all of it is fixed.",
+    "energy": 0.44,
+    "pace": 0.47,
+    "holdAfter": 0.32,
+    "seconds": 10.574
+  },
+  {
+    "n": 11,
+    "name": "PURE PROFIT UNTIL THEY TURN UP",
+    "spoken": "Which means every additional member is almost pure profit — right up until the moment they actually turn up. Then they need a machine, and a shower, and space on the floor, and the economics invert.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.26,
+    "seconds": 9.079
+  },
+  {
+    "n": 12,
+    "name": "THE IDEAL CUSTOMER",
+    "spoken": "So the ideal customer is obvious. It's the one who pays and doesn't come.",
+    "energy": 0.4,
+    "pace": 0.5,
+    "holdAfter": 0.26,
+    "seconds": 4.167
+  },
+  {
+    "n": 13,
+    "name": "TWO-THIRDS UNUSED",
+    "spoken": "Industry estimates put the share of gym memberships that go essentially unused at up to two-thirds. Some of those people intend to go. Most of them intended to go in January.",
+    "energy": 0.52,
+    "pace": 0.42,
+    "holdAfter": 0.46,
+    "seconds": 8.106
+  },
+  {
+    "n": 14,
+    "name": "BREAKAGE",
+    "spoken": "There's a word for revenue a company collects for a service it never has to deliver. Breakage.",
+    "energy": 0.76,
+    "pace": 0.34,
+    "holdAfter": 0.5,
+    "seconds": 5.295
+  },
+  {
+    "n": 15,
+    "name": "GIFT CARDS / MILES / CREDIT",
+    "spoken": "It came from the gift card business. A card gets bought, partly spent, thrown in a drawer, and the unspent balance eventually becomes profit that cost nothing to produce. Airlines have it with expired miles. Retailers have it with store credit.",
+    "energy": 0.42,
+    "pace": 0.49,
+    "holdAfter": 0.24,
+    "seconds": 11.54
+  },
+  {
+    "n": 16,
+    "name": "EVERY MONTH, FOREVER",
+    "spoken": "But a gift card only breaks once. A subscription breaks every single month, forever, until somebody actively stops it.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.28,
+    "seconds": 4.928
+  },
+  {
+    "n": 17,
+    "name": "BALLY / THE OLD MODEL",
+    "spoken": "The first companies to industrialise this got it wrong, and the way they got it wrong is instructive. Through the nineties, the dominant American gym chain was Bally. And Bally's approach to keeping revenue was not subtle. It used long contracts — customers who believed they were signing up for a few months of access found they had committed to three years — and it enforced them.",
+    "energy": 0.4,
+    "pace": 0.5,
+    "holdAfter": 0.26,
+    "seconds": 17.585
+  },
+  {
+    "n": 18,
+    "name": "THE 1994 INVESTIGATION",
+    "spoken": "In 1994, federal regulators investigated the company's billing practices, including charges customers said they never authorised and contract terms that made cancellation far harder than it appeared. It settled, paid a civil penalty, and issued refunds without admitting wrongdoing.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.28,
+    "seconds": 13.619
+  },
+  {
+    "n": 19,
+    "name": "600+ COMPLAINTS",
+    "spoken": "That did not end it. A decade later, the New York Attorney General opened an investigation after more than six hundred consumer complaints — people describing advertisements that promised short-term access and delivered three-year obligations, and cancellations that were submitted and then simply not honoured. Bally settled that too, agreeing to a set of reforms: a grace period, clearer cancellation procedures, pro-rata refunds.",
+    "energy": 0.4,
+    "pace": 0.5,
+    "holdAfter": 0.26,
+    "seconds": 20.734
+  },
+  {
+    "n": 20,
+    "name": "THE VICTIM WITH A DOCUMENT",
+    "spoken": "Now, read what happened next as a business lesson rather than a morality tale, because that's how the industry read it. Bally's model worked, in the narrow sense that it extracted money from people who had stopped attending. But it worked by creating a legal obligation — and a legal obligation generates something dangerous. It generates a victim who can point at a document and say: I tried to leave, and you wouldn't let me.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.28,
+    "seconds": 18.81
+  },
+  {
+    "n": 21,
+    "name": "THE CONTRACT WAS THE WRONG TOOL",
+    "spoken": "That produces complaints. Complaints produce attorneys general. Attorneys general produce settlements. So the next generation of the model removed the contract.",
+    "energy": 0.76,
+    "pace": 0.34,
+    "holdAfter": 0.5,
+    "seconds": 5.815
+  },
+  {
+    "n": 22,
+    "name": "PLANET FITNESS REVERSAL",
+    "spoken": "Planet Fitness will let you cancel. There's no three-year term to escape and no collections agency waiting. On paper it is the most consumer-friendly gym in America — which is exactly the point, because it discovered something the lawyers at Bally never understood.",
+    "energy": 0.4,
+    "pace": 0.5,
+    "holdAfter": 0.26,
+    "seconds": 12.642
+  },
+  {
+    "n": 23,
+    "name": "LEAVING IS NOT WORTH YOUR AFTERNOON",
+    "spoken": "You don't need to trap somebody if leaving is simply not worth their afternoon.",
+    "energy": 0.4,
+    "pace": 0.5,
+    "holdAfter": 0.26,
+    "seconds": 3.685
+  },
+  {
+    "n": 24,
+    "name": "$10 BELOW THE THRESHOLD",
+    "spoken": "And here's the part that took real intelligence to figure out. If you want to maximise breakage, the worst thing you can do is charge a lot. Charge ninety-nine dollars a month and people notice. It shows up on the statement, it sits there looking expensive, and one Sunday afternoon somebody decides to deal with it. Charge ten dollars a month, and something different happens. Ten dollars is below the threshold where the effort of cancelling feels worth it. To end it you'd need to find the login you set up on a different phone, remember which email you used, sit through the retention screens. Twenty minutes of irritation to recover ten dollars.",
+    "energy": 0.52,
+    "pace": 0.42,
+    "holdAfter": 0.46,
+    "seconds": 29.786
+  },
+  {
+    "n": 25,
+    "name": "THE $120 / YEAR PUNCH",
+    "spoken": "Most people, correctly, decide that's a bad trade. So they keep paying — not because they can't afford to stop, but because stopping costs more than continuing.",
+    "energy": 0.48,
+    "pace": 0.46,
+    "holdAfter": 0.3,
+    "seconds": 8.584
+  },
+  {
+    "n": 26,
+    "name": "THE INTENTION PRODUCT",
+    "spoken": "The gym isn't selling you fitness. It's selling you the intention to get fit, and then quietly billing you for the gap between that intention and your actual Tuesday evening.",
+    "energy": 0.42,
+    "pace": 0.49,
+    "holdAfter": 0.24,
+    "seconds": 7.426
+  },
+  {
+    "n": 27,
+    "name": "THEY JUST MADE IT VISIBLE",
+    "spoken": "The gyms didn't invent this. They just made it visible. Because at almost exactly the moment the fitness industry perfected the model, an entirely different kind of company was looking at the same maths — and it was about to apply it to something you already owned.",
+    "energy": 0.4,
+    "pace": 0.5,
+    "holdAfter": 0.26,
+    "seconds": 12.049
+  },
+  {
+    "n": 28,
+    "name": "BUYING SOFTWARE LIKE AN APPLIANCE",
+    "spoken": "For about twenty years, buying software worked like buying anything else. You paid Adobe roughly seven hundred dollars for Photoshop. A box arrived. Inside was a disc and a licence key, and that key was yours. Not rented — yours. You could use that copy in 2005 and you could still use it in 2015. If Adobe went out of business, the disc still worked.",
+    "energy": 0.4,
+    "pace": 0.5,
+    "holdAfter": 0.26,
+    "seconds": 19.019
+  },
+  {
+    "n": 29,
+    "name": "THE SAWTOOTH REVENUE",
+    "spoken": "The problem, from Adobe's side, was that chart. Revenue arrived in spikes. Every eighteen to twenty-four months they'd ship a new version, everybody would upgrade, and then there'd be a long flat stretch where a designer with a working copy of CS4 had no particular reason to give Adobe another dollar.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.26,
+    "seconds": 13.803
+  },
+  {
+    "n": 30,
+    "name": "MAY 6, 2013",
+    "spoken": "Worse, the software had become good enough. By 2012, Photoshop could already do essentially everything a working professional needed. Adobe was in the uncomfortable position of having to invent reasons for people to re-buy a tool that wasn't broken. On the sixth of May, 2013, Adobe announced that Creative Suite was finished. Not discounted. Not deprioritised. Finished. There would be no CS7. From that point forward, the only way to get Photoshop was Creative Cloud — a monthly subscription that never ended and never became yours.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.28,
+    "seconds": 24.765
+  },
+  {
+    "n": 31,
+    "name": "THE BACKLASH",
+    "spoken": "The reaction was genuinely furious. A petition demanding Adobe reverse the decision gathered tens of thousands of signatures. The tech press called it hostage-taking. Professional designers pointed out the obvious thing: under the old model, if you stopped paying, you kept your tools. Under the new one, if you stopped paying, twenty years of your work became files you could no longer open. Adobe did it anyway.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.28,
+    "seconds": 19.578
+  },
+  {
+    "n": 32,
+    "name": "THE NUMBERS",
+    "spoken": "Here's what happened. Adobe's subscription revenue in 2013 was about one point two three billion dollars. By 2023 it was eighteen point two eight billion. Total company revenue went from roughly four point four billion before the transition to over fifteen billion. Creative Cloud went from zero subscribers to more than thirty million.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.26,
+    "seconds": 16.607
+  },
+  {
+    "n": 33,
+    "name": "NOT 15× BETTER",
+    "spoken": "And notice what did not cause that. Adobe did not fifteen-times its revenue by making Photoshop fifteen times better. The software improved, but not like that. Nobody looks at Photoshop in 2023 and sees fifteen versions of the 2013 program. What changed was the ownership. Adobe took a thing you bought once and converted it into a thing you rent forever — and in doing so, converted a customer who might return into a customer who has to keep paying to keep what they've already made.",
+    "energy": 0.48,
+    "pace": 0.46,
+    "holdAfter": 0.3,
+    "seconds": 23.24
+  },
+  {
+    "n": 34,
+    "name": "THE BACKLASH DOESN'T MATTER",
+    "spoken": "That result did not go unnoticed. Because the lesson every other company in America took from Adobe was not make better products. It was simpler than that, and much worse: the backlash doesn't matter. People were angry, they signed the petition, they wrote the posts — and then they subscribed.",
+    "energy": 0.4,
+    "pace": 0.5,
+    "holdAfter": 0.26,
+    "seconds": 12.888
+  },
+  {
+    "n": 35,
+    "name": "STREAMING RESET",
+    "spoken": "The clearest proof that the model won isn't in software at all. It's in the thing that was supposed to be the model's opposite.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.28,
+    "seconds": 4.922
+  },
+  {
+    "n": 36,
+    "name": "THE BUNDLE",
+    "spoken": "For years, the argument against cable television was the bundle. You paid one large monthly bill for two hundred channels, watched about nine of them, and had no way to pay for only the nine. It was the most resented recurring charge in the American household, and streaming was sold explicitly as the escape from it. Pay for what you want. Cancel any time. No contract, no box, no installer.",
+    "energy": 0.4,
+    "pace": 0.5,
+    "holdAfter": 0.26,
+    "seconds": 17.56
+  },
+  {
+    "n": 37,
+    "name": "THE CATALOGUE SPLITS",
+    "spoken": "And for a while it was exactly that. Then every studio worked out that licensing its catalogue to Netflix was worth less than launching its own service — so the catalogue split. The show you wanted moved. Then another one moved. And the only way to watch what you used to watch was to hold four or five subscriptions at once.",
+    "energy": 0.42,
+    "pace": 0.49,
+    "holdAfter": 0.24,
+    "seconds": 15.732
+  },
+  {
+    "n": 38,
+    "name": "THE NEW BUNDLE",
+    "spoken": "By 2025, survey work put the average American household at roughly four point seven streaming services, paying about sixty-one dollars a month combined — up from around forty-eight two years earlier, as essentially every major platform raised prices. Add a live-TV service on top, which many households do to get sports, and the total moves past a hundred and twenty dollars.",
+    "energy": 0.52,
+    "pace": 0.42,
+    "holdAfter": 0.46,
+    "seconds": 19.139
+  },
+  {
+    "n": 39,
+    "name": "SIX SMALL BILLS",
+    "spoken": "Which is roughly what cable cost. The industry rebuilt the bundle. Same total, same monthly recurrence, same resentment — except now it arrives as five or six separate charges instead of one, which is the important difference. One large bill is a thing you argue with. Six small ones are a thing you stop noticing.",
+    "energy": 0.48,
+    "pace": 0.46,
+    "holdAfter": 0.3,
+    "seconds": 15.828
+  },
+  {
+    "n": 40,
+    "name": "STREAMFLATION",
+    "spoken": "There's a term for the mechanism, coined as it was happening: streamflation. Every service raises its price modestly, independently, at a moment when cancelling that one service still feels petty. None of the increases is worth acting on alone. Together, they reassembled the exact bill everybody had left.",
+    "energy": 0.44,
+    "pace": 0.47,
+    "holdAfter": 0.32,
+    "seconds": 16.169
+  },
+  {
+    "n": 41,
+    "name": "THE MODEL EVERYWHERE",
+    "spoken": "Within a few years the model was everywhere. Software, obviously. But then cars, where BMW briefly tried charging a monthly fee to switch on heated seats that were already installed in the vehicle you'd bought. Printers, where the machine watches how much you print and bills you for it. Kitchen appliances. Doorbells. Features in things you own, waiting behind a monthly payment. And once everything is a subscription, one thing becomes far more valuable than any product decision a company can make. Making it hard to leave.",
+    "energy": 0.42,
+    "pace": 0.49,
+    "holdAfter": 0.24,
+    "seconds": 26.171
+  },
+  {
+    "n": 42,
+    "name": "FTC SUES AMAZON",
+    "spoken": "In 2023, the Federal Trade Commission sued Amazon. The allegation was not about prices, or competition, or warehouses. It was about a button. The FTC's case was that Amazon had designed its checkout so that customers enrolled in Prime without understanding they'd done it — using what regulators call dark patterns. Not lies. Design. A layout where the expensive choice is the easy one and the free choice is a small grey line of text you have to look for.",
+    "energy": 0.4,
+    "pace": 0.5,
+    "holdAfter": 0.26,
+    "seconds": 24.393
+  },
+  {
+    "n": 43,
+    "name": "MILLIONS PAYING",
+    "spoken": "Millions of people, the FTC alleged, were paying for a subscription they never knowingly agreed to start. But that wasn't the part that made the case famous. The famous part was what happened when those customers tried to cancel.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.28,
+    "seconds": 10.339
+  },
+  {
+    "n": 44,
+    "name": "THE CANCELLATION MAZE",
+    "spoken": "To leave Prime, a customer had to move through a sequence of pages. Each one confirmed they wanted to cancel. Each one offered a reason to stay. Discounts, pauses, reminders of benefits they'd lose. At several points the button that continued the cancellation was smaller and paler than the button that abandoned it.",
+    "energy": 0.4,
+    "pace": 0.5,
+    "holdAfter": 0.26,
+    "seconds": 14.924
+  },
+  {
+    "n": 45,
+    "name": "ILIAD",
+    "spoken": "Internally, Amazon employees had a name for this sequence. Iliad.",
+    "energy": 0.76,
+    "pace": 0.34,
+    "holdAfter": 0.5,
+    "seconds": 3.57
+  },
+  {
+    "n": 46,
+    "name": "A TEN-YEAR WAR",
+    "spoken": "They named it after Homer's epic. A poem about a war that lasted ten years. That is not an accident of translation or a coincidence of naming. Somebody inside Amazon looked at the path a customer had to walk to stop paying, and the story it reminded them of was one that famously would not end. They named it, and they kept it.",
+    "energy": 0.4,
+    "pace": 0.5,
+    "holdAfter": 0.26,
+    "seconds": 16.44
+  },
+  {
+    "n": 47,
+    "name": "SEP 25, 2025",
+    "spoken": "On the twenty-fifth of September, 2025, in the middle of what was expected to be a month-long jury trial, Amazon settled.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.28,
+    "seconds": 5.737
+  },
+  {
+    "n": 48,
+    "name": "$2.5 BILLION",
+    "spoken": "Two and a half billion dollars. One billion of that was a civil penalty — the largest ever imposed for violating an FTC rule. The remaining one and a half billion was earmarked for refunds to customers who'd been enrolled without meaningfully agreeing to it.",
+    "energy": 0.52,
+    "pace": 0.42,
+    "holdAfter": 0.46,
+    "seconds": 12.89
+  },
+  {
+    "n": 49,
+    "name": "ADOBE SUED TOO",
+    "spoken": "Amazon was not alone. In June 2024, the Department of Justice sued Adobe — the same Adobe — over the cancellation terms attached to its most common subscription plan. The allegation was that Adobe buried an early termination fee where customers wouldn't see it: in fine print, behind optional text boxes and links that the government said were designed to go unnoticed.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.28,
+    "seconds": 17.272
+  },
+  {
+    "n": 50,
+    "name": "THE FEE",
+    "spoken": "The fee itself was fifty percent of everything remaining on the contract. So a customer who signed up for what looked like a monthly plan, and tried to leave in month four, discovered that leaving cost half of the eight months they thought they were walking away from. Adobe paid seventy-five million dollars to settle it.",
+    "energy": 0.52,
+    "pace": 0.42,
+    "holdAfter": 0.46,
+    "seconds": 14.283
+  },
+  {
+    "n": 51,
+    "name": "THE SAME UNDERLYING THING",
+    "spoken": "Two of the largest companies in America, both penalised, in under two years, for the same underlying thing: making it hard to stop paying.",
+    "energy": 0.48,
+    "pace": 0.46,
+    "holdAfter": 0.3,
+    "seconds": 6.355
+  },
+  {
+    "n": 52,
+    "name": "SOMEBODY WROTE A RULE",
+    "spoken": "Which raises the obvious question. If the government is winning these cases — if the penalties are this large, and the practice is this well documented — then surely somebody finally wrote a rule. Somebody did.",
+    "energy": 0.4,
+    "pace": 0.5,
+    "holdAfter": 0.26,
+    "seconds": 10.172
+  },
+  {
+    "n": 53,
+    "name": "CLICK-TO-CANCEL",
+    "spoken": "It was called click-to-cancel. The idea was almost aggressively simple: if you can start a subscription in two clicks on a website, you must be able to end it in about two clicks on the same website. No phone call. No retention maze. No Iliad. It was not a radical rule. It was a symmetry rule. Whatever effort the company demands to begin, it can demand to end — and no more.",
+    "energy": 0.48,
+    "pace": 0.46,
+    "holdAfter": 0.3,
+    "seconds": 19.863
+  },
+  {
+    "n": 54,
+    "name": "THE CHALLENGE",
+    "spoken": "Companies fought it hard, and the trade groups behind the challenge included some of the largest advertising and industry associations in the country.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.28,
+    "seconds": 6.548
+  },
+  {
+    "n": 55,
+    "name": "JULY 8, 2025",
+    "spoken": "On the eighth of July, 2025 — days before the rule was due to take effect — the Eighth Circuit Court of Appeals struck it down. Entirely.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.28,
+    "seconds": 7.25
+  },
+  {
+    "n": 56,
+    "name": "NOT ABOUT THE RULE",
+    "spoken": "And here's the detail worth sitting with. The court did not rule that click-to-cancel was wrong. It did not find that the rule was unfair to businesses, or that consumers didn't need it, or that the FTC lacked the authority to regulate subscriptions.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.28,
+    "seconds": 11.99
+  },
+  {
+    "n": 57,
+    "name": "PROCEDURE",
+    "spoken": "It struck the rule down on procedure. The FTC, the court held, had failed to carry out a preliminary regulatory analysis of the rule's costs and benefits — a step it was required to complete before finalising it. A paperwork failure. Years of rulemaking, vacated days before the deadline, because of a missing analysis.",
+    "energy": 0.76,
+    "pace": 0.34,
+    "holdAfter": 0.5,
+    "seconds": 15.115
+  },
+  {
+    "n": 58,
+    "name": "2026: NO FEDERAL RULE",
+    "spoken": "So as of right now, in 2026, there is no federal click-to-cancel rule in effect in the United States. The FTC has begun the process again — it's filed the early paperwork to write a new version — and individual states have their own laws, and enforcement actions like the Amazon and Adobe cases still happen one company at a time. But the general rule, the one that would have applied to everybody at once, does not exist.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.28,
+    "seconds": 19.929
+  },
+  {
+    "n": 59,
+    "name": "THE FRICTION IS STILL LEGAL",
+    "spoken": "Which means the friction is still legal. The retention screens are legal. The cancellation flow that takes six pages is legal. The plan that's easy to start on your phone and requires a phone call to end is legal.",
+    "energy": 0.58,
+    "pace": 0.4,
+    "holdAfter": 0.28,
+    "seconds": 8.467
+  },
+  {
+    "n": 60,
+    "name": "NOT AN OVERSIGHT",
+    "spoken": "Not an oversight. Not a loophole nobody noticed. A deliberate, documented, profitable design — that a court reviewed, and left in place.",
+    "energy": 0.76,
+    "pace": 0.34,
+    "holdAfter": 0.5,
+    "seconds": 6.048
+  },
+  {
+    "n": 61,
+    "name": "GO BACK TO WHERE THIS STARTED",
+    "spoken": "Go back to where this started. Twenty point eight million members. Room for a few hundred at a time. A business that works precisely because the overwhelming majority of the people paying for it are not there.",
+    "energy": 0.4,
+    "pace": 0.5,
+    "holdAfter": 0.26,
+    "seconds": 10.748
+  },
+  {
+    "n": 62,
+    "name": "THE LINK",
+    "spoken": "For most of economic history, a company made money by giving you something. If it stopped delivering, you stopped paying, and that link was the entire discipline of the thing.",
+    "energy": 0.48,
+    "pace": 0.46,
+    "holdAfter": 0.3,
+    "seconds": 8.187
+  },
+  {
+    "n": 63,
+    "name": "THE SEVERED LINK",
+    "spoken": "The subscription economy severed that link. Now the payment continues on its own, and it keeps continuing until you take deliberate action to stop it — action the company has every financial reason to make slightly harder than you can be bothered with.",
+    "energy": 0.44,
+    "pace": 0.47,
+    "holdAfter": 0.32,
+    "seconds": 11.042
+  },
+  {
+    "n": 64,
+    "name": "THE $133 GAP REFRAMED",
+    "spoken": "That's what the hundred and thirty-three dollar gap actually is. It isn't a survey artefact, and it isn't evidence that people are bad with money. It's the measured output of a system built to convert attention into revenue, where your inattention is the raw material.",
+    "energy": 0.52,
+    "pace": 0.42,
+    "holdAfter": 0.46,
+    "seconds": 11.835
+  },
+  {
+    "n": 65,
+    "name": "THE ONLY USEFUL THING",
+    "spoken": "So here's the only useful thing to do with any of this. Open your banking app. Search your statements for the last twelve months — not one month, twelve — and filter for anything charged in the same amount on roughly the same date. Every one of those is a decision you made once and have been renewing silently ever since.",
+    "energy": 0.4,
+    "pace": 0.5,
+    "holdAfter": 0.26,
+    "seconds": 14.245
+  },
+  {
+    "n": 66,
+    "name": "KEEP WHAT YOU WANT",
+    "spoken": "Some of them you'll want to keep. That's fine. That's a choice. Right now, for most people, it isn't. It's just the last thing they happened to agree to, still running.",
+    "energy": 0.42,
+    "pace": 0.49,
+    "holdAfter": 0.24,
+    "seconds": 8.207
+  },
+  {
+    "n": 67,
+    "name": "FINAL THESIS / HARD STOP",
+    "spoken": "The point is that it should be a choice.",
+    "energy": 0.76,
+    "pace": 0.34,
+    "holdAfter": 0.5,
+    "seconds": 1.692
   }
 ]
