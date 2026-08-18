@@ -1,17 +1,16 @@
-// CameraPlanner: semantic camera intent, not scale values. The renderer's
-// camera table turns intent into framing, so a change of taste happens in one
-// place instead of seven.
+// CameraPlanner: semantic camera intent, not raw scale values.
 //
-// The Shorts-specific rule: beat one holds. A camera move on the hook frame
-// competes with reading it, and reading it is the only thing that matters in
-// that half second.
+// The renderer owns the exact magnitude of each move. This planner decides
+// WHY the camera moves. Long-form needs a calmer, more cinematic language than
+// Shorts: movement follows narrative verbs and the same intent is not spammed
+// across consecutive beats.
 import type { CameraIntent, Emotion, ScriptBeat } from "../types.ts";
 import type { BeatFacts } from "../story/StoryAnalyzer.ts";
 import type { VisualDecision } from "../visual/VisualDirector.ts";
 
 const KNOWN: CameraIntent[] = ["hold", "push", "pull", "punch", "settle"];
 
-const BY_PURPOSE: Record<string, CameraIntent> = {
+const BY_PURPOSE_SHORT: Record<string, CameraIntent> = {
   hook: "hold",
   turn: "punch",
   explain: "settle",
@@ -23,7 +22,7 @@ const BY_PURPOSE: Record<string, CameraIntent> = {
 };
 
 const BY_MODULE: Record<string, CameraIntent> = {
-  kinetic: "hold", // flying type plus a moving camera is two edits fighting
+  kinetic: "hold",
   stat: "push",
   compare: "settle",
   chart: "settle",
@@ -42,21 +41,92 @@ const BY_MODULE: Record<string, CameraIntent> = {
   outro: "pull",
 };
 
+const LONGFORM_BY_PURPOSE: Record<string, CameraIntent> = {
+  hook: "hold",
+  turn: "push",
+  explain: "settle",
+  proof: "push",
+  escalate: "push",
+  reveal: "settle",
+  payoff: "pull",
+  cta: "hold",
+};
+
+const LONGFORM_BEATS: Record<number, CameraIntent> = {
+  1: "hold",
+  2: "push",
+  3: "settle",
+  4: "push",
+  5: "pull",
+  6: "settle",
+  7: "push",
+  8: "hold",
+  9: "push",
+  10: "settle",
+  11: "push",
+  12: "punch",
+  13: "settle",
+  14: "push",
+  15: "pull",
+  16: "hold",
+  17: "push",
+  18: "punch",
+  19: "push",
+  20: "settle",
+  21: "pull",
+  22: "settle",
+  23: "push",
+  24: "pull",
+  25: "punch",
+  26: "settle",
+  27: "push",
+  28: "hold",
+  29: "punch",
+  30: "settle",
+  31: "pull",
+  32: "punch",
+  33: "hold",
+  34: "pull",
+  35: "hold",
+  36: "settle",
+  37: "push",
+  38: "settle",
+  39: "push",
+  40: "hold",
+};
+
 export const cameraFor = (
   b: ScriptBeat,
   facts: BeatFacts,
   visual: VisualDecision,
   emotion: Emotion,
   isFirst: boolean,
+  isLongFormEpisode = false,
+  previous?: CameraIntent,
 ): CameraIntent => {
   if (b.camera) {
     const named = b.camera.toLowerCase();
     const hit = KNOWN.find((k) => named.includes(k));
     if (hit) return hit;
   }
+
+  if (isLongFormEpisode) {
+    if (isFirst) return "hold";
+    const authored = LONGFORM_BEATS[b.n];
+    const base = authored ?? LONGFORM_BY_PURPOSE[facts.purpose] ?? "settle";
+
+    if (previous === base && base !== "hold") {
+      if (base === "push") return emotion === "relief" ? "pull" : "settle";
+      if (base === "pull") return "settle";
+      if (base === "settle") return emotion === "tension" ? "push" : "hold";
+      if (base === "punch") return "settle";
+    }
+    return base;
+  }
+
   if (isFirst) return "hold";
   if (facts.purpose === "payoff" || facts.purpose === "reveal") return "punch";
   if (emotion === "tension" || emotion === "surprise") return "push";
   if (emotion === "relief" || emotion === "satisfaction") return "pull";
-  return BY_MODULE[visual.module] ?? BY_PURPOSE[facts.purpose] ?? "settle";
+  return BY_MODULE[visual.module] ?? BY_PURPOSE_SHORT[facts.purpose] ?? "settle";
 };

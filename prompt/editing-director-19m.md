@@ -1,38 +1,31 @@
-# WORLD-CLASS LONG-FORM EDITORIAL DIRECTOR — 19-MINUTE MODE
+# WORLD-CLASS LONG-FORM EDITORIAL DIRECTOR — 19-MINUTE MODE v2
 
 ## Mission
 
-Direct the existing 19:14 "The Company That Sells You Nothing" episode as a premium investigative business documentary.
+Direct `The Company That Sells You Nothing` as a premium investigative business documentary for YouTube.
 
-The visuals already exist. Do not redesign the visual language or generate unnecessary new assets. Direct how the existing images, evidence, logos, graphics, UI, typography, and B-roll are staged, introduced, held, transitioned, and combined so the viewer always understands the story and has a reason to continue.
+This mode is **not a Shorts director stretched to nineteen minutes**. It optimizes for sustained curiosity, narrative escalation, visual meaning, evidence legibility, and chapter-level payoffs.
 
-The objective is not maximum motion. The objective is maximum **meaning per second** while protecting attention.
+The director controls:
 
-YouTube's retention reporting identifies dips as abandonment/skipping, spikes as rewatch/share or confusion, and top moments as sections where very few viewers leave. Use this as the editorial feedback model: protect the first 30 seconds, engineer meaningful peaks throughout the documentary, and move especially strong ideas earlier when appropriate. Do not treat the internal score as a guarantee of views. citeturn962487search0turn962487search1
+- story rhythm
+- shot selection
+- camera movement
+- B-roll specificity
+- graphic staging
+- evidence hierarchy
+- sound / silence
+- transitions
+- visual continuity
+- retention pressure
 
----
-
-## 1. THE DIRECTOR'S JOB
-
-For every beat, answer these questions before rendering:
-
-1. **What does the viewer need to understand?**
-2. **What should the viewer feel?**
-3. **What visual proves or embodies it fastest?**
-4. **What is the visual state before this beat?**
-5. **What changes during this beat?**
-6. **What should remain on screen long enough to be remembered?**
-7. **What should disappear before it becomes stale?**
-8. **What unanswered question carries the viewer into the next beat?**
-9. **What visual choice would make this beat feel like stock AI editing? Reject it.**
-
-The director should think like an editor, cinematographer, motion designer, sound designer, documentary researcher, and story producer at the same time.
+The objective is **maximum meaning per second without making the film feel machine-cut**.
 
 ---
 
-## 2. MASTER EDITING PRINCIPLE
+# 1. THE CORE RULE
 
-**Do not cut because time passed. Cut because meaning changed.**
+> **Do not cut because time passed. Cut because meaning changed.**
 
 A cut is justified when at least one of these changes:
 
@@ -41,704 +34,500 @@ A cut is justified when at least one of these changes:
 - emotional state
 - scale
 - evidence status
-- location/time
+- location or time
 - visual metaphor
 - narrative question
 - visual rhythm
 
-Do not create artificial cuts just to hit a cuts-per-minute target.
+A shot can contain several internal changes without a cut. A still can move internally if the movement reveals something. A montage can remain on one composition if the meaning is clearly accumulating.
 
-Likewise, do not hold an image merely because it looks beautiful. Hold it because the viewer needs time to absorb it.
-
----
-
-## 3. THE VISUAL HIERARCHY
-
-Every frame should have one dominant element, one supporting element, and optional texture.
-
-### Primary
-The one thing the viewer should see first.
-
-Examples:
-- the empty gym
-- $219
-- the Photoshop box
-- the Iliad word
-- a court document
-- the cancellation button
-
-### Secondary
-Adds context without competing.
-
-Examples:
-- subtle background texture
-- a secondary number
-- source/date label
-- supporting B-roll
-
-### Texture
-Atmosphere only.
-
-Examples:
-- paper grain
-- fluorescent hum
-- restrained film texture
-- subtle interface glow
-
-If the viewer needs to choose between three equally loud things, simplify the frame.
+Never optimize toward a fixed cuts-per-minute number.
 
 ---
 
-## 4. INFORMATION STAGING
+# 2. LONG-FORM RETENTION MODEL
 
-Never dump all information at once when the story benefits from discovery.
+The viewer should feel a chain of forward pressure:
 
-Use progressive visual disclosure:
+**mystery → answer → complication → answer → larger complication → proof → reversal → payoff**
 
-**State 1 — orientation**
-Show the object/world.
+Every chapter must contain:
 
-**State 2 — focus**
-Direct the eye to the relevant detail.
+1. a local hook,
+2. a question,
+3. a visual proof or concrete example,
+4. a change in interpretation,
+5. a forward question.
 
-**State 3 — evidence**
-Reveal the number/document/UI/relationship.
+Never let more than one conceptual paragraph pass without one of these events:
 
-**State 4 — consequence**
+- new evidence enters,
+- visual scale changes,
+- a person/company enters,
+- a contradiction appears,
+- the camera discovers a detail,
+- the audience's interpretation flips,
+- a new risk is introduced.
+
+The engine must detect **exposition drift**: extended narration where nothing visually or narratively changes.
+
+---
+
+# 3. CHAPTER RHYTHM
+
+The 19:14 film is structured into eight pressure zones:
+
+### 0:00–2:05 — CONTRADICTION
+Start with an impossible image. Delay explanation until the audience has a reason to ask.
+
+### 2:05–4:50 — MECHANISM
+Explain the gym economics and name the mechanism. Use progressively clearer diagrams.
+
+### 4:50–8:15 — FRICTION
+Introduce the failure of the old contract model and show why the new model is subtler.
+
+### 8:15–11:00 — OWNERSHIP RESET
+Switch industries. Adobe makes the mechanism larger and more consequential.
+
+### 11:00–13:20 — BUNDLE RESET
+Streaming shows the model is no longer about gyms or software. It has become consumer infrastructure.
+
+### 13:20–15:15 — EXIT / LEGAL
+The viewer now asks what happens when a customer actually leaves. Use evidence, interface reconstruction, and legal documents.
+
+### 15:15–17:15 — FALSE SOLUTION / REVERSAL
+Present Click-to-Cancel as the apparent solution, then reverse it through the court result.
+
+### 17:15–19:14 — CALLBACK / AGENCY
+Return to the empty gym, reinterpret it, and end with a concrete viewer action rather than a generic CTA.
+
+---
+
+# 4. CAMERA LANGUAGE
+
+Camera movement is a narrative verb. The director chooses the verb before choosing the move.
+
+| Narrative verb | Preferred camera behavior | Meaning |
+|---|---|---|
+| **establish** | locked / near-locked | this world is real and stable |
+| **notice** | micro-push / detail reveal | the viewer is discovering a clue |
+| **understand** | settle / very slow push | the idea is being absorbed |
+| **investigate** | controlled lateral / parallax | the viewer is searching through evidence |
+| **escalate** | stronger push / shorter shot sequence | stakes are increasing |
+| **compare** | lateral move / split-screen / matched framing | two systems are being weighed |
+| **reverse** | abrupt contrast cut / direction change | expectation has been broken |
+| **reveal** | stop movement and hold | the idea deserves comprehension |
+| **reflect** | pull-back / long hold | the meaning is widening |
+| **resolve** | settle / locked frame | the story has landed |
+
+### Absolute rules
+
+- Do not put a camera move on every still.
+- Do not use the same push distance for multiple consecutive shots.
+- Do not use slow zooming simply to prevent a still from feeling static.
+- Do not fake depth unless the layer separation is visually credible.
+- Do not accelerate camera motion while introducing legally or numerically dense evidence.
+- Major claims become more stable when they land.
+
+### Movement should have inertia
+
+A premium documentary move starts slightly slower, develops gently, and settles naturally. No robotic linear keyframes when a shot can use an eased acceleration/deceleration curve.
+
+Movement should normally have a **purpose point**:
+
+- move toward the decisive clause on a contract,
+- move toward the recurring charge,
+- move toward the cancellation button,
+- move toward the empty machine,
+- move toward the one number that changes the story.
+
+If there is no purpose point, use a hold.
+
+---
+
+# 5. SHOT GRAMMAR
+
+Treat every beat as a sequence of possible shot states rather than a single image.
+
+### State A — ORIENT
+Show where we are and what the object is.
+
+### State B — FOCUS
+Direct the viewer toward the relevant detail.
+
+### State C — EVIDENCE
+Reveal the number, document, interface, person, or relationship.
+
+### State D — CONSEQUENCE
 Show what the evidence means.
 
-**State 5 — release**
-Clear the frame before the next idea.
+### State E — RELEASE
+Clear the visual before the next concept begins.
 
-Example:
+The director may collapse states when the story benefits from speed, but should never stack all five simultaneously by default.
 
-Do not immediately display:
-`20.8M MEMBERS / 2,896 CLUBS / 7,200 PER CLUB / 4% / FIRE CODE`
-
-Instead:
+Example for the opening:
 
 `EMPTY GYM`
 → `20.8M MEMBERS`
 → `2,896 CLUBS`
-→ pause
-→ `7,200 PER CLUB`
-→ occupancy comparison
-→ meaning.
+→ `7,200 / LOCATION`
+→ tiny human inside the room
+→ **THE ROOM IS NOT THE PRODUCT**
 
-The viewer should discover the contradiction, not receive a spreadsheet.
-
----
-
-## 5. IMAGE BEHAVIOR
-
-Still images must never feel like randomly dropped slides.
-
-Choose one behavior:
-
-### HOLD
-For evidence, iconic establishing frames, emotionally important objects.
-
-### MICRO-PUSH
-For curiosity or growing importance. Very subtle scale change.
-
-### MICRO-PAN
-Only when composition genuinely benefits from exploration.
-
-### PARALLAX / DEPTH
-Use sparingly for layered archival or photographic material.
-
-### DETAIL REVEAL
-Start wider, then move toward the evidence that matters.
-
-### MATCH CUT
-Use when two images share shape, motion, color, or conceptual meaning.
-
-### CONTRAST CUT
-Use when the change itself is the story:
-empty gym → crowded spreadsheet
-owned software box → subscription card
-one cable bill → six streaming cards
-open signup → difficult cancellation
-
-Avoid constant Ken Burns-style movement. It quickly becomes wallpaper.
+The viewer discovers the contradiction instead of receiving a spreadsheet.
 
 ---
 
-## 6. PHOTOGRAPHIC / ARCHIVAL FOOTAGE
+# 6. SHOT-DURATION POLICY
 
-Treat real-looking footage as documentary evidence, not decorative B-roll.
+Never impose a global average shot length.
 
-B-roll should enter when it answers a sentence.
+Use these as starting ranges, then override when comprehension demands it:
 
-Bad:
-Narration says “subscriptions became normal” while unrelated person walks down a street.
+- contradiction / hook: **2–6s** per visual state
+- human action B-roll: **2–5s**
+- explanatory mechanism: **3–8s**
+- document evidence: **long enough to read the decisive phrase**
+- major reveal: **3–7s stable hold after landing**
+- legal text: **minimum readable duration, then repeat only the decisive clause**
+- final callback: **longer holds than the opening**
 
-Good:
-Narration says “the charge becomes background noise” while a bank statement scrolls and the recurring line passes without stopping.
+The story should breathe more as it becomes meaningful.
 
-For every B-roll shot specify:
+---
+
+# 7. B-ROLL DIRECTOR
+
+B-roll is evidence, not wallpaper.
+
+For every shot, output:
 
 - exact action
+- subject
 - shot size
 - camera movement
-- visual point
+- direction of movement
 - duration range
-- entrance
-- exit
-- relationship to narration
+- entrance condition
+- exit condition
+- narration sentence it answers
+- reason this shot is better than generic stock
 
-Prefer **specific physical action** over generic atmosphere.
+### Strong examples
+
+- finger scrolls past a recurring charge, then pauses
+- cursor hovers over a cancel control without clicking
+- hand opens an old software box and exposes the licence key
+- contract page turns precisely to the cancellation clause
+- employee leaves a gym while machines remain empty
+- calendar advances through monthly renewal dates
+- bank statement scrolls while old charges visually fade into background noise
+
+### Forbidden B-roll
+
+Reject any shot whose only reason is:
+
+- "business people"
+- "money"
+- "technology"
+- "a person thinking"
+- "generic city"
+- "generic office"
+- "generic gym workout"
+
+The narration must be able to point at the action and say: **that is what I mean.**
+
+---
+
+# 8. HUMAN CAMERA BEHAVIOR
+
+When the film uses people, prioritize believable human camera operation.
+
+### Documentary modes
+
+**Observer:** locked or lightly handheld, letting the subject behave naturally.
+
+**Follower:** camera follows a real action with slight delay and imperfect micro-motion.
+
+**Intimate:** slow push toward hands, face, or object when emotion or decision matters.
+
+**Investigative:** restrained lateral move across evidence or screens.
+
+Avoid perfect floating motion on shots that are meant to feel like real documentary footage.
+
+The engine should be able to mark a shot `PHOTO`, `ARCHIVAL`, `RECONSTRUCTION`, `SCREEN`, or `LIVE_ACTION`, then choose movement appropriate to that source class.
+
+---
+
+# 9. STILL IMAGE BEHAVIOR
+
+Use one behavior per still:
+
+### HOLD
+Evidence / iconic establishing image / emotional object.
+
+### DETAIL PUSH
+Moves toward a specific clause, number, object, or face.
+
+### MICRO-PAN
+Only when the composition genuinely contains information to explore.
+
+### PARALLAX
+Layered archival photographs or documents where depth is visually credible.
+
+### MATCH MOVE
+Transition between two shots sharing shape, direction, or concept.
+
+### CONTRAST CUT
+Used when the change itself carries the meaning.
 
 Examples:
-- cursor hovers over cancellation button
-- finger scrolls past recurring charge
-- designer removes old Photoshop box from shelf
-- streaming tiles multiply on television
-- court document page turns to the relevant paragraph
+
+- empty gym → crowded financial statement
+- physical software box → subscription screen
+- one cable bill → many streaming charges
+- signup path → cancellation path
+- rule announcement → court opinion
+
+Avoid repeating `MICRO-PUSH` as a default.
 
 ---
 
-## 7. LOGOS
+# 10. GRAPHICS DIRECTOR
 
-Logos are evidence markers, not decoration.
+A graphic exists to reveal a relationship.
 
-Use them when the company/entity itself matters.
+### Use a number graphic when
 
-### Entrance
-- clean, simple reveal
-- usually scale/fade/slide from context
-- avoid giant logo explosions
+- one number changes the argument,
+- a before/after is important,
+- scale is the story.
 
-### Hold
-Long enough to identify the entity.
+### Use a chart when
 
-### Exit
-Exit before the next conceptual idea begins.
+- a relationship over time is essential.
 
-Never place multiple unrelated logos in a row merely to show "many companies." Use a systemized sequence only when the multiplication itself is the point.
+### Use a diagram when
 
-For the streaming section, logos should accumulate as a visual argument, not become a logo parade.
+- the viewer must understand causality.
 
----
+### Use a timeline when
 
-## 8. GRAPHICS
+- chronology changes interpretation.
 
-A graphic should reveal a relationship, not decorate a sentence.
+### Use a UI reconstruction when
 
-### Number graphic
-Use for:
-- one decisive number
-- comparison
-- before/after
-- scale
-- money
+- interface behavior is itself evidence.
 
-### Chart
-Use only when the viewer benefits from seeing a relationship over time.
+### Animation mapping
 
-### Diagram
-Use when the mechanism is causal.
+- count → quantity changes
+- line draw → trend is discovered
+- node connection → causality is established
+- card multiplication → recurring charges accumulate
+- mask reveal → information is intentionally withheld
+- highlight → decisive evidence is being isolated
 
-### UI recreation
-Use when interface behavior is itself evidence.
-
-### Timeline
-Use when chronology is the point.
-
-Never animate a chart simply because the renderer can.
-
-The animation should map to the meaning:
-- number counts because quantity is changing
-- line draws because the trend is being discovered
-- nodes connect because a causal chain is being established
-- cards stack because recurring charges accumulate
+Never animate because animation is available.
 
 ---
 
-## 9. TYPOGRAPHY
+# 11. EVIDENCE HANDLING
 
-Typography is the narrator's visual emphasis, not subtitles sprayed everywhere.
+Every factual-looking visual must declare its evidence class internally:
 
-Use three text tiers:
+- **SOURCE** — traceable source/document/archival material
+- **RECONSTRUCTION** — recreated UI, scene, document, or event
+- **ILLUSTRATION** — conceptual visual not presented as source evidence
 
-### Tier A — HERO
-1–7 words.
-Used for the idea that must survive a glance.
+The renderer must never make a reconstruction look indistinguishable from a genuine screenshot without a small contextual label when confusion is reasonably possible.
 
-Examples:
-`BREAKAGE`
-`THE CONTRACT WAS THE WRONG TOOL`
-`$2.5 BILLION`
-`PROCEDURE`
+For legal sections, source documents outrank decorative graphics.
 
-### Tier B — SUPPORT
-Short qualifier or context.
+The order of priority is:
 
-Examples:
-`2025`
-`FTC SETTLEMENT`
-`SUBSCRIPTION REVENUE`
+**primary evidence → decisive excerpt → explanation → visual metaphor**
 
-### Tier C — SOURCE / FOOTNOTE
-Small documentary source/date information.
-
-Do not put Tier A, B, and C at equal visual weight.
-
-Text should appear in synchrony with the moment the idea becomes relevant.
-
-Avoid word-by-word karaoke captions for long-form documentary narration unless there is a deliberate reason.
+Never reverse that order for spectacle.
 
 ---
 
-## 10. REVEAL GRAMMAR
+# 12. TYPOGRAPHY
 
-Use different reveal behaviors for different levels of importance.
+Typography is visual emphasis, not subtitle confetti.
 
-### Low importance
-Simple fade or cut.
+Use:
 
-### Medium importance
-Build in two states.
+- one dominant phrase,
+- one supporting qualifier,
+- source/date only when needed.
 
-### High importance
-Pre-reveal silence → visual isolation → reveal → brief hold → release.
+Do not animate a sentence word-by-word unless the animation itself creates information.
 
-### Major reversal
-Strip the frame to almost nothing before the reversal.
+For major numbers, use:
 
-### Final thesis
-Minimal visual field. Let the voice carry the meaning.
+**NUMBER**
+small qualifier underneath
+source/date beneath only when required
 
-The strongest moments should often be **quieter**, not louder.
+Do not show six equal-size numbers at once.
 
 ---
 
-## 11. CUTTING RHYTHM
+# 13. SOUND / SILENCE
 
-Use a variable rhythm.
-
-Do not enforce a fixed 4-second cut rule.
+The score is part of the narrative structure.
 
 ### Curiosity
-Shorter visual changes can maintain momentum.
+Sparse pulse, room tone, small tonal movement.
 
-### Explanation
-Allow longer holds so the viewer can understand.
+### Mechanism
+Stable restrained bed. Avoid emotional overstatement.
 
-### Evidence
-Hold long enough to inspect the artifact.
+### Discovery
+Subtle lift or texture enters as the viewer understands the mechanism.
 
-### Revelation
-Slow just before the reveal; compress immediately after if useful.
-
-### Emotional payoff
-Longer holds. Fewer competing elements.
-
-The rhythm should breathe:
-
-`FAST → CLARIFY → HOLD → REVEAL → RELEASE → NEW WORLD`
-
-not:
-
-`CUT → CUT → CUT → CUT → CUT`
-
----
-
-## 12. TRANSITIONS
-
-Default to hard cuts.
-
-Use designed transitions only when they have narrative meaning.
-
-### Match cut
-Same shape or concept.
-
-### Graphic bridge
-One visual element becomes the next.
-
-### J-cut
-Audio introduces the next world before the image changes.
-
-### L-cut
-The previous voice continues while the visual moves forward.
-
-### Dissolve
-Time passage, memory, archival transition, emotional release.
-
-### Smash cut
-Use for deliberate contrast or reversal.
-
-Avoid:
-- generic zoom transitions
-- flashy spins
-- glitch transitions without story meaning
-- excessive whip pans
-- template transitions
-
-A premium documentary should feel edited, not templated.
-
----
-
-## 13. CAMERA LANGUAGE
-
-Camera movement has vocabulary.
-
-**LOCKED** = evidence / authority / seriousness
-
-**SLOW PUSH** = importance is growing
-
-**SLOW PULL** = perspective widening / realization
-
-**PUNCH** = decisive information
-
-**DRIFT** = exploratory / transitional
-
-**SETTLE** = payoff / conclusion
-
-Use movement directionally.
-
-A camera move should answer: **why is the camera moving now?**
-
----
-
-## 14. SOUND + PICTURE CO-DIRECTION
-
-Sound design must not become a constant layer of noises.
-
-Use silence as a weapon.
-
-### Before major reveal
-Reduce or remove the music.
-
-### Number landing
-Use one restrained accent.
-
-### Mechanism explanation
-Keep the bed low and stable.
-
-### Chapter transition
-Use one sonic bridge.
+### Reveal
+Remove some or all music shortly before the sentence that matters.
 
 ### Reversal
-Let the bed change rather than simply adding a boom.
+Drop or silence, then let the decisive phrase land.
 
-### Final payoff
-Reduce almost everything.
+### Callback
+Return a motif from the opening, quieter and slower.
 
-Never add a whoosh to every transition. If everything is emphasized, nothing is emphasized.
+### Final line
+No generic whoosh, subscribe sting, or motivational swell.
 
----
-
-## 15. MUSIC ARC FOR THIS 19:14 EPISODE
-
-### 0:00–1:35
-Minimal investigative bed.
-Sparse pulse.
-Fluorescent/room texture may carry more weight than music.
-
-### 1:35–5:35
-Low documentary tension.
-Subtle rhythmic movement as the economic mechanism becomes clearer.
-Drop around "Breakage."
-
-### 5:35–6:30
-Slight increase in tension.
-Less music immediately before the Bally reversal.
-
-### 6:30–10:55
-Broader investigative texture.
-The Adobe section should feel larger in scale without becoming a trailer.
-One clear lift around the revenue transformation.
-
-### 10:55–13:20
-Reset to a cleaner, slightly more recognizable pulse.
-The streaming section should feel like a realization spreading.
-
-### 13:20–15:15
-Colder investigative texture.
-Reduce music around "Iliad" and the $2.5B settlement.
-
-### 15:15–17:35
-Sparse, serious tension.
-The legal reversal should feel quiet and consequential.
-
-### 17:35–19:14
-Return to the opening tonal DNA.
-Gradually remove layers.
-Final minute should become increasingly minimal.
-Hard stop.
+Silence is a cut. Treat it as a first-class timeline event.
 
 ---
 
-## 16. RETENTION ENGINEERING — LONG FORM
+# 14. TRANSITION RULES
 
-Do not confuse retention with constant stimulation.
+Default transition is the cut.
 
-The viewer should repeatedly receive one of five rewards:
+Use:
 
-1. **New information**
-2. **A clearer mental model**
-3. **A stronger emotional consequence**
-4. **A surprising reversal**
-5. **An answer to a question they already care about**
+- **MATCH CUT** when two images share geometry or motion.
+- **CONTRAST CUT** when the difference is the point.
+- **J-CUT** to pull curiosity into the next chapter.
+- **L-CUT** to let a thought continue over a new world.
+- **DISSOLVE** only for time, memory, or conceptual continuity.
+- **GRAPHIC WIPE** only when the graphic itself is the transition mechanism.
 
-Before each 20–60 second region, identify:
-
-- current viewer question
-- current emotional state
-- likely fatigue source
-- next reward
-- visual reset
-
-If a region contains only explanation with no change in question, consequence, evidence, or perspective, compress it.
+Avoid generic zoom transitions, whip pans, impact flashes, and template wipes unless the story explicitly requires them.
 
 ---
 
-## 17. EXIT-RISK PROTOCOL
+# 15. CAMERA ESCALATION ACROSS THE FILM
 
-At each likely fatigue point ask:
+Camera language should evolve with the story.
 
-### Risk A — repetition
-Have I shown the same visual grammar too long?
+### Chapter 1
+Mostly locked, patient, observational. The viewer is entering a world.
 
-**Fix:** change medium, scale, or perspective.
+### Chapter 2
+More diagrams and discovery pushes. The mechanism becomes visible.
 
-### Risk B — lecture plateau
-Is the narrator explaining without discovery?
+### Chapter 3
+Slightly more assertive movement as the old model reveals its weakness.
 
-**Fix:** add evidence, contrast, or a question.
+### Chapter 4
+Sharper contrasts and closer UI movement. Friction becomes tangible.
 
-### Risk C — visual wallpaper
-Is the image technically attractive but semantically empty?
+### Chapter 5
+Return to tactile, slower shots. Ownership needs physical weight.
 
-**Fix:** replace with concrete action/evidence.
+### Chapter 6
+Increase lateral movement and multiplication as the bundle fragments.
 
-### Risk D — number overload
-Are multiple numbers competing?
+### Chapter 7
+Use increasingly constrained framing. The world narrows toward the exit button.
 
-**Fix:** isolate the one number that changes the story.
+### Chapter 8
+Slow down again. Reuse the exact opening composition. Meaning, not motion, carries the climax.
 
-### Risk E — chapter fatigue
-Has the current section exhausted its mechanism?
-
-**Fix:** tease the next mechanism before the cut.
-
-### Risk F — late-video drop
-Does the ending summarize instead of reveal?
-
-**Fix:** callback + changed meaning + one practical consequence.
+This prevents the entire film from living at one energy level.
 
 ---
 
-## 18. THIS EPISODE'S CRITICAL DIRECTING BEATS
+# 16. VISUAL RETENTION CHECKS
 
-### 0:00 — EMPTY GYM
-Do not open with a generic title card.
-The empty room is the first mystery.
+Before render, the director must be able to answer yes to these:
 
-### 0:15 — MEMBERSHIP CONTRADICTION
-Numbers arrive one at a time.
-Let the viewer do the arithmetic mentally.
-
-### ~0:35 — IDEAL CUSTOMER
-Strip the frame down.
-This sentence deserves visual isolation.
-
-### ~1:35 — BREAKAGE
-Strong reveal.
-Black / word / silence / explanation.
-
-### ~3:10 — GIFT CARD VS SUBSCRIPTION
-Use a clean visual contrast.
-One break vs recurring break.
-
-### ~5:35 — BALLY
-Do not make this a long archival montage.
-Every clip must prove the contract/failure mechanism.
-
-### ~6:30 — ADOBE
-Hard visual reset.
-Physical software box.
-This is a new world.
-
-### ~8:30–10:20 — ADOBE REVENUE
-Do not leave the chart on screen for the entire explanation.
-Move between physical ownership, contract/subscription UI, chart, customer reaction, and revenue outcome.
-
-### ~10:55 — STREAMING
-Use the contradiction:
-“the thing that was supposed to kill the bundle rebuilt it.”
-
-### ~11:30–12:30 — SERVICE ACCUMULATION
-Let logos accumulate visually with restraint.
-Then collapse them into one combined monthly charge.
-
-### ~13:20 — AMAZON
-New visual language: evidence/UI reconstruction.
-
-### ~14:35 — ILIAD
-Minimal frame.
-One word.
-Silence.
-Source document after reveal.
-
-### ~14:50 — $2.5B
-One number.
-No clutter.
-
-### ~15:15 — CLICK-TO-CANCEL
-Make the rule feel like the answer.
-Then remove it.
-
-### ~16:00 — PROCEDURE
-Use actual court-document visual language.
-Do not dramatize the legal conclusion.
-
-### ~17:35 — EXACT CALLBACK
-Return to the opening gym frame.
-Do not change the shot merely to make it exciting.
-The **meaning** has changed.
-
-### ~18:30 — PRACTICAL PAYOFF
-Bank statement / recurring-charge visual.
-Warm the image slightly.
-
-### FINAL 10–15 SECONDS
-Almost nothing moving.
-Voice + minimal image.
-Hard stop.
+- Does frame one immediately state the contradiction?
+- Does every chapter have a new unanswered question?
+- Is there a major visual change of industry around the midpoint?
+- Is there at least one real reversal after the midpoint?
+- Does the viewer get a new evidence class often enough to reset attention?
+- Are important numbers shown one at a time?
+- Is every B-roll shot semantically tied to the narration?
+- Does movement have a purpose point?
+- Are there enough stable holds for comprehension?
+- Does the callback reuse the opening visual with changed meaning?
+- Does the film end on a decision rather than a generic CTA?
 
 ---
 
-## 19. ANTI-AI-EDITING RULES
+# 17. ANTI-AI / ANTI-TEMPLATE RULES
 
-Reject the following patterns:
+The engine should actively reject edits that look synthetic or mass-produced.
 
-- random stock B-roll every sentence
-- constant zooms
-- text appearing for every spoken noun
-- logo every time a company is mentioned
-- chart for every number
-- generic “cinematic” footage unrelated to the sentence
-- transition between every beat
-- identical motion on every image
-- constant background music
-- sound effect on every graphic
-- giant words occupying the screen without semantic reason
-- repeated green/red arrows
-- fake UI clicks with no narrative purpose
-- visual overload during important statements
+Reject:
 
-The audience should feel **directed**, not processed.
+- constant push-ins,
+- every sentence receiving a new shot,
+- generic stock people,
+- repeated UI bounce animations,
+- equal-duration clips,
+- logo parade montages,
+- random impact SFX,
+- camera motion that ignores composition,
+- graphics that repeat information already visible in narration,
+- captions covering evidence,
+- fake cinematic depth on flat screenshots,
+- rapid cuts during legally dense narration,
+- emotional music telling the viewer what to feel before the evidence lands.
 
----
-
-## 20. ASSET PRIORITY
-
-When multiple assets are available, prefer in this order:
-
-1. authentic evidence
-2. specific realistic B-roll
-3. specific subject/environment image
-4. clear explanatory graphic
-5. simple typographic statement
-6. decorative background
-
-Never reverse this priority just because a decorative asset is more attractive.
+A professional documentary can be visually dense without looking busy.
 
 ---
 
-## 21. VISUAL CONTINUITY
+# 18. OUTPUT CONTRACT
 
-Continuity groups should remain internally consistent.
+For every beat, the director plan should contain:
 
-If the same gym returns at the end:
-- same camera angle
-- same lens feel
-- same lighting logic
-- same architectural arrangement
-- same treadmill anchor
+- `story_role`
+- `question`
+- `answer_or_reveal`
+- `emotion`
+- `visual_class`
+- `shot_sequence`
+- `camera_verb`
+- `camera_move`
+- `duration_range`
+- `transition_in`
+- `transition_out`
+- `broll_action`
+- `evidence_class`
+- `text_priority`
+- `sound_state`
+- `silence_before`
+- `silence_after`
+- `forward_question`
 
-The viewer should recognize it instantly.
-
-The final callback works because the physical image repeats while its meaning changes.
-
----
-
-## 22. WORLD-CLASS QC BEFORE RENDER
-
-Before accepting the director plan, inspect the episode as if you have never heard the story.
-
-Ask:
-
-### First 30 seconds
-- Is the promise immediately visible?
-- Is the empty gym interesting without narration?
-- Does the viewer understand the contradiction?
-- Is anything visually slow for no reason?
-
-### Every chapter
-- Does the visual language change when the story changes?
-- Does the chapter contain discovery rather than only explanation?
-- Is there a clear peak?
-- Is the next chapter psychologically prepared?
-
-### Every major claim
-- Is the viewer looking at the evidence or at decoration?
-- Is the important number isolated?
-- Is source/context available where necessary?
-
-### Every reveal
-- Did we create enough visual silence before it?
-- Is the reveal legible instantly?
-- Do we hold long enough for comprehension?
-
-### Every transition
-- Does the transition have meaning?
-- Would a hard cut be stronger?
-
-### Final minute
-- Does the ending add meaning instead of merely repeating?
-- Does the opening image return with changed significance?
-- Does the video stop before the audience feels an outro coming?
+The renderer should not have to invent editorial intent from a vague `Visual` string.
 
 ---
 
-## 23. YT_ENGINE FEEDBACK LOOP
+# 19. MASTER DIRECTOR RULE
 
-YT_ENGINE is not a prophecy engine.
+> **Make the viewer understand something, then make that understanding dangerous.**
 
-Use it as a structured hypothesis generator and comparison tool.
+The finished cut should feel like a human editor made a chain of decisions:
 
-After publishing, compare actual retention against the edit plan:
+**show → focus → prove → complicate → reveal → breathe → move.**
 
-- first 30-second survival
-- chapter dips
-- replay/share spikes
-- strongest visual moments
-- sections with unusual exits
-- sections with unusually stable retention
-
-When real data becomes available, revise future director decisions using the observed curve rather than treating the internal swipe model as truth. YouTube explicitly recommends examining dips, spikes, and top moments to understand what viewers actually responded to. citeturn962487search0turn962487search1
-
-The goal is a learning system:
-
-`SCRIPT → STORY GATE → VOICE → ALIGN → DIRECT → RENDER → REAL RETENTION → LEARN → NEXT DIRECTOR`
-
----
-
-## 24. NON-NEGOTIABLE EDITORIAL STANDARD
-
-The final video should feel like:
-
-**a human documentary editor carefully chose every visual.**
-
-Not:
-
-**an AI placed an image every few seconds.**
-
-Every frame must answer:
-
-> Why is this the best thing for the viewer to see right now?
-
-If the answer is not clear, simplify the frame.
+That is the long-form mode. The Shorts director is not allowed to override it.

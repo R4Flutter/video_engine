@@ -2,10 +2,12 @@
 
 **Source:** `script.md`  
 **Voice direction:** `prompt/voice-performance-19m.md`  
+**Style:** Vox Deep Dive / Investigative Business Documentary  
 **Mode:** Finance / long-form documentary  
+**Format:** Landscape 16:9  
 **Target runtime:** 19:14  
 **Parser contract:** `### BEAT n — NAME (m:ss–m:ss)`  
-**Purpose:** machine-readable beat structure for `parse-script.mjs`, Chatterbox voice generation, alignment, director planning, and QC. The approved documentary story in `script.md` remains the editorial source of truth; this file is its beat-formatted production representation.
+**Purpose:** machine-readable beat structure for `parse-script.mjs`, Chatterbox voice generation, alignment, director planning, B-roll sourcing, and QC. The approved documentary story in `script.md` remains the editorial source of truth; this file is its beat-formatted production representation.
 
 ## BEAT 1 — COLD OPEN / STRANGE OBSERVATION (0:00–0:20)
 | **Audio** | Planet Fitness ended 2025 with about twenty point eight million members. It had two thousand eight hundred and ninety-six clubs. |
@@ -87,7 +89,7 @@
 | **Audio** | Start with the gym, because the gym makes the economics visible without hiding behind software. A gym has a strange cost structure. The building costs the same whether one person walks in or a thousand do. The machines cost the same. The lease, the lights, the insurance, the staff at the desk — most of it exists whether the customer arrives tonight or not. So an extra member can be extraordinarily cheap — until that member actually appears. Then they need a machine. A shower. Floor space. Staff time. The economics flip the instant the customer consumes the thing they bought. |
 | **Visual** | Cost line flat → revenue line rises → second cost-to-serve line stays flat then spikes at real usage. |
 | **On-screen text** | FIXED COSTS / COST TO SERVE |
-| **Module** | investChart |
+| **Module** | chart |
 | **Purpose** | explain |
 | **Question** | What kind of member creates the best economics? |
 | **Reveal** | Capacity, not membership, is the scarce resource. |
@@ -253,7 +255,7 @@
 | **Audio** | The problem, from Adobe's side, was the revenue chart. A new version shipped. Revenue spiked. People upgraded. Then the line flattened again while working copies stayed perfectly usable. By 2012, the software was good enough that the customer did not have to feel urgency every eighteen months. Your product can be excellent and your revenue can still wait. |
 | **Visual** | Revenue sawtooth: release → spike → decay → release → spike; calendar advances while line flattens. |
 | **On-screen text** | GREAT PRODUCT / WAITING REVENUE |
-| **Module** | investChart |
+| **Module** | chart |
 | **Purpose** | explain |
 | **Question** | What do you do when your best product is too good at being a one-time purchase? |
 | **Reveal** | Adobe has a structural recurring-revenue problem. |
