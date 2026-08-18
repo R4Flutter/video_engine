@@ -1,7 +1,8 @@
 {
   "version": 1,
   "policy": "asset-first",
-  "generated": false,
+  "generated": true,
+  "generated_at": "2026-08-18T07:40:43.988Z",
   "folders": {
     "subjects": "assets/01_SUBJECTS",
     "archive": "assets/02_ARCHIVE",
@@ -13,5 +14,643 @@
     "ui_mockups": "assets/08_UI_MOCKUPS",
     "maps": "assets/09_MAPS"
   },
-  "assets": []
+  "assets": [
+    {
+      "path": "assets/01_SUBJECTS/anonymous-gym-member.png",
+      "category": "01_SUBJECTS",
+      "filename": "anonymous-gym-member.png",
+      "bytes": 701062,
+      "ext": "png"
+    },
+    {
+      "path": "assets/01_SUBJECTS/generic-smartphone-subscription.png",
+      "category": "01_SUBJECTS",
+      "filename": "generic-smartphone-subscription.png",
+      "bytes": 905708,
+      "ext": "png"
+    },
+    {
+      "path": "assets/01_SUBJECTS/photoshop-cs6-box.png",
+      "category": "01_SUBJECTS",
+      "filename": "photoshop-cs6-box.png",
+      "bytes": 544573,
+      "ext": "png"
+    },
+    {
+      "path": "assets/01_SUBJECTS/photoshop-cs6-disc.png",
+      "category": "01_SUBJECTS",
+      "filename": "photoshop-cs6-disc.png",
+      "bytes": 670207,
+      "ext": "png"
+    },
+    {
+      "path": "assets/01_SUBJECTS/planet-fitness-entrance.png",
+      "category": "01_SUBJECTS",
+      "filename": "planet-fitness-entrance.png",
+      "bytes": 877917,
+      "ext": "png"
+    },
+    {
+      "path": "assets/01_SUBJECTS/planet-fitness-membership-card.png",
+      "category": "01_SUBJECTS",
+      "filename": "planet-fitness-membership-card.png",
+      "bytes": 380866,
+      "ext": "png"
+    },
+    {
+      "path": "assets/01_SUBJECTS/prime-membership-card.png",
+      "category": "01_SUBJECTS",
+      "filename": "prime-membership-card.png",
+      "bytes": 464701,
+      "ext": "png"
+    },
+    {
+      "path": "assets/01_SUBJECTS/subscription-envelope-stack.png",
+      "category": "01_SUBJECTS",
+      "filename": "subscription-envelope-stack.png",
+      "bytes": 819429,
+      "ext": "png"
+    },
+    {
+      "path": "assets/02_ARCHIVE/adobe_2013_max_stage.png",
+      "category": "02_ARCHIVE",
+      "filename": "adobe_2013_max_stage.png",
+      "bytes": 1573950,
+      "ext": "png"
+    },
+    {
+      "path": "assets/02_ARCHIVE/bally_1990s_storefront.png",
+      "category": "02_ARCHIVE",
+      "filename": "bally_1990s_storefront.png",
+      "bytes": 2508416,
+      "ext": "png"
+    },
+    {
+      "path": "assets/02_ARCHIVE/bally_membership_desk.png",
+      "category": "02_ARCHIVE",
+      "filename": "bally_membership_desk.png",
+      "bytes": 2381234,
+      "ext": "png"
+    },
+    {
+      "path": "assets/02_ARCHIVE/cable_bill_2007.png",
+      "category": "02_ARCHIVE",
+      "filename": "cable_bill_2007.png",
+      "bytes": 2539210,
+      "ext": "png"
+    },
+    {
+      "path": "assets/02_ARCHIVE/early_netflix_interface.png",
+      "category": "02_ARCHIVE",
+      "filename": "early_netflix_interface.png",
+      "bytes": 1575012,
+      "ext": "png"
+    },
+    {
+      "path": "assets/02_ARCHIVE/gym_1980s_health_club.png",
+      "category": "02_ARCHIVE",
+      "filename": "gym_1980s_health_club.png",
+      "bytes": 2653548,
+      "ext": "png"
+    },
+    {
+      "path": "assets/02_ARCHIVE/photoshop_retail_shelf_2012.png",
+      "category": "02_ARCHIVE",
+      "filename": "photoshop_retail_shelf_2012.png",
+      "bytes": 2214318,
+      "ext": "png"
+    },
+    {
+      "path": "assets/02_ARCHIVE/streaming_launch_montage_archive.png",
+      "category": "02_ARCHIVE",
+      "filename": "streaming_launch_montage_archive.png",
+      "bytes": 2015774,
+      "ext": "png"
+    },
+    {
+      "path": "assets/03_EVIDENCE/adobe_2013_announcement.png",
+      "category": "03_EVIDENCE",
+      "filename": "adobe_2013_announcement.png",
+      "bytes": 1304901,
+      "ext": "png"
+    },
+    {
+      "path": "assets/03_EVIDENCE/adobe_2025_subscription_revenue.png",
+      "category": "03_EVIDENCE",
+      "filename": "adobe_2025_subscription_revenue.png",
+      "bytes": 1120597,
+      "ext": "png"
+    },
+    {
+      "path": "assets/03_EVIDENCE/adobe_doj_2026_settlement.png",
+      "category": "03_EVIDENCE",
+      "filename": "adobe_doj_2026_settlement.png",
+      "bytes": 1382142,
+      "ext": "png"
+    },
+    {
+      "path": "assets/03_EVIDENCE/amazon_ftc_complaint.png",
+      "category": "03_EVIDENCE",
+      "filename": "amazon_ftc_complaint.png",
+      "bytes": 1156891,
+      "ext": "png"
+    },
+    {
+      "path": "assets/03_EVIDENCE/amazon_settlement_2_5b.png",
+      "category": "03_EVIDENCE",
+      "filename": "amazon_settlement_2_5b.png",
+      "bytes": 1361005,
+      "ext": "png"
+    },
+    {
+      "path": "assets/03_EVIDENCE/bally_1994_regulatory_document.png",
+      "category": "03_EVIDENCE",
+      "filename": "bally_1994_regulatory_document.png",
+      "bytes": 1959177,
+      "ext": "png"
+    },
+    {
+      "path": "assets/03_EVIDENCE/bally_2004_nyag_complaints.png",
+      "category": "03_EVIDENCE",
+      "filename": "bally_2004_nyag_complaints.png",
+      "bytes": 1320036,
+      "ext": "png"
+    },
+    {
+      "path": "assets/03_EVIDENCE/bally_contract_recreation.png",
+      "category": "03_EVIDENCE",
+      "filename": "bally_contract_recreation.png",
+      "bytes": 2624110,
+      "ext": "png"
+    },
+    {
+      "path": "assets/03_EVIDENCE/cr_subscription_gap_86_219.png",
+      "category": "03_EVIDENCE",
+      "filename": "cr_subscription_gap_86_219.png",
+      "bytes": 1201391,
+      "ext": "png"
+    },
+    {
+      "path": "assets/03_EVIDENCE/eighth_circuit_click_to_cancel.png",
+      "category": "03_EVIDENCE",
+      "filename": "eighth_circuit_click_to_cancel.png",
+      "bytes": 399539,
+      "ext": "png"
+    },
+    {
+      "path": "assets/03_EVIDENCE/ftc_2026_anprm.png",
+      "category": "03_EVIDENCE",
+      "filename": "ftc_2026_anprm.png",
+      "bytes": 1297118,
+      "ext": "png"
+    },
+    {
+      "path": "assets/03_EVIDENCE/planet_fitness_2026_year_end_metrics.png",
+      "category": "03_EVIDENCE",
+      "filename": "planet_fitness_2026_year_end_metrics.png",
+      "bytes": 1128012,
+      "ext": "png"
+    },
+    {
+      "path": "assets/04_GRAPHICS/g01_membership_density.png",
+      "category": "04_GRAPHICS",
+      "filename": "g01_membership_density.png",
+      "bytes": 1688854,
+      "ext": "png"
+    },
+    {
+      "path": "assets/04_GRAPHICS/g02_four_percent_math.png",
+      "category": "04_GRAPHICS",
+      "filename": "g02_four_percent_math.png",
+      "bytes": 1028358,
+      "ext": "png"
+    },
+    {
+      "path": "assets/04_GRAPHICS/g03_subscription_gap.png",
+      "category": "04_GRAPHICS",
+      "filename": "g03_subscription_gap.png",
+      "bytes": 2376525,
+      "ext": "png"
+    },
+    {
+      "path": "assets/04_GRAPHICS/g04_breakage_loop.png",
+      "category": "04_GRAPHICS",
+      "filename": "g04_breakage_loop.png",
+      "bytes": 1282194,
+      "ext": "png"
+    },
+    {
+      "path": "assets/04_GRAPHICS/g05_contract_vs_friction.png",
+      "category": "04_GRAPHICS",
+      "filename": "g05_contract_vs_friction.png",
+      "bytes": 2270413,
+      "ext": "png"
+    },
+    {
+      "path": "assets/04_GRAPHICS/g06_ten_dollars_noise.png",
+      "category": "04_GRAPHICS",
+      "filename": "g06_ten_dollars_noise.png",
+      "bytes": 1543534,
+      "ext": "png"
+    },
+    {
+      "path": "assets/04_GRAPHICS/g07_adobe_sawtooth_to_curve.png",
+      "category": "04_GRAPHICS",
+      "filename": "g07_adobe_sawtooth_to_curve.png",
+      "bytes": 1395344,
+      "ext": "png"
+    },
+    {
+      "path": "assets/04_GRAPHICS/g08_adobe_2013_2023_2025.png",
+      "category": "04_GRAPHICS",
+      "filename": "g08_adobe_2013_2023_2025.png",
+      "bytes": 2212716,
+      "ext": "png"
+    },
+    {
+      "path": "assets/04_GRAPHICS/g09_streaming_stack.png",
+      "category": "04_GRAPHICS",
+      "filename": "g09_streaming_stack.png",
+      "bytes": 1644889,
+      "ext": "png"
+    },
+    {
+      "path": "assets/04_GRAPHICS/g10_cable_vs_streaming.png",
+      "category": "04_GRAPHICS",
+      "filename": "g10_cable_vs_streaming.png",
+      "bytes": 1186002,
+      "ext": "png"
+    },
+    {
+      "path": "assets/04_GRAPHICS/g11_iliad_flow.png",
+      "category": "04_GRAPHICS",
+      "filename": "g11_iliad_flow.png",
+      "bytes": 1536480,
+      "ext": "png"
+    },
+    {
+      "path": "assets/04_GRAPHICS/g12_amazon_2_5b_split.png",
+      "category": "04_GRAPHICS",
+      "filename": "g12_amazon_2_5b_split.png",
+      "bytes": 1830213,
+      "ext": "png"
+    },
+    {
+      "path": "assets/04_GRAPHICS/g13_settlement_compare.png",
+      "category": "04_GRAPHICS",
+      "filename": "g13_settlement_compare.png",
+      "bytes": 1000623,
+      "ext": "png"
+    },
+    {
+      "path": "assets/04_GRAPHICS/g14_click_to_cancel_symmetry.png",
+      "category": "04_GRAPHICS",
+      "filename": "g14_click_to_cancel_symmetry.png",
+      "bytes": 1594980,
+      "ext": "png"
+    },
+    {
+      "path": "assets/04_GRAPHICS/g15_final_133_gap.png",
+      "category": "04_GRAPHICS",
+      "filename": "g15_final_133_gap.png",
+      "bytes": 1838660,
+      "ext": "png"
+    },
+    {
+      "path": "assets/05_BACKGROUNDS/bg_anonymous_boardroom.png",
+      "category": "05_BACKGROUNDS",
+      "filename": "bg_anonymous_boardroom.png",
+      "bytes": 1722647,
+      "ext": "png"
+    },
+    {
+      "path": "assets/05_BACKGROUNDS/bg_bank_statement_macro.png",
+      "category": "05_BACKGROUNDS",
+      "filename": "bg_bank_statement_macro.png",
+      "bytes": 2079605,
+      "ext": "png"
+    },
+    {
+      "path": "assets/05_BACKGROUNDS/bg_black_evidence_paper.png",
+      "category": "05_BACKGROUNDS",
+      "filename": "bg_black_evidence_paper.png",
+      "bytes": 2745006,
+      "ext": "png"
+    },
+    {
+      "path": "assets/05_BACKGROUNDS/bg_courthouse.png",
+      "category": "05_BACKGROUNDS",
+      "filename": "bg_courthouse.png",
+      "bytes": 2506742,
+      "ext": "png"
+    },
+    {
+      "path": "assets/05_BACKGROUNDS/bg_empty_gym_4am.png",
+      "category": "05_BACKGROUNDS",
+      "filename": "bg_empty_gym_4am.png",
+      "bytes": 2394708,
+      "ext": "png"
+    },
+    {
+      "path": "assets/05_BACKGROUNDS/bg_ftc_building.png",
+      "category": "05_BACKGROUNDS",
+      "filename": "bg_ftc_building.png",
+      "bytes": 2168030,
+      "ext": "png"
+    },
+    {
+      "path": "assets/05_BACKGROUNDS/bg_modern_software_office.png",
+      "category": "05_BACKGROUNDS",
+      "filename": "bg_modern_software_office.png",
+      "bytes": 2386115,
+      "ext": "png"
+    },
+    {
+      "path": "assets/05_BACKGROUNDS/bg_streaming_living_room.png",
+      "category": "05_BACKGROUNDS",
+      "filename": "bg_streaming_living_room.png",
+      "bytes": 1856840,
+      "ext": "png"
+    },
+    {
+      "path": "assets/06_BROLL/b01_empty_gym_4am.mp4",
+      "category": "06_BROLL",
+      "filename": "b01_empty_gym_4am.mp4",
+      "bytes": 7830329,
+      "ext": "mp4"
+    },
+    {
+      "path": "assets/06_BROLL/b02_bank_statement_scroll.mp4",
+      "category": "06_BROLL",
+      "filename": "b02_bank_statement_scroll.mp4",
+      "bytes": 7107600,
+      "ext": "mp4"
+    },
+    {
+      "path": "assets/06_BROLL/b03_free_trial_checkout.mp4",
+      "category": "06_BROLL",
+      "filename": "b03_free_trial_checkout.mp4",
+      "bytes": 6495205,
+      "ext": "mp4"
+    },
+    {
+      "path": "assets/06_BROLL/b04_1990s_gym_archive.mp4",
+      "category": "06_BROLL",
+      "filename": "b04_1990s_gym_archive.mp4",
+      "bytes": 29474081,
+      "ext": "mp4"
+    },
+    {
+      "path": "assets/06_BROLL/b05_bally_storefront.mp4",
+      "category": "06_BROLL",
+      "filename": "b05_bally_storefront.mp4",
+      "bytes": 29571770,
+      "ext": "mp4"
+    },
+    {
+      "path": "assets/06_BROLL/b06_photoshop_box_turntable.mp4",
+      "category": "06_BROLL",
+      "filename": "b06_photoshop_box_turntable.mp4",
+      "bytes": 4902124,
+      "ext": "mp4"
+    },
+    {
+      "path": "assets/06_BROLL/b07_2013_conference.mp4",
+      "category": "06_BROLL",
+      "filename": "b07_2013_conference.mp4",
+      "bytes": 25809000,
+      "ext": "mp4"
+    },
+    {
+      "path": "assets/06_BROLL/b08_streaming_services_montage.mp4",
+      "category": "06_BROLL",
+      "filename": "b08_streaming_services_montage.mp4",
+      "bytes": 2598278,
+      "ext": "mp4"
+    },
+    {
+      "path": "assets/06_BROLL/b09_amazon_cancel_flow.mp4",
+      "category": "06_BROLL",
+      "filename": "b09_amazon_cancel_flow.mp4",
+      "bytes": 2808575,
+      "ext": "mp4"
+    },
+    {
+      "path": "assets/06_BROLL/b10_ftc_courthouse.mp4",
+      "category": "06_BROLL",
+      "filename": "b10_ftc_courthouse.mp4",
+      "bytes": 29761229,
+      "ext": "mp4"
+    },
+    {
+      "path": "assets/06_BROLL/b11_subscription_audit.mp4",
+      "category": "06_BROLL",
+      "filename": "b11_subscription_audit.mp4",
+      "bytes": 7266383,
+      "ext": "mp4"
+    },
+    {
+      "path": "assets/06_BROLL/b12_empty_gym_return.mp4",
+      "category": "06_BROLL",
+      "filename": "b12_empty_gym_return.mp4",
+      "bytes": 7830329,
+      "ext": "mp4"
+    },
+    {
+      "path": "assets/07_LOGOS/adobe-logo.png",
+      "category": "07_LOGOS",
+      "filename": "adobe-logo.png",
+      "bytes": 462212,
+      "ext": "png"
+    },
+    {
+      "path": "assets/07_LOGOS/amazon-logo.png",
+      "category": "07_LOGOS",
+      "filename": "amazon-logo.png",
+      "bytes": 392341,
+      "ext": "png"
+    },
+    {
+      "path": "assets/07_LOGOS/amazon-prime-logo.png",
+      "category": "07_LOGOS",
+      "filename": "amazon-prime-logo.png",
+      "bytes": 452484,
+      "ext": "png"
+    },
+    {
+      "path": "assets/07_LOGOS/apple-tv-plus-logo.png",
+      "category": "07_LOGOS",
+      "filename": "apple-tv-plus-logo.png",
+      "bytes": 389414,
+      "ext": "png"
+    },
+    {
+      "path": "assets/07_LOGOS/disney-plus-logo.png",
+      "category": "07_LOGOS",
+      "filename": "disney-plus-logo.png",
+      "bytes": 407552,
+      "ext": "png"
+    },
+    {
+      "path": "assets/07_LOGOS/hulu-logo.png",
+      "category": "07_LOGOS",
+      "filename": "hulu-logo.png",
+      "bytes": 362410,
+      "ext": "png"
+    },
+    {
+      "path": "assets/07_LOGOS/max-logo.png",
+      "category": "07_LOGOS",
+      "filename": "max-logo.png",
+      "bytes": 1104683,
+      "ext": "png"
+    },
+    {
+      "path": "assets/07_LOGOS/netflix-logo.png",
+      "category": "07_LOGOS",
+      "filename": "netflix-logo.png",
+      "bytes": 488251,
+      "ext": "png"
+    },
+    {
+      "path": "assets/07_LOGOS/paramount-plus-logo.png",
+      "category": "07_LOGOS",
+      "filename": "paramount-plus-logo.png",
+      "bytes": 1183164,
+      "ext": "png"
+    },
+    {
+      "path": "assets/07_LOGOS/peacock-logo.png",
+      "category": "07_LOGOS",
+      "filename": "peacock-logo.png",
+      "bytes": 418815,
+      "ext": "png"
+    },
+    {
+      "path": "assets/07_LOGOS/planet-fitness-logo.png",
+      "category": "07_LOGOS",
+      "filename": "planet-fitness-logo.png",
+      "bytes": 1055011,
+      "ext": "png"
+    },
+    {
+      "path": "assets/08_UI_MOCKUPS/arrow-friction.png",
+      "category": "08_UI_MOCKUPS",
+      "filename": "arrow-friction.png",
+      "bytes": 143286,
+      "ext": "png"
+    },
+    {
+      "path": "assets/08_UI_MOCKUPS/circle-red.png",
+      "category": "08_UI_MOCKUPS",
+      "filename": "circle-red.png",
+      "bytes": 547390,
+      "ext": "png"
+    },
+    {
+      "path": "assets/08_UI_MOCKUPS/cursor-white.png",
+      "category": "08_UI_MOCKUPS",
+      "filename": "cursor-white.png",
+      "bytes": 278411,
+      "ext": "png"
+    },
+    {
+      "path": "assets/08_UI_MOCKUPS/cursor-yellow.png",
+      "category": "08_UI_MOCKUPS",
+      "filename": "cursor-yellow.png",
+      "bytes": 349493,
+      "ext": "png"
+    },
+    {
+      "path": "assets/08_UI_MOCKUPS/highlight-red.png",
+      "category": "08_UI_MOCKUPS",
+      "filename": "highlight-red.png",
+      "bytes": 571121,
+      "ext": "png"
+    },
+    {
+      "path": "assets/08_UI_MOCKUPS/highlight-yellow.png",
+      "category": "08_UI_MOCKUPS",
+      "filename": "highlight-yellow.png",
+      "bytes": 1080777,
+      "ext": "png"
+    },
+    {
+      "path": "assets/08_UI_MOCKUPS/paper-shadow.png",
+      "category": "08_UI_MOCKUPS",
+      "filename": "paper-shadow.png",
+      "bytes": 440484,
+      "ext": "png"
+    },
+    {
+      "path": "assets/08_UI_MOCKUPS/recurring-loop-arrow.png",
+      "category": "08_UI_MOCKUPS",
+      "filename": "recurring-loop-arrow.png",
+      "bytes": 361009,
+      "ext": "png"
+    },
+    {
+      "path": "assets/08_UI_MOCKUPS/ui_adobe_cancel_fee.jpg",
+      "category": "08_UI_MOCKUPS",
+      "filename": "ui_adobe_cancel_fee.jpg",
+      "bytes": 126132,
+      "ext": "jpg"
+    },
+    {
+      "path": "assets/08_UI_MOCKUPS/ui_adobe_ownership_transition.jpg",
+      "category": "08_UI_MOCKUPS",
+      "filename": "ui_adobe_ownership_transition.jpg",
+      "bytes": 109390,
+      "ext": "jpg"
+    },
+    {
+      "path": "assets/08_UI_MOCKUPS/ui_amazon_iliad_flow.jpg",
+      "category": "08_UI_MOCKUPS",
+      "filename": "ui_amazon_iliad_flow.jpg",
+      "bytes": 157651,
+      "ext": "jpg"
+    },
+    {
+      "path": "assets/08_UI_MOCKUPS/ui_amazon_prime_signup.png",
+      "category": "08_UI_MOCKUPS",
+      "filename": "ui_amazon_prime_signup.png",
+      "bytes": 1245849,
+      "ext": "png"
+    },
+    {
+      "path": "assets/08_UI_MOCKUPS/ui_bally_contract_zoom.jpg",
+      "category": "08_UI_MOCKUPS",
+      "filename": "ui_bally_contract_zoom.jpg",
+      "bytes": 256948,
+      "ext": "jpg"
+    },
+    {
+      "path": "assets/08_UI_MOCKUPS/ui_click_to_cancel_symmetry.jpg",
+      "category": "08_UI_MOCKUPS",
+      "filename": "ui_click_to_cancel_symmetry.jpg",
+      "bytes": 185044,
+      "ext": "jpg"
+    },
+    {
+      "path": "assets/08_UI_MOCKUPS/ui_free_trial_checkout.jpg",
+      "category": "08_UI_MOCKUPS",
+      "filename": "ui_free_trial_checkout.jpg",
+      "bytes": 92787,
+      "ext": "jpg"
+    },
+    {
+      "path": "assets/08_UI_MOCKUPS/ui_streaming_stack.jpg",
+      "category": "08_UI_MOCKUPS",
+      "filename": "ui_streaming_stack.jpg",
+      "bytes": 107467,
+      "ext": "jpg"
+    },
+    {
+      "path": "assets/08_UI_MOCKUPS/ui_subscription_bank_statement.jpg",
+      "category": "08_UI_MOCKUPS",
+      "filename": "ui_subscription_bank_statement.jpg",
+      "bytes": 117595,
+      "ext": "jpg"
+    }
+  ]
 }

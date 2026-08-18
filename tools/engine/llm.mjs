@@ -37,6 +37,9 @@ export const modelChain = (prefix = "GEMINI") =>
   (process.env[`${prefix}_MODELS`] || (prefix === "GEMINI" ? GEMINI_DEFAULT : GROQ_DEFAULT).join(","))
     .split(",").map(s => s.trim()).filter(Boolean);
 
+// Gemini no longer accepts sampling params (temperature/top_p/top_k were
+// deprecated in the 3.x flash line), so generationConfig carries only the
+// mime type and token budget. Groq keeps temperature — it still supports it.
 async function geminiCall(model, system, prompt, temperature, maxOutputTokens, timeoutMs) {
   const key = loadApiKey("GEMINI_API_KEY");
   const url = `${GEMINI_ENDPOINT}/${model}:generateContent?key=${encodeURIComponent(key)}`;
@@ -49,7 +52,7 @@ async function geminiCall(model, system, prompt, temperature, maxOutputTokens, t
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: system }] },
         contents: [{ role: "user", parts: [{ text: prompt }] }],
-        generationConfig: { responseMimeType: "application/json", temperature, maxOutputTokens },
+        generationConfig: { responseMimeType: "application/json", maxOutputTokens },
       }),
       signal: controller.signal,
     });

@@ -100,9 +100,14 @@ export const bedLevel = (t: number): number => {
   return level;
 };
 
-/** Every sfx cue the director scheduled, flattened. */
+/** Every sfx cue the director scheduled, flattened. The director's per-beat
+ *  audio.sfx may be a plain NAME (e.g. "stamp", consumed by scene staging) —
+ *  only array-shaped cue schedules contribute here, and staging falls back to
+ *  script.sfx when none exist. */
 export const SFX_CUES = (plan.beats ?? []).flatMap((b) =>
-  (b.audio?.sfx ?? []).map((cue) => ({ at: cue.at, files: cue.files })),
+  Array.isArray(b.audio?.sfx)
+    ? (b.audio.sfx as { at: number; files: string[] }[]).map((cue) => ({ at: cue.at, files: cue.files }))
+    : [],
 );
 
 /** The beat the plan wants the bed to swell into — the payoff. Used by the

@@ -35,6 +35,18 @@ for (const symbol of forbiddenEntry) if (entry.includes(symbol)) errors.push(`Sh
 const forbiddenModules = new Set(["coinDrop", "coinStack", "jarFill", "mountain", "kinetic"]);
 for (const b of plan.beats ?? []) if (forbiddenModules.has(b?.visual?.module)) errors.push(`beat ${b.n}: legacy Shorts module ${b.visual.module}`);
 
+// Media contract: footage/evidence/data beats MUST carry a resolvable src.
+// Graphical modules (icon, payoff, background) render internally and need none.
+const mediaModules = new Set(["footage", "evidence", "stat", "chart", "investChart", "timeline", "compare"]);
+for (const b of plan.beats ?? []) {
+  if (!mediaModules.has(b?.visual?.module)) continue;
+  const src = String(b?.render?.media?.src || b?.visual?.assetPath || b?.visual?.asset || "");
+  if (!src) { errors.push(`beat ${b.n}: ${b.visual.module} requires media but has no src`); continue; }
+  const normalized = src.replace(/\\/g, "/").replace(/^assets\//, "assets/");
+  const candidate = join(root, "video/public", normalized);
+  if (!existsSync(candidate)) errors.push(`beat ${b.n}: media ${src} does not exist on disk`);
+}
+
 const repeats = [];
 for (let i = 1; i < (plan.beats ?? []).length; i++) if (plan.beats[i]?.visual?.module === plan.beats[i - 1]?.visual?.module) repeats.push(plan.beats[i].n);
 if (repeats.length > Math.max(3, Math.floor((plan.beats?.length ?? 0) * 0.12))) warnings.push(`adjacent module repetition is high (${repeats.length})`);

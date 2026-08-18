@@ -21,8 +21,11 @@
 //
 //   node ../tools/master.mjs out/vox.mp4 out/vox_upload.mp4
 import { spawnSync } from "node:child_process";
-import { existsSync } from "node:fs";
+import { existsSync, statSync } from "node:fs";
 import path from "node:path";
+import { ffmpegBin } from "./ffmpeg-bin.mjs";
+
+const FFMPEG = ffmpegBin();
 
 const TARGET_I = -14; // LUFS, what the platform normalises toward
 const TARGET_TP = -1.5; // dBTP, headroom left for the lossy encoder
@@ -44,10 +47,15 @@ if (!existsSync(input)) {
  *  captured and concatenated: the caller wants the measurements, not the exit
  *  code. */
 const run = (args) => {
-  const r = spawnSync("ffmpeg", args, { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  const r = spawnSync(FFMPEG, args, { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
   if (r.error) {
     console.error(`could not run ffmpeg: ${r.error.message}`);
     console.error("ffmpeg must be on PATH for this step.");
+    process.exit(1);
+  }
+  if (r.status !== 0) {
+    console.error(`ffmpeg failed (exit ${r.status}):`);
+    console.error(`${r.stdout ?? ""}${r.stderr ?? ""}`.slice(-2000));
     process.exit(1);
   }
   return `${r.stdout ?? ""}${r.stderr ?? ""}`;
@@ -136,11 +144,18 @@ const got = {
 };
 
 console.log(`  out: ${got.i} LUFS   peak ${got.tp} dBFS`);
-console.log(`wrote ${output}`);
 
-if (got.i && Math.abs(Number(got.i) - TARGET_I) > 1) {
-  console.warn(`warning: integrated loudness is ${got.i}, wanted ${TARGET_I}`);
+if (!existsSync(output) || statSync(output).size === 0) {
+  console.error(`FAIL: output missing or empty: ${path.resolve(output)}`);
+  process.exit(1);
+}
+console.log(`wrote ${output} (${(statSync(output).size / 1024 / 1024).toFixed(1)} MB)`);
+
+if (got.i && Math.abs(Number(got.i) - TARGET_I) > 1.5) {
+  console.error(`FAIL: integrated loudness ${got.i} LUFS outside tolerance ${TARGET_I} ± 1.5`);
+  process.exit(1);
 }
 if (got.tp && Number(got.tp) > -0.5) {
-  console.warn(`warning: true peak is ${got.tp} dBFS — still close to clipping`);
+  console.error(`FAIL: true peak ${got.tp} dBFS too close to clipping (limit -0.5)`);
+  process.exit(1);
 }

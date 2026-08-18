@@ -11,3 +11,7 @@ video/render_vox.log
 out-tmp.json
 _nexa_tmp_ignore.txt
 voice.json
+
+# vendored ffmpeg (portable build, not part of the repo)
+vendor/
+*.bak-align

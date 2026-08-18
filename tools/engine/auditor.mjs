@@ -208,9 +208,8 @@ ready=false and request precise patches from the vocabulary.`;
 // ------------------------------------------------------------------ loop
 export async function audit(script, plan, { maxRounds = MAX_ROUNDS, key = null, skip = noGemini } = {}) {
   const round = [];
-  const ctx = buildContext(script, plan);
   const baseDials = { ...(plan.search?.dials || {}) };
-  const pristineTag = plan.search?.tag || "baseline";
+  const pristineTag = String(plan.search?.tag || "baseline").replace(/(\+[^+]+)+$/, "");
   const seed = Number(plan.search?.seed ?? 20260817);
   const narrationKey = p => p.beats.map(b => JSON.stringify(b.narrative)).sort();
   const baseNarration = narrationKey(plan);
@@ -224,7 +223,9 @@ export async function audit(script, plan, { maxRounds = MAX_ROUNDS, key = null, 
       status.skipped = true;
       break;
     }
-    const res = await generateJson({ system: SYSTEM, prompt: auditPrompt(ctx), key });
+    // Context is rebuilt every round from the CURRENT plan so the auditor
+    // judges what it actually patched, never a stale snapshot from round 1.
+    const ctx = buildContext(script, currentPlan);
     if (!res.ok) { round.push({ round: r, error: res.reason, detail: res.errors }); status.error = res.reason; status.models = res.errors; break; }
     const v = res.data || {};
     const verdicts = {};
@@ -273,6 +274,10 @@ if (isMain) {
     const weakest = Object.entries(r.verdicts).sort((a, b) => a[1].score - b[1].score)[0];
     console.log(`  round ${r.round}: ${r.ready ? "READY" : "NOT READY"} · model ${r.model} · weakest ${weakest[0]} ${weakest[1].score}/10 · ${r.patches.length} patch(es) · QC ${r.score_after}/10`);
     if (r.top_issue) console.log(`           issue: ${r.top_issue}`);
+  }
+  if (!status.ready && !status.skipped && !status.error && !status.fatal) {
+    console.error(`AUDITOR NOT READY after ${status.rounds} round(s) — plan NOT written, pipeline halts`);
+    process.exit(3);
   }
   const changed = status.rounds > 0 && !status.skipped && !status.error && !status.fatal;
   if (changed && round.length) {
