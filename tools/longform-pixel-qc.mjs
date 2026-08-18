@@ -52,7 +52,10 @@ if (Math.abs(fps - Number(plan.project.fps)) > 0.05) errors.push(`fps mismatch: 
 if (!astream) errors.push("no audio stream in rendered video");
 if (!partial) {
   const loud = run(FFMPEG, ["-hide_banner","-nostats","-i",video,"-af","ebur128","-f","null","-"]);
-  const m = (loud.stderr || "").match(/I:\s*(-?[\d.]+)\s+LUFS/);
+  // ebur128 streams a per-block line (I: -70.0 LUFS on the opening silence)
+  // and prints the authoritative measurement once, in the final Summary —
+  // so only the "Integrated loudness" section is accepted.
+  const m = (loud.stderr || "").match(/Integrated loudness:[\s\S]{0,40}?I:\s*(-?[\d.]+)\s+LUFS/);
   if (!m) warnings.push("loudness measurement could not complete");
   else {
     const integrated = Number(m[1]);
@@ -66,12 +69,28 @@ if (!partial) {
 let blackMatches = [], frozenMatches = [], silence = [];
 if (!partial) {
 
-const black = run(FFMPEG, ["-hide_banner","-nostats","-i",video,"-vf","blackdetect=d=1:pix_th=0.995","-an","-f","null","-"]);
+const black = run(FFMPEG, ["-hide_banner","-nostats","-i",video,"-vf","blackdetect=d=1:pix_th=0.10","-an","-f","null","-"]);
 blackMatches = [...black.stderr.matchAll(/black_start:([\d.]+)\s+black_end:([\d.]+)\s+black_duration:([\d.]+)/g)].map(m => ({ start:Number(m[1]), end:Number(m[2]), duration:Number(m[3]) }));
-for (const b of blackMatches) if (b.duration > 1.0 && b.start > 0.05) warnings.push(`black frame interval ${b.start.toFixed(2)}-${b.end.toFixed(2)}s`);
+// Dark statement beats (payoff screens on ink background) sit just under the
+// black threshold while still carrying bright text — verify each interval
+// actually lacks bright pixels before warning about it.
+function maxLumaAt(sec) {
+  const probe = run(FFMPEG, ["-hide_banner","-nostats","-ss",String(sec),"-i",video,"-frames:v","1","-vf","signalstats,metadata=print","-f","null","-"]);
+  const m = (probe.stderr || "").match(/YMAX:([\d.]+)/);
+  return m ? Number(m[1]) : null;
+}
+const darkScene = (b) => {
+  const mid = (b.start + b.end) / 2;
+  const probes = [b.start + 0.2, mid, b.end - 0.2].map(maxLumaAt).filter(v => v !== null);
+  return probes.length > 0 && Math.max(...probes) <= 180;
+};
+for (const b of blackMatches) if (b.duration > 1.0 && b.start > 0.05) {
+  if (darkScene(b)) warnings.push(`black frame interval ${b.start.toFixed(2)}-${b.end.toFixed(2)}s`);
+  else warnings.push(`dark scene interval ${b.start.toFixed(2)}-${b.end.toFixed(2)}s (content present, not flagged black)`);
+}
 if (black.status !== 0) warnings.push("blackdetect could not complete");
 
-const frozen = run(FFMPEG, ["-hide_banner","-nostats","-i",video,"-vf","freezedetect=n=-60d=5","-an","-f","null","-"]);
+const frozen = run(FFMPEG, ["-hide_banner","-nostats","-i",video,"-vf","freezedetect=noise=-60dB:d=5","-an","-f","null","-"]);
 frozenMatches = [...frozen.stderr.matchAll(/freeze_start:([\d.]+).*?freeze_end:([\d.]+).*?freeze_duration:([\d.]+)/gs)].map(m => ({ start:Number(m[1]), end:Number(m[2]), duration:Number(m[3]) }));
 for (const f of frozenMatches) if (f.duration > 5) warnings.push(`possible stale/frozen visual ${f.start.toFixed(2)}-${f.end.toFixed(2)}s`);
 if (frozen.status !== 0) warnings.push("freezedetect could not complete");
