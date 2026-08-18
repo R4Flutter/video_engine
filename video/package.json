@@ -13,6 +13,7 @@
     "qc":"node ../tools/qc.mjs",
     "gate":"npm run longform:callgraph && node ../tools/qc.mjs --strict",
     "engine:beam":"node ../tools/engine/search.mjs",
+    "engine:audit":"node ../tools/engine/auditor.mjs",
     "engine:status":"node ../tools/engine/loop.mjs status",
     "engine:calibrate":"python ../tools/engine/calibrate.py",
     "test:engine":"node --test ../tools/tests/engine.test.mjs",

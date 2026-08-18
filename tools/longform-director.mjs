@@ -202,7 +202,17 @@ export const buildPlan = (script, opts = {}) => {
   const chapterOpenerN = new Set(chapters.slice(1).map(c => Number(c.beats[0])));
   let priorModule = "", sameRun = 0, visualChanges = 0, evidenceEvents = 0;
   const directedBeats = beats.map((b, i) => {
-    const module = String(b.module || (b.footage ? "footage" : b.data?.length ? "chart" : b.source ? "evidence" : "evidence"));
+    const beatKey = String(b.n ?? b.name ?? i);
+    const reqMod = dials.evidenceOverrides?.[beatKey];
+    let module = String(b.module || (b.footage ? "footage" : b.data?.length ? "chart" : b.source ? "evidence" : "evidence"));
+    if (reqMod) {
+      const compatible = reqMod === "footage" ? Boolean(b.footage)
+        : ["chart","investChart","timeline","compare"].includes(reqMod) ? (b.data?.length ?? 0) > 0
+        : reqMod === "stat" ? numbers(b.vo || "").length > 0 || (b.data?.length ?? 0) > 0
+        : reqMod === "evidence" ? Boolean(b.source || b.data?.length)
+        : false;
+      if (compatible) module = reqMod;
+    }
     sameRun = module === priorModule ? sameRun + 1 : 1; if (module !== priorModule) visualChanges++; priorModule = module;
     const evidenceRequired = ["proof","reveal","escalate"].includes(String(b.purpose || "").toLowerCase()) || numbers(b.vo).length > 0 || numbers(b.text || "").length > 0 || DATA_MODULES.has(module); if (evidenceRequired) evidenceEvents++;
     const d = durationOf(b), internalChange = staging(d).map(f => Number((d * f).toFixed(2)));
@@ -210,9 +220,10 @@ export const buildPlan = (script, opts = {}) => {
     const fatigueRisk = d > 18 && internalChange.length < needed ? 1 : Math.max(0, (sameRun - 3) * 0.25);
     const next = beats[i + 1];
     const source = assetSeed.get(Number(b.n)) || null;
-    let revealMode = String(b.revealMode || "IMMEDIATE");
-    if (!b.revealMode && revealShift > 0 && rng() < revealShift) revealMode = REVEAL_ALTERNATIVES[Math.floor(rng() * REVEAL_ALTERNATIVES.length)];
-    const camera = String(b.camera || cameraBias || (d > 8 ? "push" : "hold"));
+    const overrideReveal = dials.revealOverrides?.[beatKey];
+    let revealMode = String(b.revealMode || overrideReveal || "IMMEDIATE");
+    if (!b.revealMode && !overrideReveal && revealShift > 0 && rng() < revealShift) revealMode = REVEAL_ALTERNATIVES[Math.floor(rng() * REVEAL_ALTERNATIVES.length)];
+    const camera = String(b.camera || dials.cameraOverrides?.[beatKey] || cameraBias || (d > 8 ? "push" : "hold"));
     const transition = i === 0 ? "cut" : (b.purpose === "reveal" || b.purpose === "payoff" || (contrastChapters && chapterOpenerN.has(Number(b.n)))) ? "contrast" : "cut";
     return {
       n: b.n, name: b.name || `Beat ${b.n}`, start: Number(b.start), end: Number(b.end), duration: d,

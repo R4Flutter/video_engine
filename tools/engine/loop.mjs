@@ -17,7 +17,8 @@ const arg = (name, fallback = null) => { const i = process.argv.indexOf(`--${nam
 
 const MODEL = process.env.YT_ENGINE_MODEL || "C:/Users/rajna/yt_engine/reports/retention_coefficients.json";
 const planPath = resolve(root, "video/src/director-plan.json");
-const auditPath = resolve(root, "video/out/plan-variants.json");
+const auditPath = resolve(root, "video/out/gemini-audit.json");
+const beamAuditPath = resolve(root, "video/out/plan-variants.json");
 const voDir = resolve(root, "video/public/audio/vo");
 
 const run = (argv, opts = {}) => {
@@ -34,10 +35,10 @@ function status() {
   console.log(`  QC       ${plan.qc?.score ?? "?"}/10 across ${plan.qc ? Object.keys(plan.qc.scores ?? {}).length : 0} dimensions`);
   const failures = Object.entries(plan.qc?.scores ?? {}).filter(([, v]) => v < 8);
   if (failures.length) for (const [k, v] of failures) console.log(`           FAIL ${k} ${v}/10`);
-  const search = plan.search ?? JSON.parse(existsSync(auditPath) ? readFileSync(auditPath, "utf8") : "{}");
+  const search = plan.search ?? JSON.parse(existsSync(beamAuditPath) ? readFileSync(beamAuditPath, "utf8") : "{}");
   console.log(`  SEARCH   variant "${search.tag ?? "baseline"}" · seed ${search.seed ?? "?"} ${search.generated ? `· audited ${search.generated}` : ""}`);
-  if (existsSync(auditPath)) {
-    const a = JSON.parse(readFileSync(auditPath, "utf8"));
+  if (existsSync(beamAuditPath)) {
+    const a = JSON.parse(readFileSync(beamAuditPath, "utf8"));
     if (a.winner) console.log(`           beam ${a.variants} variants · ${a.passedCount ?? "?"} passed · Δ${a.deltaVsBaseline ?? 0} vs baseline`);
   }
   let takes = 0;
@@ -48,8 +49,10 @@ function status() {
     console.log(`  MODEL    ${m.self_calibrated_at ? `self-calibrated ${m.self_calibrated_at} on ${m.self_calibrated_videos} video(s) · ${m.self_calibrated_sentences} sentences (prior weight ${m.prior_weight})` : `corpus model (${m.n_sentences ?? "?"} sentences) — not yet self-calibrated`}`);
   } else console.log("  MODEL    MISSING — retention scores will be 0");
   if (existsSync(auditPath)) {
+    const a = JSON.parse(readFileSync(auditPath, "utf8"));
     const ageMs = Date.now() - statSync(auditPath).mtimeMs;
-    console.log(`  AUDIT    ${auditPath} (${Math.round(ageMs / 60000)} min old)`);
+    const last = (a.round || []).filter(r => r.verdicts).pop();
+    console.log(`  AUDIT    ${a.status?.ready ? "READY" : a.status?.skipped ? "skipped (no key)" : a.status?.error ? `error ${a.status.error}` : "NOT READY"} · ${a.round?.length ?? 0} round(s) · ${last ? `weakest ${Object.entries(last.verdicts).sort((x, y) => x[1].score - y[1].score)[0][0]} ${Math.min(...Object.values(last.verdicts).map(v => v.score))}/10` : ""} (${Math.round(ageMs / 60000)} min old)`);
   }
 }
 
@@ -58,6 +61,16 @@ function beam() {
   const seed = Number(arg("seed", "20260817")) || 20260817;
   run([resolve(root, "tools/engine/search.mjs"), "--script", resolve(root, "video/src/script.json"),
        "--out", planPath, "--variants", String(variants), "--seed", String(seed)]);
+  run([resolve(root, "tools/longform-autofix.mjs")]);
+  if (!process.argv.includes("--no-audit")) {
+    run([resolve(root, "tools/engine/auditor.mjs"), "--script", resolve(root, "video/src/script.json"), "--plan", planPath]);
+    run([resolve(root, "tools/longform-autofix.mjs")]);
+  }
+  run([resolve(root, "tools/qc.mjs"), "--plan", planPath]);
+}
+
+function auditCmd() {
+  run([resolve(root, "tools/engine/auditor.mjs"), "--script", resolve(root, "video/src/script.json"), "--plan", planPath]);
   run([resolve(root, "tools/longform-autofix.mjs")]);
   run([resolve(root, "tools/qc.mjs"), "--plan", planPath]);
 }
@@ -74,5 +87,6 @@ function calibrate() {
 const cmd = process.argv[2];
 if (cmd === "status") status();
 else if (cmd === "beam") beam();
+else if (cmd === "audit") auditCmd();
 else if (cmd === "calibrate") calibrate();
-else { console.error("usage: node tools/engine/loop.mjs <status|beam|calibrate> [opts]"); process.exit(2); }
+else { console.error("usage: node tools/engine/loop.mjs <status|beam|audit|calibrate> [opts]"); process.exit(2); }

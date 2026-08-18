@@ -2498,7 +2498,7 @@
           "jcut": 0,
           "lcut": 0
         },
-        "transition": "contrast"
+        "transition": "cut"
       }
     },
     {
@@ -4782,7 +4782,7 @@
           "jcut": 1,
           "lcut": 0
         },
-        "transition": "contrast"
+        "transition": "cut"
       }
     },
     {
@@ -5674,10 +5674,13 @@
   ],
   "referencePatterns": [],
   "search": {
-    "tag": "baseline",
+    "tag": "baseline+gemini-r1+gemini-r1",
     "seed": 20260817,
     "dials": {
-      "tag": "baseline"
+      "tag": "baseline+gemini-r1+gemini-r1",
+      "cameraOverrides": {},
+      "revealOverrides": {},
+      "evidenceOverrides": {}
     }
   },
   "qc": {
@@ -6117,12 +6120,7 @@
         "staged": false,
         "score": -0.0166
       }
-    ],
-    "autofix": {
-      "changedFields": 2,
-      "iterations": 1,
-      "scope": "timing/visual/motion/transition only; no narrative facts or source claims modified"
-    }
+    ]
   },
   "renderContract": {
     "schema": "longform-render-1",

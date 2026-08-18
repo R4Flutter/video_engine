@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 import { searchPlan, dialsFor } from "../engine/search.mjs";
 import { buildPlan } from "../longform-director.mjs";
+import { coercePatches } from "../engine/auditor.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const script = JSON.parse(readFileSync(join(ROOT, "video/src/script.json"), "utf8"));
@@ -51,6 +52,54 @@ test("all variants respect canonical narration and authored staging", () => {
     const p = buildPlan(script, { seed: 7 + e.index * 7919, dials: e.dials });
     assert.deepEqual(multiset(p), first, `variant ${e.tag} altered the narration`);
   }
+});
+
+test("auditor patch vocabulary: coercion, clamping, unknown-op rejection", () => {
+  const r = coercePatches([
+    { op: "dials", dials: { stagingPattern: "front", cameraBias: "punch", revealShift: 1.7, jcutAdd: 9 } },
+    { op: "camera", beat: 12, camera: "punch" },
+    { op: "reveal", beat: 0, mode: "WEIRD" },
+    { op: "reveal", beat: 7, mode: "HIDDEN_THEN_REVEAL" },
+    { op: "evidence", beat: 7, module: "stat" },
+    { op: "narration", beat: 1, text: "hax" },
+    { op: "jcut", add: 5 },
+  ], 67);
+  assert.deepEqual(r.dials, { stagingPattern: "front", cameraBias: "punch", revealShift: 1, jcutAdd: 3 });
+  assert.deepEqual(r.cameraOverrides, { "12": "punch" });
+  assert.deepEqual(r.revealOverrides, { "7": "HIDDEN_THEN_REVEAL" });
+  assert.deepEqual(r.evidenceOverrides, { "7": "stat" });
+  assert.equal(r.applied.length, 5);
+  assert.ok(r.rejected.some(x => x.reason === "bad_beat_0"));
+  assert.ok(r.rejected.some(x => x.op === "narration" && x.reason === "unknown_op"));
+  const none = coercePatches(null, 10);
+  assert.equal(none.applied.length, 0);
+});
+
+test("auditor patch application: overrides apply on unauthored beats, narration untouched", () => {
+  const synthetic = {
+    title: "Synthetic", durationInSeconds: 40,
+    beats: [
+      { n: 1, name: "Chapter One: A", start: 0, end: 10, vo: "One two three four.", purpose: "hook" },
+      { n: 2, name: "Chapter Two: B", start: 10, end: 25, vo: "Five six seven eight nine. 42 people.", purpose: "explain" },
+      { n: 3, name: "Chapter Three: C", start: 25, end: 35, vo: "Ten eleven twelve.", purpose: "payoff" },
+      { n: 4, name: "D", start: 35, end: 40, vo: "Thirteen fourteen.", purpose: "explain" },
+    ],
+  };
+  const base = buildPlan(synthetic, { seed: 5, dials: { tag: "base" } });
+  const patched = buildPlan(synthetic, { seed: 5, dials: { tag: "patched", cameraOverrides: { "1": "punch" }, revealOverrides: { "2": "SEQUENTIAL" }, evidenceOverrides: { "2": "stat" }, jcutAdd: 1, contrastPolicy: "chapters" } });
+  assert.equal(patched.beats.length, base.beats.length);
+  assert.deepEqual(
+    patched.beats.map(b => JSON.stringify(b.narrative)).sort(),
+    base.beats.map(b => JSON.stringify(b.narrative)).sort(),
+    "patches must never touch narration");
+  assert.equal(patched.beats.find(b => b.n === 1).visual.camera, "punch");
+  assert.equal(patched.beats.find(b => b.n === 2).visual.revealMode, "SEQUENTIAL");
+  assert.equal(patched.beats.find(b => b.n === 2).visual.module, "stat");
+  assert.ok(patched.beats.some(b => b.audio.jcut === 1), "jcutAdd must produce j-cuts");
+  const narrated = buildPlan(script, { seed: 20260817, dials: { tag: "p" } });
+  assert.deepEqual(
+    narrated.beats.map(b => JSON.stringify(b.narrative)).sort(),
+    searchPlan(script, { variants: 4, seed: 20260817 }).plan.beats.map(b => JSON.stringify(b.narrative)).sort());
 });
 
 test("calibrate round-trip: schema-compatible output with self-calibration fields", () => {
