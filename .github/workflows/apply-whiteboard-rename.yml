@@ -1,0 +1,123 @@
+name: Apply whiteboard clip rename
+
+on:
+  push:
+    branches:
+      - feat/episode-company-sells-you-nothing
+
+permissions:
+  contents: write
+
+jobs:
+  rename:
+    if: ${{ !contains(github.event.head_commit.message, 'whiteboard: apply CLIP rename') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply rename plan
+        shell: python
+        run: |
+          from pathlib import Path
+          import csv
+          import os
+          import re
+
+          root = Path('whiteboard_clips')
+          plan_path = root / 'rename_plan.csv'
+          rows = list(csv.DictReader(plan_path.open(encoding='utf-8-sig', newline='')))
+
+          if len(rows) != 165:
+              raise SystemExit(f'Expected 165 rename rows, found {len(rows)}')
+
+          sources = [r['video'].strip() for r in rows]
+          targets = [r['target'].strip() + '.mp4' for r in rows]
+          if len(set(sources)) != 165:
+              raise SystemExit('Rename plan has duplicate source filenames')
+          if len(set(targets)) != 165:
+              raise SystemExit('Rename plan has duplicate target filenames')
+          if any(not re.fullmatch(r'beat_\d{2}_p\d{2}\.mp4', s) for s in sources):
+              raise SystemExit('Unexpected source filename in rename plan')
+          if any(not re.fullmatch(r'beat_\d{2}_p\d{2}\.mp4', t) for t in targets):
+              raise SystemExit('Unexpected target filename in rename plan')
+
+          missing = [s for s in sources if not (root / s).is_file()]
+          if missing:
+              raise SystemExit('Missing source videos: ' + ', '.join(missing[:20]))
+
+          # Two-phase rename avoids collisions because this is a permutation.
+          temp_pairs = []
+          for i, src in enumerate(sources):
+              src_path = root / src
+              tmp_name = f'.__wb_rename_tmp_{i:03d}.mp4'
+              tmp_path = root / tmp_name
+              if tmp_path.exists():
+                  tmp_path.unlink()
+              src_path.rename(tmp_path)
+              temp_pairs.append((tmp_name, targets[i]))
+
+          for tmp_name, target in temp_pairs:
+              (root / tmp_name).rename(root / target)
+
+          # Rename derived frame images that mirror the MP4 stem.
+          frame_dirs = [root / d for d in ('frames', 'frames_re', 'fresh_frames', 'lastframes', 'match_frames')]
+          for old, new in zip(sources, targets):
+              old_png = Path(old).with_suffix('.png').name
+              new_png = Path(new).with_suffix('.png').name
+              for d in frame_dirs:
+                  if (d / old_png).exists():
+                      (d / old_png).rename(d / new_png)
+
+          # Refresh the generated verification/gallery references, preserving rename_plan.csv history.
+          replacements = dict(zip(sources, targets))
+          replacements.update({Path(s).stem + '.png': Path(t).stem + '.png' for s, t in zip(sources, targets)})
+          text_files = [
+              root / 'gallery.html',
+              root / 'verify_lastframes.html',
+              root / 'current_names.txt',
+              root / 'clip_mapping.csv',
+              root / 'full_order.xml',
+              root / 'seq_to_beat.xml',
+              root / 'target_order.txt',
+          ]
+          for path in text_files:
+              if not path.exists():
+                  continue
+              text = path.read_text(encoding='utf-8-sig')
+              for old, new in sorted(replacements.items(), key=lambda kv: -len(kv[0])):
+                  text = text.replace(old, new)
+              path.write_text(text, encoding='utf-8')
+
+          # Record the applied mapping without destroying the original CLIP plan.
+          applied = root / 'rename_applied.csv'
+          with applied.open('w', encoding='utf-8', newline='') as f:
+              w = csv.writer(f)
+              w.writerow(['source_before_rename', 'target_after_rename'])
+              w.writerows(zip(sources, targets))
+
+      - name: Verify result
+        shell: bash
+        run: |
+          test "$(find whiteboard_clips -maxdepth 1 -type f -name 'beat_*.mp4' | wc -l)" -eq 165
+          test "$(find whiteboard_clips -maxdepth 1 -type f -name '.__wb_rename_tmp_*.mp4' | wc -l)" -eq 0
+          python - <<'PY'
+          import csv
+          from pathlib import Path
+          rows = list(csv.DictReader(Path('whiteboard_clips/rename_applied.csv').open(encoding='utf-8')))
+          assert len(rows) == 165
+          assert len({r['target_after_rename'] for r in rows}) == 165
+          assert all(Path('whiteboard_clips', r['target_after_rename']).exists() for r in rows)
+          print('Verified 165 target videos.')
+          PY
+
+      - name: Commit and push
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add whiteboard_clips
+          git commit -m 'whiteboard: apply CLIP rename' || exit 0
+          git push origin HEAD:feat/episode-company-sells-you-nothing
