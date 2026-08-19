@@ -1,0 +1,1 @@
+﻿Black-and-white hand-drawn whiteboard sketch animation frame, 16:9 widescreen. A whiteboard sketch: a vertical meter drawn in bold strokes labeled "PROFIT" with the needle pinned at the top, and a small caption on the meter: "THE DESIGN WORKS". A small chart of rising coins beside it. Caption: "PROFITABLE — IT PAID." 16:9 widescreen, black ink on white, diagram sketch style.
