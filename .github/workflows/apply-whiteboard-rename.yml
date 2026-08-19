@@ -23,67 +23,47 @@ jobs:
         run: |
           from pathlib import Path
           import csv
-          import os
           import re
 
           root = Path('whiteboard_clips')
-          plan_path = root / 'rename_plan.csv'
-          rows = list(csv.DictReader(plan_path.open(encoding='utf-8-sig', newline='')))
-
+          rows = list(csv.DictReader((root / 'rename_plan.csv').open(encoding='utf-8-sig', newline='')))
           if len(rows) != 165:
               raise SystemExit(f'Expected 165 rename rows, found {len(rows)}')
 
           sources = [r['video'].strip() for r in rows]
           targets = [r['target'].strip() + '.mp4' for r in rows]
-          if len(set(sources)) != 165:
-              raise SystemExit('Rename plan has duplicate source filenames')
-          if len(set(targets)) != 165:
-              raise SystemExit('Rename plan has duplicate target filenames')
-          if any(not re.fullmatch(r'beat_\d{2}_p\d{2}\.mp4', s) for s in sources):
-              raise SystemExit('Unexpected source filename in rename plan')
-          if any(not re.fullmatch(r'beat_\d{2}_p\d{2}\.mp4', t) for t in targets):
-              raise SystemExit('Unexpected target filename in rename plan')
-
+          if len(set(sources)) != 165 or len(set(targets)) != 165:
+              raise SystemExit('Rename plan must contain 165 unique sources and targets')
+          if any(not re.fullmatch(r'beat_\d{2}_p\d{2}\.mp4', x) for x in sources + targets):
+              raise SystemExit('Unexpected filename in rename plan')
           missing = [s for s in sources if not (root / s).is_file()]
           if missing:
               raise SystemExit('Missing source videos: ' + ', '.join(missing[:20]))
 
-          # Two-phase rename avoids collisions because this is a permutation.
-          temp_pairs = []
+          # Two-phase rename avoids collisions in the permutation.
+          temps = []
           for i, src in enumerate(sources):
-              src_path = root / src
-              tmp_name = f'.__wb_rename_tmp_{i:03d}.mp4'
-              tmp_path = root / tmp_name
-              if tmp_path.exists():
-                  tmp_path.unlink()
-              src_path.rename(tmp_path)
-              temp_pairs.append((tmp_name, targets[i]))
+              tmp = f'.__wb_rename_tmp_{i:03d}.mp4'
+              (root / src).rename(root / tmp)
+              temps.append((tmp, targets[i]))
+          for tmp, target in temps:
+              (root / tmp).rename(root / target)
 
-          for tmp_name, target in temp_pairs:
-              (root / tmp_name).rename(root / target)
-
-          # Rename derived frame images that mirror the MP4 stem.
+          # Keep derived frame folders in sync where matching PNGs exist.
           frame_dirs = [root / d for d in ('frames', 'frames_re', 'fresh_frames', 'lastframes', 'match_frames')]
-          for old, new in zip(sources, targets):
-              old_png = Path(old).with_suffix('.png').name
-              new_png = Path(new).with_suffix('.png').name
+          for src, target in zip(sources, targets):
+              old_png = Path(src).with_suffix('.png').name
+              new_png = Path(target).with_suffix('.png').name
               for d in frame_dirs:
                   if (d / old_png).exists():
                       (d / old_png).rename(d / new_png)
 
-          # Refresh the generated verification/gallery references, preserving rename_plan.csv history.
           replacements = dict(zip(sources, targets))
           replacements.update({Path(s).stem + '.png': Path(t).stem + '.png' for s, t in zip(sources, targets)})
-          text_files = [
-              root / 'gallery.html',
-              root / 'verify_lastframes.html',
-              root / 'current_names.txt',
-              root / 'clip_mapping.csv',
-              root / 'full_order.xml',
-              root / 'seq_to_beat.xml',
-              root / 'target_order.txt',
-          ]
-          for path in text_files:
+          for path in [
+              root / 'gallery.html', root / 'verify_lastframes.html', root / 'current_names.txt',
+              root / 'clip_mapping.csv', root / 'full_order.xml', root / 'seq_to_beat.xml', root / 'target_order.txt'
+          ]:
               if not path.exists():
                   continue
               text = path.read_text(encoding='utf-8-sig')
@@ -91,9 +71,7 @@ jobs:
                   text = text.replace(old, new)
               path.write_text(text, encoding='utf-8')
 
-          # Record the applied mapping without destroying the original CLIP plan.
-          applied = root / 'rename_applied.csv'
-          with applied.open('w', encoding='utf-8', newline='') as f:
+          with (root / 'rename_applied.csv').open('w', encoding='utf-8', newline='') as f:
               w = csv.writer(f)
               w.writerow(['source_before_rename', 'target_after_rename'])
               w.writerows(zip(sources, targets))
@@ -121,3 +99,5 @@ jobs:
           git add whiteboard_clips
           git commit -m 'whiteboard: apply CLIP rename' || exit 0
           git push origin HEAD:feat/episode-company-sells-you-nothing
+
+# trigger rename on the next push; the apply commit is guarded above
