@@ -1,0 +1,114 @@
+name: Restore canonical whiteboard clip names
+
+on:
+  push:
+    branches:
+      - feat/episode-company-sells-you-nothing
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    if: ${{ !contains(github.event.head_commit.message, 'whiteboard: restore canonical names') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Restore video names from canonical commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess
+          import hashlib
+          import re
+
+          ROOT = Path('whiteboard_clips')
+          CANONICAL_COMMIT = 'dbe1f4c2bc06878c4af464ebef760a664b2802b0'
+
+          def run(*args):
+              return subprocess.check_output(args, text=True).strip()
+
+          # Canonical names are the exact MP4 paths from the original commit.
+          tree = run('git', 'ls-tree', '-r', '--name-only', CANONICAL_COMMIT, '--', 'whiteboard_clips')
+          canonical = [
+              p for p in tree.splitlines()
+              if re.fullmatch(r'whiteboard_clips/beat_\d{2}_p\d{2}\.mp4', p)
+          ]
+          if len(canonical) != 165:
+              raise SystemExit(f'Expected 165 canonical MP4s, found {len(canonical)}')
+
+          # Map the immutable blob SHA of each canonical video to its canonical filename.
+          sha_to_name = {}
+          for path in canonical:
+              blob = run('git', 'rev-parse', f'{CANONICAL_COMMIT}:{path}')
+              if blob in sha_to_name:
+                  raise SystemExit(f'Duplicate canonical blob SHA: {blob}')
+              sha_to_name[blob] = path.split('/')[-1]
+
+          current = sorted(ROOT.glob('beat_*.mp4'))
+          if len(current) != 165:
+              raise SystemExit(f'Expected 165 current MP4s, found {len(current)}')
+
+          mapping = []
+          for path in current:
+              blob = run('git', 'hash-object', str(path))
+              target = sha_to_name.get(blob)
+              if target is None:
+                  raise SystemExit(f'Current video is not one of the canonical 165 blobs: {path.name}')
+              mapping.append((path.name, target))
+
+          if len({target for _, target in mapping}) != 165:
+              raise SystemExit('Canonical mapping is not one-to-one')
+
+          changed = [(src, dst) for src, dst in mapping if src != dst]
+          print(f'Canonical restore: {len(changed)} videos need renaming.')
+          for src, dst in changed[:20]:
+              print(f'  {src} -> {dst}')
+
+          # Two-phase rename avoids collisions.
+          temp = []
+          for i, (src, dst) in enumerate(changed):
+              tmp = f'.__canonical_tmp_{i:03d}.mp4'
+              (ROOT / src).rename(ROOT / tmp)
+              temp.append((tmp, dst))
+          for tmp, dst in temp:
+              (ROOT / tmp).rename(ROOT / dst)
+
+          # Record the actual applied state.
+          out = ROOT / 'canonical_restore_map.csv'
+          out.write_text(
+              'source_before_restore,target_canonical\n' +
+              ''.join(f'{src},{dst}\n' for src, dst in mapping),
+              encoding='utf-8',
+          )
+          PY
+
+      - name: Verify canonical state
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(find whiteboard_clips -maxdepth 1 -type f -name 'beat_*.mp4' | wc -l)" -eq 165
+          test "$(find whiteboard_clips -maxdepth 1 -type f -name '.__canonical_tmp_*.mp4' | wc -l)" -eq 0
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          files = sorted(Path('whiteboard_clips').glob('beat_*.mp4'))
+          assert len(files) == 165
+          assert all(re.fullmatch(r'beat_\d{2}_p\d{2}\.mp4', p.name) for p in files)
+          print('Verified 165 canonical beat/prompt filenames.')
+          PY
+
+      - name: Commit and push
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add whiteboard_clips .github/workflows/restore-whiteboard-canonical.yml
+          git commit -m 'whiteboard: restore canonical names' || exit 0
+          git push origin HEAD:feat/episode-company-sells-you-nothing
