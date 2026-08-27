@@ -1,4 +1,4 @@
-export type EffectIntensity = 0.5 | 1 | 1.5 | 2;
+export type EffectIntensity = number;
 
 export type EffectCategory =
   | "camera"
@@ -20,8 +20,19 @@ export type EffectCategory =
   | "camera-effects"
   | "combinations";
 
+export type ShotIntent =
+  | "establish"
+  | "approach"
+  | "evidence"
+  | "portrait"
+  | "detail"
+  | "location"
+  | "escalate"
+  | "resolve";
+
 export type BaseEffectProps = {
   image?: string;
+  text?: string;
   children?: React.ReactNode;
   durationInFrames?: number;
   delay?: number;
@@ -44,13 +55,13 @@ export type CameraEffectProps = BaseEffectProps & {
 
 export type TextEffectProps = BaseEffectProps & {
   text: string;
-  fontSize?: number; // default 48
-  color?: string; // default "white"
-  fontFamily?: string; // default "Inter, sans-serif"
-  fontWeight?: number; // default 700
-  textAlign?: "left" | "center" | "right"; // default "center"
-  x?: number | string; // 0..1 of width, or px. default 0.5
-  y?: number | string; // 0..1 of height, or px. default 0.5
+  fontSize?: number;
+  color?: string;
+  fontFamily?: string;
+  fontWeight?: number;
+  textAlign?: "left" | "center" | "right";
+  x?: number | string;
+  y?: number | string;
 };
 
 export type ReframeTarget = {
