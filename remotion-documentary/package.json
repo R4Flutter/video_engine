@@ -1,15 +1,16 @@
 {
   "name": "remotion-documentary",
-  "version": "1.0.0",
-  "description": "Production-grade documentary animation library for Remotion 4.x. 270+ cinematic effects, callable via <Director effect=\"...\" />.",
+  "version": "2.0.0",
+  "description": "Production-grade deterministic documentary shot engine for Remotion 4.x.",
   "scripts": {
     "start": "remotion studio",
     "build": "remotion render Showcase out/showcase.mp4",
     "build:shot": "remotion render DocumentaryShot out/documentary-shot.mp4",
-    "build:all": "remotion render Showcase out/showcase.mp4 && remotion render DocumentaryShot out/documentary-shot.mp4",
+    "build:production": "remotion render ProductionDocumentary out/production-documentary.mp4",
+    "build:all": "npm run typecheck && npm run build:production && npm run build:shot && npm run build",
     "typecheck": "tsc --noEmit",
-    "upgrade": "remotion upgrade",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "upgrade": "remotion upgrade"
   },
   "dependencies": {
     "@remotion/cli": "4.0.290",
