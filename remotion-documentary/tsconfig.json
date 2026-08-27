@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "jsx": "react-jsx",
+    "target": "es2022",
+    "moduleResolution": "bundler",
+    "baseUrl": "src",
+    "paths": {
+      "/*": ["/*"]
+    },
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "outDir": "../dist",
+    "rootDir": "."
+  },
+  "include": ["src/**/*", "compositions/**/*"]
+}

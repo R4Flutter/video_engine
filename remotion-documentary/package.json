@@ -1,0 +1,25 @@
+{
+  "name": "remotion-documentary",
+  "version": "1.0.0",
+  "description": "Production-grade documentary animation library for Remotion 4.x. 270+ cinematic effects, callable via <Director effect=\"...\" />.",
+  "scripts": {
+    "start": "remotion studio",
+    "build": "remotion render Showcase out/showcase.mp4",
+    "build:shot": "remotion render DocumentaryShot out/documentary-shot.mp4",
+    "build:all": "remotion render Showcase out/showcase.mp4 && remotion render DocumentaryShot out/documentary-shot.mp4",
+    "typecheck": "tsc --noEmit",
+    "upgrade": "remotion upgrade",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.290",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.290"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.12",
+    "@types/web": "0.0.166",
+    "typescript": "5.6.3"
+  }
+}
