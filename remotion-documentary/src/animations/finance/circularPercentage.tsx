@@ -11,6 +11,9 @@ interface CounterConfig {
   decimals?: number;
   fontSize?: number;
   color?: string;
+  size?: number;
+  strokeWidth?: number;
+  trailColor?: string;
 }
 
 type CircularPercentageProps = BaseEffectProps & { config: CounterConfig };
@@ -24,7 +27,7 @@ export const circularPercentage: React.FC<CircularPercentageProps> = ({ image, c
   const t = Math.max(0, Math.min(1, local / durationInFrames));
   const eased = easeOutQuart(t);
   const { from = 0, to = 100, strokeWidth = 10, color = "#3b82f6", trailColor = "#e5e7eb" } = config;
-  const progress = interpolate(t, [0, 1], [from, to]);
+  const progress = interpolate(eased, [0, 1], [from, to]);
   const radius = 50 - strokeWidth / 2;
   const circumference = 2 * Math.PI * radius;
   const dashOffset = circumference * (1 - progress / 100);
@@ -32,32 +35,10 @@ export const circularPercentage: React.FC<CircularPercentageProps> = ({ image, c
   return (
     <AbsoluteFill style={style} className={className}>
       <svg width="100%" height="100%" viewBox="0 0 100 100">
-        <circle
-          cx="50"
-          cy="50"
-          r={radius}
-          fill="none"
-          stroke={trailColor}
-          strokeWidth={strokeWidth}
-          strokeOpacity="0.1"
-        />
-        <circle
-          cx="50"
-          cy="50"
-          r={radius}
-          fill="none"
-          stroke={color}
-          strokeWidth={strokeWidth}
-          strokeOpacity="1"
-          strokeDasharray={circumference}
-          strokeDashoffset={dashOffset}
-          transform="rotate(-90 50 50)"
-        />
+        <circle cx="50" cy="50" r={radius} fill="none" stroke={trailColor} strokeWidth={strokeWidth} strokeOpacity="0.1" />
+        <circle cx="50" cy="50" r={radius} fill="none" stroke={color} strokeWidth={strokeWidth} strokeOpacity="1" strokeDasharray={circumference} strokeDashoffset={dashOffset} transform="rotate(-90 50 50)" />
       </svg>
-      <Img
-        src={typeof image === "string" ? image : (image as any)}
-        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-      />
+      <Img src={typeof image === "string" ? image : (image as any)} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
       {children}
     </AbsoluteFill>
   );
