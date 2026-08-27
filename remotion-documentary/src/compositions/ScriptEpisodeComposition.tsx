@@ -1,5 +1,5 @@
 import React from "react";
-import {Sequence, AbsoluteFill} from "remotion";
+import {staticFile} from "remotion";
 import {ScriptEpisode} from "../engine/script/ScriptEpisode";
 import type {DocumentaryScript} from "../engine/script/types";
 
@@ -13,7 +13,7 @@ export const DEFAULT_SCRIPT_EPISODE: DocumentaryScript = {
       duration: 150,
       visuals: [
         {
-          image: "/sample-building.svg",
+          image: staticFile("sample-building.svg"),
           shot: "pushIn",
           duration: 150,
           focalPoint: {x: 0.5, y: 0.5},
