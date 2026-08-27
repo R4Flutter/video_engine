@@ -25,7 +25,7 @@ export const planShot = (input: ShotPlanningInput): DocumentaryShotSpec => {
   if (intent === "escalate") return {...base,camera:{effect:"pushIn",target:focal,scale:1.3,intensity:1.5},overlays:[{effect:"textScale",text:input.title ?? "THIS CHANGED EVERYTHING",from:duration*.42,durationInFrames:Math.min(70,duration*.4),config:{fontSize:72,y:.8,fontWeight:900,accent}}]};
   if (intent === "resolve") return {...base,camera:{effect:"pullOut",target:focal,scale:1.06,intensity:.5},overlays:[{effect:"textFade",text:input.title ?? "THE ANSWER",from:duration*.48,durationInFrames:Math.min(60,duration*.4),config:{fontSize:62,y:.82,fontWeight:700}}]};
   if (intent === "approach") return {...base,camera:{effect:"pushPanRight",target:focal,scale:1.2,intensity:1},overlays: input.title ? [{effect:"textRise",text:input.title,from:duration*.36,durationInFrames:Math.min(70,duration*.4),config:{fontSize:76,y:.82,fontWeight:800}}] : []};
-  return {...base,camera:{effect:"slowDrift",target:focal,scale:1.1,intensity:.8},overlays: input.title ? [{effect:"textFade",text:input.title,from:duration*.36,durationInFrames:Math.min(64,duration*.4),config:{fontSize:64,y:.82,fontWeight:700}}] : []};
+  return {...base,camera:{effect:"slowDrift",target:focal,scale:1.1,intensity:.5},overlays: input.title ? [{effect:"textFade",text:input.title,from:duration*.36,durationInFrames:Math.min(64,duration*.4),config:{fontSize:64,y:.82,fontWeight:700}}] : []};
 };
 
 export const planEpisode = (inputs: ShotPlanningInput[]) => inputs.map(planShot);
