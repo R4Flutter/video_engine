@@ -8,7 +8,6 @@ interface CounterConfig {
   durationInFrames?: number;
   prefix?: string;
   suffix?: string;
-  durationInFrames?: number;
   decimals?: number;
   fontSize?: number;
   color?: string;
