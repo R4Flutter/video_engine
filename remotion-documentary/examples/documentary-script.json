@@ -1,0 +1,77 @@
+{
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "scenes": [
+    {
+      "id": "01-opening",
+      "narration": "In January 2021, everything changed.",
+      "visuals": [
+        {
+          "image": "/assets/january-2021.jpg",
+          "shot": "pushIn",
+          "duration": 150,
+          "focalPoint": {"x": 0.54, "y": 0.46}
+        },
+        {
+          "image": "/assets/city-night.jpg",
+          "shot": "pullOut",
+          "duration": 90
+        },
+        {
+          "image": "/assets/headline.jpg",
+          "shot": "fadeIn",
+          "duration": 30,
+          "config": {"opacity": 1}
+        }
+      ]
+    },
+    {
+      "id": "02-evidence",
+      "narration": "But the document contained one detail almost everyone missed.",
+      "visuals": [
+        {
+          "image": "/assets/document.jpg",
+          "shot": "documentReveal",
+          "duration": 120,
+          "focalPoint": {"x": 0.62, "y": 0.38}
+        },
+        {
+          "image": "/assets/document.jpg",
+          "shot": "detailReveal",
+          "duration": 90,
+          "focalPoint": {"x": 0.62, "y": 0.38},
+          "config": {"scale": 1.42}
+        },
+        {
+          "image": "/assets/document.jpg",
+          "shot": "fadeOut",
+          "duration": 24
+        }
+      ]
+    },
+    {
+      "id": "03-impact",
+      "narration": "Then the number crossed one billion dollars.",
+      "visuals": [
+        {
+          "image": "/assets/portrait.jpg",
+          "shot": "faceReframe",
+          "duration": 120,
+          "focalPoint": {"x": 0.72, "y": 0.34}
+        },
+        {
+          "image": "/assets/chart.jpg",
+          "shot": "rapidZoom",
+          "duration": 45
+        },
+        {
+          "image": "/assets/chart.jpg",
+          "shot": "dollarCounter",
+          "duration": 90,
+          "config": {"from": 0, "to": 1000000000, "prefix": "$", "fontSize": 88, "y": 0.78}
+        }
+      ]
+    }
+  ]
+}
