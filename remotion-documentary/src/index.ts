@@ -8,5 +8,6 @@ export * from "./animations/director";
 export * from "./animations/advanced";
 export * from "./engine";
 export * from "./engine/shotPlanner";
+export * from "./engine/script";
 export * from "./qc/validateShot";
 export * from "./Root";
