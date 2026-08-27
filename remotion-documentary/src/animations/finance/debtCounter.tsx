@@ -1,6 +1,6 @@
-import { AbsoluteFill, useCurrentFrame, useVideoConfig, Img, interpolate } from "remotion";
-import type { BaseEffectProps } from "../../types";
-import { easeOutQuart } from "../timing/easings";
+import {AbsoluteFill, useCurrentFrame, interpolate} from "remotion";
+import type {BaseEffectProps} from "../../types";
+import {easeOutQuart} from "../timing/easings";
 
 interface CounterConfig {
   from: number;
@@ -13,18 +13,32 @@ interface CounterConfig {
   color?: string;
 }
 
-type DebtCounterProps = BaseEffectProps & { config: CounterConfig };
+type DebtCounterProps = BaseEffectProps & {config: CounterConfig};
 
-export const debtCounter: React.FC<DebtCounterProps> = ({ image, children, durationInFrames = 45, delay = 0, intensity = 1, style, className, config }) => {
+export const debtCounter: React.FC<DebtCounterProps> = ({
+  children,
+  durationInFrames = 45,
+  delay = 0,
+  intensity = 1,
+  style,
+  className,
+  config,
+}) => {
   const frame = useCurrentFrame();
-  const { width, height } = useVideoConfig();
-  void width;
-  void height;
-  const local = frame - delay;
-  const t = Math.max(0, Math.min(1, local / durationInFrames));
+  const local = Math.max(0, frame - delay);
+  const safeDuration = Math.max(1, durationInFrames);
+  const t = Math.max(0, Math.min(1, local / safeDuration));
   const eased = easeOutQuart(t);
-  const { from = 0, to = 1000000, prefix = "$", suffix = "", decimals = 2, fontSize = 32, color = "#ef4444" } = config;
-  const value = interpolate(t, [0, 1], [from, to]);
+  const {
+    from = 0,
+    to = 1000000,
+    prefix = "$",
+    suffix = "",
+    decimals = 2,
+    fontSize = 32,
+    color = "#ef4444",
+  } = config;
+  const value = interpolate(eased, [0, 1], [from, to]);
   const formatted = `${prefix}${value.toFixed(decimals)}${suffix}`;
 
   return (
@@ -36,14 +50,11 @@ export const debtCounter: React.FC<DebtCounterProps> = ({ image, children, durat
           left: 0,
           fontSize: fontSize * intensity,
           color,
+          fontVariantNumeric: "tabular-nums",
         }}
       >
         {formatted}
       </div>
-      <Img
-        src={typeof image === "string" ? image : (image as any)}
-        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-      />
       {children}
     </AbsoluteFill>
   );
