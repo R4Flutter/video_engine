@@ -76,8 +76,8 @@
         "score": 10
       }
     ],
-    "visualFirstSeconds": 3.5,
-    "evidenceStartSeconds": 3.5,
+    "visualFirstSeconds": 0,
+    "evidenceStartSeconds": 0,
     "claimTargetSeconds": 18
   },
   "chapters": [
@@ -590,7 +590,33 @@
           "src": "assets/03_EVIDENCE/cr_subscription_gap_86_219.png",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "overlays": [
+            {
+              "src": "assets/07_LOGOS/netflix-logo.png",
+              "at": 0.55,
+              "kind": "brand"
+            },
+            {
+              "src": "assets/07_LOGOS/paramount-plus-logo.png",
+              "at": 1,
+              "kind": "brand"
+            }
+          ],
+          "list": [
+            {
+              "src": "assets/03_EVIDENCE/cr_subscription_gap_86_219.png",
+              "at": 0
+            },
+            {
+              "src": "assets/08_UI_MOCKUPS/ui_amazon_prime_signup.png",
+              "at": 4.32
+            },
+            {
+              "src": "assets/08_UI_MOCKUPS/ui_free_trial_checkout.jpg",
+              "at": 4.56
+            }
+          ]
         },
         "typography": {
           "text": "$86 / ESTIMATED",
@@ -670,7 +696,14 @@
           "src": "assets/03_EVIDENCE/cr_subscription_gap_86_219.png",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "overlays": [
+            {
+              "src": "assets/07_LOGOS/peacock-logo.png",
+              "at": 0.55,
+              "kind": "brand"
+            }
+          ]
         },
         "typography": {
           "text": "$219 / ITEMIZED",
@@ -830,7 +863,28 @@
           "src": "assets/02_ARCHIVE/gym_1980s_health_club.png",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/02_ARCHIVE/gym_1980s_health_club.png",
+              "at": 0
+            },
+            {
+              "src": "assets/01_SUBJECTS/subscription-envelope-stack.png",
+              "at": 5.71
+            },
+            {
+              "src": "assets/03_EVIDENCE/adobe_2025_subscription_revenue.png",
+              "at": 6.02
+            }
+          ],
+          "overlays": [
+            {
+              "src": "assets/08_UI_MOCKUPS/circle-red.png",
+              "at": 0.55,
+              "kind": "mark"
+            }
+          ]
         },
         "typography": {
           "text": "NOT CARELESSNESS",
@@ -908,7 +962,21 @@
           "src": "assets/06_BROLL/b01_empty_gym_4am.mp4",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/06_BROLL/b01_empty_gym_4am.mp4",
+              "at": 0
+            },
+            {
+              "src": "assets/01_SUBJECTS/anonymous-gym-member.png",
+              "at": 1.47
+            },
+            {
+              "src": "assets/05_BACKGROUNDS/bg_empty_gym_4am.png",
+              "at": 2.03
+            }
+          ]
         },
         "typography": {
           "text": "THE GYM",
@@ -1534,7 +1602,21 @@
           "src": "assets/06_BROLL/b04_1990s_gym_archive.mp4",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/06_BROLL/b04_1990s_gym_archive.mp4",
+              "at": 0
+            },
+            {
+              "src": "assets/02_ARCHIVE/bally_membership_desk.png",
+              "at": 9.67
+            },
+            {
+              "src": "assets/02_ARCHIVE/streaming_launch_montage_archive.png",
+              "at": 10.2
+            }
+          ]
         },
         "typography": {
           "text": "BALLY TOTAL FITNESS",
@@ -1614,7 +1696,17 @@
           "src": "assets/03_EVIDENCE/bally_1994_regulatory_document.png",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/03_EVIDENCE/bally_1994_regulatory_document.png",
+              "at": 0
+            },
+            {
+              "src": "assets/05_BACKGROUNDS/bg_ftc_building.png",
+              "at": 7.37
+            }
+          ]
         },
         "typography": {
           "text": "1994 — FEDERAL REGULATORS",
@@ -1695,7 +1787,17 @@
           "src": "assets/06_BROLL/b10_ftc_courthouse.mp4",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/06_BROLL/b10_ftc_courthouse.mp4",
+              "at": 0
+            },
+            {
+              "src": "assets/03_EVIDENCE/bally_2004_nyag_complaints.png",
+              "at": 7.18
+            }
+          ]
         },
         "typography": {
           "text": "600+ COMPLAINTS",
@@ -1777,7 +1879,29 @@
           "src": "assets/03_EVIDENCE/bally_1994_regulatory_document.png",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/03_EVIDENCE/bally_1994_regulatory_document.png",
+              "at": 0
+            },
+            {
+              "src": "assets/05_BACKGROUNDS/bg_black_evidence_paper.png",
+              "at": 6.62
+            }
+          ],
+          "overlays": [
+            {
+              "src": "assets/08_UI_MOCKUPS/highlight-red.png",
+              "at": 0.55,
+              "kind": "mark"
+            },
+            {
+              "src": "assets/08_UI_MOCKUPS/paper-shadow.png",
+              "at": 1,
+              "kind": "mark"
+            }
+          ]
         },
         "typography": {
           "text": "3 YEARS",
@@ -1938,7 +2062,24 @@
           "src": "assets/01_SUBJECTS/planet-fitness-entrance.png",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/01_SUBJECTS/planet-fitness-entrance.png",
+              "at": 0
+            },
+            {
+              "src": "assets/01_SUBJECTS/planet-fitness-membership-card.png",
+              "at": 6.92
+            }
+          ],
+          "overlays": [
+            {
+              "src": "assets/07_LOGOS/planet-fitness-logo.png",
+              "at": 0.55,
+              "kind": "brand"
+            }
+          ]
         },
         "typography": {
           "text": "NO THREE-YEAR TRAP",
@@ -2016,7 +2157,17 @@
           "src": "assets/06_BROLL/b05_bally_storefront.mp4",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/06_BROLL/b05_bally_storefront.mp4",
+              "at": 0
+            },
+            {
+              "src": "assets/08_UI_MOCKUPS/ui_adobe_cancel_fee.jpg",
+              "at": 1.5
+            }
+          ]
         },
         "typography": {
           "text": "EFFORT IS THE FRICTION",
@@ -2338,7 +2489,17 @@
           "src": "assets/06_BROLL/b01_empty_gym_4am.mp4",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/06_BROLL/b01_empty_gym_4am.mp4",
+              "at": 0
+            },
+            {
+              "src": "assets/05_BACKGROUNDS/bg_modern_software_office.png",
+              "at": 6.58
+            }
+          ]
         },
         "typography": {
           "text": "MADE IT VISIBLE",
@@ -2419,7 +2580,21 @@
           "src": "assets/06_BROLL/b06_photoshop_box_turntable.mp4",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/06_BROLL/b06_photoshop_box_turntable.mp4",
+              "at": 0
+            },
+            {
+              "src": "assets/01_SUBJECTS/photoshop-cs6-box.png",
+              "at": 6.66
+            },
+            {
+              "src": "assets/01_SUBJECTS/photoshop-cs6-disc.png",
+              "at": 12.36
+            }
+          ]
         },
         "typography": {
           "text": "YOU OWNED IT",
@@ -2581,7 +2756,17 @@
           "src": "assets/03_EVIDENCE/adobe_2013_announcement.png",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/03_EVIDENCE/adobe_2013_announcement.png",
+              "at": 0
+            },
+            {
+              "src": "assets/06_BROLL/b07_2013_conference.mp4",
+              "at": 8.64
+            }
+          ]
         },
         "typography": {
           "text": "MAY 6, 2013",
@@ -2906,7 +3091,17 @@
           "src": "assets/06_BROLL/b03_free_trial_checkout.mp4",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/06_BROLL/b03_free_trial_checkout.mp4",
+              "at": 0
+            },
+            {
+              "src": "assets/08_UI_MOCKUPS/ui_subscription_bank_statement.jpg",
+              "at": 7.02
+            }
+          ]
         },
         "typography": {
           "text": "ANGER ≠ CHURN",
@@ -2984,7 +3179,33 @@
           "src": "assets/04_GRAPHICS/g09_streaming_stack.png",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/04_GRAPHICS/g09_streaming_stack.png",
+              "at": 0
+            },
+            {
+              "src": "assets/02_ARCHIVE/adobe_2013_max_stage.png",
+              "at": 2.05
+            },
+            {
+              "src": "assets/02_ARCHIVE/early_netflix_interface.png",
+              "at": 2.83
+            }
+          ],
+          "overlays": [
+            {
+              "src": "assets/07_LOGOS/disney-plus-logo.png",
+              "at": 0.55,
+              "kind": "brand"
+            },
+            {
+              "src": "assets/07_LOGOS/hulu-logo.png",
+              "at": 1,
+              "kind": "brand"
+            }
+          ]
         },
         "typography": {
           "text": "2013 / 2023",
@@ -3062,7 +3283,33 @@
           "src": "assets/06_BROLL/b08_streaming_services_montage.mp4",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/06_BROLL/b08_streaming_services_montage.mp4",
+              "at": 0
+            },
+            {
+              "src": "assets/02_ARCHIVE/cable_bill_2007.png",
+              "at": 9.59
+            },
+            {
+              "src": "assets/02_ARCHIVE/photoshop_retail_shelf_2012.png",
+              "at": 10.12
+            }
+          ],
+          "overlays": [
+            {
+              "src": "assets/07_LOGOS/apple-tv-plus-logo.png",
+              "at": 0.55,
+              "kind": "brand"
+            },
+            {
+              "src": "assets/07_LOGOS/max-logo.png",
+              "at": 1,
+              "kind": "brand"
+            }
+          ]
         },
         "typography": {
           "text": "THE BUNDLE",
@@ -3223,7 +3470,21 @@
           "src": "assets/04_GRAPHICS/g09_streaming_stack.png",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/04_GRAPHICS/g09_streaming_stack.png",
+              "at": 0
+            },
+            {
+              "src": "assets/05_BACKGROUNDS/bg_streaming_living_room.png",
+              "at": 6.42
+            },
+            {
+              "src": "assets/08_UI_MOCKUPS/ui_streaming_stack.jpg",
+              "at": 11.91
+            }
+          ]
         },
         "typography": {
           "text": "4.7 SERVICES / $61",
@@ -3547,7 +3808,33 @@
           "src": "assets/06_BROLL/b10_ftc_courthouse.mp4",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/06_BROLL/b10_ftc_courthouse.mp4",
+              "at": 0
+            },
+            {
+              "src": "assets/03_EVIDENCE/amazon_ftc_complaint.png",
+              "at": 8.54
+            },
+            {
+              "src": "assets/05_BACKGROUNDS/bg_courthouse.png",
+              "at": 15.86
+            }
+          ],
+          "overlays": [
+            {
+              "src": "assets/07_LOGOS/amazon-logo.png",
+              "at": 0.55,
+              "kind": "brand"
+            },
+            {
+              "src": "assets/07_LOGOS/amazon-prime-logo.png",
+              "at": 1,
+              "kind": "brand"
+            }
+          ]
         },
         "typography": {
           "text": "IT WAS ABOUT A BUTTON",
@@ -3628,7 +3915,21 @@
           "src": "assets/04_GRAPHICS/g05_contract_vs_friction.png",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/04_GRAPHICS/g05_contract_vs_friction.png",
+              "at": 0
+            },
+            {
+              "src": "assets/01_SUBJECTS/generic-smartphone-subscription.png",
+              "at": 5.7
+            },
+            {
+              "src": "assets/01_SUBJECTS/prime-membership-card.png",
+              "at": 6.01
+            }
+          ]
         },
         "typography": {
           "text": "MILLIONS ENROLLED",
@@ -3708,7 +4009,33 @@
           "src": "assets/06_BROLL/b09_amazon_cancel_flow.mp4",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/06_BROLL/b09_amazon_cancel_flow.mp4",
+              "at": 0
+            },
+            {
+              "src": "assets/04_GRAPHICS/g11_iliad_flow.png",
+              "at": 8.23
+            },
+            {
+              "src": "assets/08_UI_MOCKUPS/ui_amazon_iliad_flow.jpg",
+              "at": 8.68
+            }
+          ],
+          "overlays": [
+            {
+              "src": "assets/08_UI_MOCKUPS/cursor-white.png",
+              "at": 0.55,
+              "kind": "mark"
+            },
+            {
+              "src": "assets/08_UI_MOCKUPS/cursor-yellow.png",
+              "at": 1,
+              "kind": "mark"
+            }
+          ]
         },
         "typography": {
           "text": "ARE YOU SURE?",
@@ -4020,7 +4347,17 @@
           "src": "assets/04_GRAPHICS/g12_amazon_2_5b_split.png",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/04_GRAPHICS/g12_amazon_2_5b_split.png",
+              "at": 0
+            },
+            {
+              "src": "assets/05_BACKGROUNDS/bg_anonymous_boardroom.png",
+              "at": 7.3
+            }
+          ]
         },
         "typography": {
           "text": "$2.5 BILLION",
@@ -4100,7 +4437,28 @@
           "src": "assets/03_EVIDENCE/adobe_doj_2026_settlement.png",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "overlays": [
+            {
+              "src": "assets/07_LOGOS/adobe-logo.png",
+              "at": 0.55,
+              "kind": "brand"
+            }
+          ],
+          "list": [
+            {
+              "src": "assets/03_EVIDENCE/adobe_doj_2026_settlement.png",
+              "at": 0
+            },
+            {
+              "src": "assets/08_UI_MOCKUPS/ui_adobe_ownership_transition.jpg",
+              "at": 9.36
+            },
+            {
+              "src": "assets/08_UI_MOCKUPS/ui_bally_contract_zoom.jpg",
+              "at": 9.87
+            }
+          ]
         },
         "typography": {
           "text": "BURIED IN FINE PRINT",
@@ -4421,7 +4779,17 @@
           "src": "assets/04_GRAPHICS/g14_click_to_cancel_symmetry.png",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/04_GRAPHICS/g14_click_to_cancel_symmetry.png",
+              "at": 0
+            },
+            {
+              "src": "assets/08_UI_MOCKUPS/ui_click_to_cancel_symmetry.jpg",
+              "at": 6.94
+            }
+          ]
         },
         "typography": {
           "text": "START = STOP",
@@ -4582,7 +4950,14 @@
           "src": "assets/03_EVIDENCE/adobe_doj_2026_settlement.png",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "overlays": [
+            {
+              "src": "assets/08_UI_MOCKUPS/highlight-yellow.png",
+              "at": 0.55,
+              "kind": "mark"
+            }
+          ]
         },
         "typography": {
           "text": "JUL 8, 2025 — VACATED",
@@ -4904,7 +5279,14 @@
           "src": "assets/03_EVIDENCE/ftc_2026_anprm.png",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "overlays": [
+            {
+              "src": "assets/08_UI_MOCKUPS/arrow-friction.png",
+              "at": 0.55,
+              "kind": "mark"
+            }
+          ]
         },
         "typography": {
           "text": "STILL LEGAL",
@@ -5224,7 +5606,14 @@
           "src": "assets/04_GRAPHICS/g04_breakage_loop.png",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "overlays": [
+            {
+              "src": "assets/08_UI_MOCKUPS/recurring-loop-arrow.png",
+              "at": 0.55,
+              "kind": "mark"
+            }
+          ]
         },
         "typography": {
           "text": "PAYMENT CONTINUES",
@@ -5384,7 +5773,21 @@
           "src": "assets/06_BROLL/b02_bank_statement_scroll.mp4",
           "fit": "cover",
           "muted": true,
-          "loop": true
+          "loop": true,
+          "list": [
+            {
+              "src": "assets/06_BROLL/b02_bank_statement_scroll.mp4",
+              "at": 0
+            },
+            {
+              "src": "assets/05_BACKGROUNDS/bg_bank_statement_macro.png",
+              "at": 7.78
+            },
+            {
+              "src": "assets/06_BROLL/b11_subscription_audit.mp4",
+              "at": 8.2
+            }
+          ]
         },
         "typography": {
           "text": "CHECK THE LAST 12 MONTHS",

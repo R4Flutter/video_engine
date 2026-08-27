@@ -18,6 +18,7 @@ type PlanDocument = {
     start?: number;
     narrative?: { purpose?: string };
     motion?: { camera?: { intent?: string } };
+    render?: { motion?: { camera?: string } };
     audio?: {
       silence?: { at: number; dur: number }[];
       sfx?: { at: number; files: string[] }[];
@@ -74,8 +75,9 @@ const MOVE: Record<string, Record<string, [number, number]>> = {
 /** The camera move for a beat, as a [from, to] scale pair. */
 export const cameraMove = (n: number): [number, number] => {
   const b = beatPlan(n);
+  const intent = b?.render?.motion?.camera ?? b?.motion?.camera?.intent ?? "settle";
   const table = MOVE[HOOK.engine] ?? MOVE.finance;
-  return table[b?.motion?.camera?.intent ?? "settle"] ?? [1, 1];
+  return table[String(intent)] ?? [1, 1];
 };
 
 /** The music bed level at time t, from the plan's level events. Piecewise

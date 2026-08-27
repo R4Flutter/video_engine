@@ -308,7 +308,7 @@ export const buildPlan = (script, opts = {}) => {
     version: "longform-1.0",
     project: { title: script.title, durationInSeconds: duration, fps: Number(script.fps), width: Number(script.width), height: Number(script.height), engine: script.engine, mode: LONGFORM_MODE },
     editorialThesis: "Every visual advances understanding, evidence, emotion, or curiosity. Long holds require staged discovery or a deliberate payoff.",
-    coldOpen: { selected: winner, candidates, visualFirstSeconds: 3.5, evidenceStartSeconds: 3.5, claimTargetSeconds: 18 },
+    coldOpen: { selected: winner, candidates, visualFirstSeconds: 0, evidenceStartSeconds: 0, claimTargetSeconds: 18 },
     chapters,
     beats: directedBeats,
     referencePatterns: refs,

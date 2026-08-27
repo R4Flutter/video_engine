@@ -1,13 +1,13 @@
 // The parts of a composition that don't care about the visual language:
-// music, narration, SFX and the director camera. Long-form finance gets one
-// intentional exception: Beat 1 opens in true room silence before the evidence
-// ladder begins, while short-form behavior remains unchanged.
+// narration, SFX and the director camera. Music was removed from the long-form
+// mix by request — VO and SFX carry the audio, silence is intentional.
 import React from "react";
 import {
   Audio,
   Easing,
   getInputProps,
   interpolate,
+  Loop,
   Sequence,
   staticFile,
   useCurrentFrame,
@@ -16,18 +16,13 @@ import {
 import script from "./script.json";
 import voice from "./voice.json";
 import { bedLevel, cameraMove, SFX_CUES } from "./plan";
+import type { LongFormBeat } from "./LongFormScenes";
 
-const BED = 0.4;
-const SWELL = 0.58;
-const DUCK = 0.34;
+type LongFormBeatLike = LongFormBeat | { n: number };
+
 const LONGFORM_HOOK_VO_DELAY = 3.5;
 
-const ramp = (x: number, from: [number, number], to: [number, number]) =>
-  interpolate(x, from, to, { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-
 export const NARRATION = voice.beats.filter((b) => b.file && b.words.length > 0);
-
-const PLANNED_BED = SFX_CUES.length > 0 || bedLevel(0) !== 0.4 || bedLevel(1) !== bedLevel(0);
 
 export const impactAt = (module: string, word: RegExp, frac = 0.6) => {
   const beat = script.beats.find((b) => b.module === module);
@@ -79,9 +74,8 @@ export const usePlanCamera = (impact: number, strength = 1.1) => {
   return { scale, shake };
 };
 
-export const Soundtrack: React.FC<{ impact: number; longForm?: boolean }> = ({ impact, longForm = false }) => {
+export const Soundtrack: React.FC<{ impact?: number; longForm?: boolean }> = ({ longForm = false }) => {
   const { fps } = useVideoConfig();
-  const total = script.durationInSeconds;
   const master = (() => {
     const db = Number(getInputProps().MASTER_GAIN_DB);
     return Number.isFinite(db) && db !== 0 ? Math.pow(10, db / 20) : 1;
@@ -91,7 +85,6 @@ export const Soundtrack: React.FC<{ impact: number; longForm?: boolean }> = ({ i
     beat: b,
     start: longForm && b.n === 1 ? LONGFORM_HOOK_VO_DELAY : b.start,
   }));
-  const speechWindows = speech.map((x) => [x.start, x.start + x.beat.words[x.beat.words.length - 1].end] as const);
 
   return (
     <>
@@ -100,28 +93,6 @@ export const Soundtrack: React.FC<{ impact: number; longForm?: boolean }> = ({ i
           <Audio src={staticFile(`audio/${beat.file}`)} volume={master} />
         </Sequence>
       ))}
-
-      <Audio
-        src={staticFile("audio/music.mp3")}
-        loop
-        volume={(f) => {
-          const t = f / fps;
-          const bed = PLANNED_BED ? bedLevel(t) : ramp(t, [impact - 1, impact], [BED, SWELL]);
-          const introEdge = longForm
-            ? ramp(t, [LONGFORM_HOOK_VO_DELAY - 0.1, LONGFORM_HOOK_VO_DELAY + 0.35], [0, 1])
-            : ramp(t, [0, 0.15], [0, 1]);
-          const edges = introEdge * ramp(t, [total - 1.2, total], [1, 0]);
-          const duck = Math.min(
-            1,
-            ...speechWindows.map(([a, b]) =>
-              t < a ? ramp(t, [a - 0.3, a], [1, DUCK])
-              : t > b ? ramp(t, [b, b + 0.45], [DUCK, 1])
-              : DUCK,
-            ),
-          );
-          return bed * edges * duck * master;
-        }}
-      />
 
       {(SFX_CUES.length ? SFX_CUES : script.sfx)
         .filter((cue) => !longForm || cue.at >= LONGFORM_HOOK_VO_DELAY)
@@ -132,6 +103,51 @@ export const Soundtrack: React.FC<{ impact: number; longForm?: boolean }> = ({ i
             </Sequence>
           )),
         )}
+    </>
+  );
+};
+
+/** MagnatesMedia-style number hit: a short boom landing on the word that says
+ * the figure (the plan's `impact` or the first numeric word of the beat). */
+export const NumberHitSFX: React.FC<{ beat: LongFormBeatLike; offset?: number }> = ({ beat, offset = 0 }) => {
+  const { fps } = useVideoConfig();
+  const voiceBeat = voice.beats.find((b) => b.n === beat.n);
+  const hit = voiceBeat?.words?.find((w) => /million|billion|thousand|\d[\d,.]*/.test(w.w));
+  if (!hit || !voiceBeat) return null;
+  const at = (voiceBeat.start + hit.start + offset) * fps;
+  return (
+    <Sequence from={Math.round(at)}>
+      <Audio src={staticFile("audio/boom.wav")} volume={() => 0.7} />
+      <Audio src={staticFile("audio/tick.wav")} volume={() => 0.5} />
+    </Sequence>
+  );
+};
+
+/** The MagnatesMedia bed: looping music with ducking, plus risers into the
+ * big beats and booms on the numbers. Only active in long-form (the shorts
+ * keep their existing mix). */
+export const MagnatesBed: React.FC<{ impact?: number }> = ({ impact }) => {
+  const { fps, durationInFrames } = useVideoConfig();
+  const frame = useCurrentFrame();
+  const t = frame / fps;
+  const bed = bedLevel(t) * 0.55;
+  const MUSIC_LOOP_FRAMES = Math.round(27.5 * fps);
+  return (
+    <>
+      <Sequence layout="none" name="music-bed">
+        <Loop durationInFrames={MUSIC_LOOP_FRAMES}>
+          <Audio src={staticFile("audio/music.mp3")} volume={bed} />
+        </Loop>
+      </Sequence>
+      {impact !== undefined && Math.abs(t - impact) < 0.12 ? (
+        <Audio src={staticFile("audio/boom.wav")} volume={0.8} />
+      ) : null}
+      {Math.abs(t - (impact ?? 0) - 2.2) < 0.12 ? (
+        <Audio src={staticFile("audio/riser.wav")} volume={0.5} />
+      ) : null}
+      {durationInFrames > 0 && t > durationInFrames / fps - 2.4 && t < durationInFrames / fps - 2.2 ? (
+        <Audio src={staticFile("audio/riser.wav")} volume={0.6} />
+      ) : null}
     </>
   );
 };

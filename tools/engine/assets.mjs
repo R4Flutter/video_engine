@@ -233,6 +233,86 @@ function keepOldBinding(beat, existing) {
   if (beat.render?.media) beat.render.media.src = existing;
 }
 
+// ------------------------------------------------------ full-coverage placement
+// Second pass: every library asset must earn screen time. Assets the primary
+// pass left unbound are placed deterministically — full-bleed assets ride as
+// extra slots in their best-matching beat's media queue (swapped at
+// internalChangeAt moments), logos and UI annotations become overlays (brand
+// badge / annotation mark) on their best-matching beat. Scoring reuses the
+// semantic matcher; curated targets resolve weak/zero-score ties.
+const OVERLAY_MARK_FILES = new Set(["arrow-friction.png", "circle-red.png", "cursor-white.png", "cursor-yellow.png", "highlight-red.png", "highlight-yellow.png", "paper-shadow.png", "recurring-loop-arrow.png"]);
+const CURATED_TARGETS = {
+  "arrow-friction.png": 51, "circle-red.png": 8, "cursor-white.png": 44, "cursor-yellow.png": 53,
+  "highlight-red.png": 20, "highlight-yellow.png": 55, "paper-shadow.png": 20,
+  "recurring-loop-arrow.png": 16, "bg_anonymous_boardroom.png": 48,
+  "adobe-logo.png": 49, "amazon-logo.png": 42, "amazon-prime-logo.png": 43,
+  "planet-fitness-logo.png": 22, "apple-tv-plus-logo.png": 37,
+  "netflix-logo.png": 35, "hulu-logo.png": 36, "disney-plus-logo.png": 39,
+  "max-logo.png": 40, "peacock-logo.png": 41, "paramount-plus-logo.png": 40,
+};
+const MEDIA_RENDER = new Set(["footage", "evidence", "stat", "chart", "investChart", "timeline", "compare", "icon"]);
+const LIST_CAP = 3;          // 1 primary + 2 queue swaps per beat
+const OVERLAY_CAP = 2;       // overlays per beat per kind
+
+export function placeRemainingAssets(plan, manifestAssets) {
+  const used = new Set();
+  for (const b of plan.beats || []) {
+    const m = b?.render?.media;
+    if (m?.src) used.add(m.src);
+    for (const e of m?.list || []) used.add(e.src);
+  }
+  const beats = plan.beats || [];
+  const canHost = (b) => Boolean(b && MEDIA_RENDER.has(String(b?.visual?.module)) && Number(b.n) >= 4);
+  const ranked = (a) => beats
+    .map(b => ({ beat: b, ...score(b, a) }))
+    .sort((x, y) => (y.score - x.score) || (Number(x.beat.n) - Number(y.beat.n)));
+  const placed = [];
+  for (const a of manifestAssets) {
+    if (used.has(a.path)) continue;
+    const fname = a.filename;
+    const isLogo = a.tags.includes("logo");
+    const isMark = OVERLAY_MARK_FILES.has(fname);
+    const cands = ranked(a).filter(r => canHost(r.beat));
+    let target = null;
+    let scoreOf = 0;
+    if (cands.length && cands[0].score >= 3) { target = cands[0].beat; scoreOf = cands[0].score; }
+    if (!target && CURATED_TARGETS[fname]) {
+      const cb = beats.find(b => Number(b.n) === CURATED_TARGETS[fname]);
+      if (cb && canHost(cb)) { target = cb; scoreOf = 0; }
+    }
+    if (!target && cands.length) { target = cands[0].beat; scoreOf = cands[0].score; }
+    if (!target) { placed.push({ asset: a.path, beat: null, kind: "skipped", reason: "no host beat" }); continue; }
+    const media = (target.render.media = target.render.media || {});
+    if (isLogo || isMark) {
+      const kind = isLogo ? "brand" : "mark";
+      const existing = media.overlays?.filter(o => o.kind === kind) || [];
+      let host = existing.length < OVERLAY_CAP ? target : cands.find(r => r.beat !== target && ((r.beat.render.media?.overlays?.filter(o => o.kind === kind) || []).length < OVERLAY_CAP))?.beat || target;
+      const overlays = (host.render.media.overlays = host.render.media.overlays || []);
+      const dur = Number(host.duration ?? Number(host.end) - Number(host.start) ?? 4);
+      const at = Number(Math.min(0.55 + 0.45 * overlays.length, Math.max(0.4, dur - 0.4)).toFixed(2));
+      overlays.push({ src: a.path, at, kind });
+      used.add(a.path);
+      placed.push({ asset: a.path, beat: host.n, kind, score: scoreOf });
+    } else {
+      const list = (media.list = media.list || (media.src ? [{ src: media.src, at: 0 }] : []));
+      if (!media.src && list.length) media.src = list[0].src;
+      let host = list.length < LIST_CAP ? target : cands.find(r => r.beat !== target && ((r.beat.render.media?.list?.length || 0) < LIST_CAP))?.beat || target;
+      const hmedia = (host.render.media = host.render.media || {});
+      const hlist = (hmedia.list = hmedia.list || (hmedia.src ? [{ src: hmedia.src, at: 0 }] : []));
+      if (!hmedia.src && hlist.length) hmedia.src = hlist[0].src;
+      const ica = host.render?.motion?.internalChangeAt || [];
+      const dur = Number(host.duration ?? Number(host.end) - Number(host.start) ?? 4);
+      const at = ica[hlist.length - 1] != null
+        ? Number(ica[hlist.length - 1])
+        : Number(Math.min(dur * (0.42 + 0.16 * (hlist.length - 1)), Math.max(0.4, dur - 0.4)).toFixed(2));
+      hlist.push({ src: a.path, at: Number(at.toFixed(2)) });
+      used.add(a.path);
+      placed.push({ asset: a.path, beat: host.n, kind: "list", score: scoreOf });
+    }
+  }
+  return placed;
+}
+
 // -------------------------------------------------------------------- CLI
 const isMain = process.argv[1] && import.meta.url === new URL(`file://${process.argv[1].replaceAll("\\", "/")}`).href;
 if (isMain) {
@@ -241,6 +321,7 @@ if (isMain) {
   mkdirSync(dirname(manifestPath), { recursive: true });
   writeFileSync(manifestPath, JSON.stringify({ version: 2, policy: "semantic", generated: true, generated_at: new Date().toISOString(), folders, assets: assets.map(a => ({ path: a.path, category: a.category, filename: a.filename, bytes: a.bytes, ext: a.ext, isVideo: a.isVideo, tags: a.tags, curated: a.curated })) }, null, 2), "utf8");
   const { bound, unbound } = resolveAssets(plan, assets);
+  const placed = placeRemainingAssets(plan, assets);
   if (debugRows.length) {
     console.log("  DEBUG top-3 candidates per media beat:");
     for (const row of debugRows) console.log(row);
@@ -267,7 +348,17 @@ if (isMain) {
   }
   writeFileSync(planPath, JSON.stringify(plan, null, 2), "utf8");
   mkdirSync(resolve(ROOT, "video/out"), { recursive: true });
-  writeFileSync(resolve(ROOT, "video/out/asset-bindings.json"), JSON.stringify({ generated: new Date().toISOString(), policy: "semantic", threshold: SEMANTIC_THRESHOLD, bound: bound.map(b => ({ beat: b.beat, src: b.src, score: b.score, matched: b.matched, kept: b.kept })) }, null, 2), "utf8");
+  writeFileSync(resolve(ROOT, "video/out/asset-bindings.json"), JSON.stringify({ generated: new Date().toISOString(), policy: "semantic", threshold: SEMANTIC_THRESHOLD, bound: bound.map(b => ({ beat: b.beat, src: b.src, score: b.score, matched: b.matched, kept: b.kept })), placed: placed.filter(p => p.beat != null) }, null, 2), "utf8");
+  const usedPaths = new Set();
+  for (const b of plan.beats || []) {
+    const m = b?.render?.media;
+    if (m?.src) usedPaths.add(m.src);
+    for (const e of m?.list || []) usedPaths.add(e.src);
+    for (const o of m?.overlays || []) usedPaths.add(o.src);
+  }
+  const unused = assets.filter(a => !usedPaths.has(a.path));
+  console.log(`ASSET COVERAGE  ${usedPaths.size}/${assets.length} assets placed`);
+  if (unused.length) console.log(`  unused: ${unused.map(a => a.path).join(", ")}`);
   console.log(`WROTE ${manifestPath}`);
   console.log(`WROTE ${planPath} (semantic media binding)`);
   console.log(`WROTE video/out/asset-bindings.json (audit trail)`);

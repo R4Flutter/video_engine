@@ -12,7 +12,21 @@ import { enableTailwind } from '@remotion/tailwind-v4';
 Config.setRspack(true);
 Config.setVideoImageFormat("jpeg");
 Config.setOverwriteOutput(true);
-Config.overrideBundlerConfig(enableTailwind);
+Config.setDelayRenderTimeoutInMilliseconds(90000);
+Config.overrideBundlerConfig((current) => {
+  const withTailwind = enableTailwind(current);
+  return {
+    ...withTailwind,
+    module: {
+      ...withTailwind.module,
+      rules: withTailwind.module.rules.map((rule) =>
+        rule && rule !== "..." && rule.test && String(rule.test).includes("woff")
+          ? { test: /\.(woff2?|otf|ttf|eot)(\?.*)?$/, type: "asset/inline" }
+          : rule,
+      ),
+    },
+  };
+});
 
 // ------------------------------------------------------------------ speed
 // Everything below trades machine time, never picture. The codec settings keep
