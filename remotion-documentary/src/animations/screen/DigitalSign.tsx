@@ -1,4 +1,4 @@
-import { AbsoluteFill, interpolate } from "remotion";
+import { AbsoluteFill, useCurrentFrame } from "remotion";
 import type { BaseEffectProps } from "../../types";
 
 export interface DigitalSignProps extends BaseEffectProps {
@@ -19,26 +19,22 @@ export const DigitalSign: React.FC<DigitalSignProps> = ({
   className,
 }) => {
   const { x = 0, y = 0, width = 100, height = 100 } = region;
-  const left = (x / 100) * 100;
-  const top = (y / 100) * 100;
-  const w = (width / 100) * 100;
-  const h = (height / 100) * 100;
-
   const frame = useCurrentFrame();
-  const totalChars = texts.reduce((t, str) => t + str.length, 0);
+  const totalChars = texts.reduce((total, text) => total + text.length, 0);
   const charWidth = 10;
   const scrollingWidth = totalChars * charWidth + 200;
-  const progress = (frame % (scrollingWidth * speed)) / (scrollingWidth * speed);
+  const cycleFrames = Math.max(1, scrollingWidth * Math.max(1, speed));
+  const progress = (frame % cycleFrames) / cycleFrames;
 
   return (
     <AbsoluteFill style={style} className={className}>
       <div
         style={{
           position: "absolute",
-          left: `${left}%`,
-          top: `${top}%`,
-          width: `${w}%`,
-          height: `${h}%`,
+          left: `${x}%`,
+          top: `${y}%`,
+          width: `${width}%`,
+          height: `${height}%`,
           overflow: "hidden",
           background: "rgba(0, 0, 0, 0.8)",
           color: "#00FF00",
@@ -52,23 +48,23 @@ export const DigitalSign: React.FC<DigitalSignProps> = ({
             width: `${scrollingWidth}px`,
             height: "20px",
             left: `-${progress * totalChars * charWidth}px`,
-            animation: `scroll-${speed}s linear infinite`,
           }}
         >
-          {texts.map((t, i) => (
+          {texts.map((text, index) => (
             <span
-              key={i}
+              key={`${text}-${index}`}
               style={{
                 position: "absolute",
-                left: `${i * 100}px`,
+                left: `${index * 100}px`,
                 whiteSpace: "nowrap",
               }}
             >
-              {t}
+              {text}
             </span>
           ))}
         </div>
       </div>
+      {children}
     </AbsoluteFill>
   );
 };
