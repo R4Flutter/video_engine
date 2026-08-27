@@ -4,6 +4,16 @@ import type {EffectName} from "../types";
 export type NormalizedPoint = {x: number; y: number};
 export type DepthLayer = {src: string; depth: number; blur?: number; opacity?: number};
 
+export type ShotIntent =
+  | "establish"
+  | "approach"
+  | "evidence"
+  | "portrait"
+  | "detail"
+  | "location"
+  | "escalate"
+  | "resolve";
+
 export type ShotCamera = {
   effect?: EffectName;
   target?: NormalizedPoint;
