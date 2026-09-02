@@ -4,13 +4,14 @@
   "description": "Production-grade deterministic documentary shot engine for Remotion 4.x.",
   "scripts": {
     "start": "remotion studio",
-    "build": "remotion render Showcase out/showcase.mp4",
+    "build": "npm run build:handdrawn",
     "build:shot": "remotion render DocumentaryShot out/documentary-shot.mp4",
     "build:production": "remotion render ProductionDocumentary out/production-documentary.mp4",
+    "build:legacy": "remotion render Showcase out/showcase.mp4",
     "assets:prepare": "node tools/build-handdrawn-manifest.mjs",
     "assets:check": "npm run assets:prepare",
     "build:handdrawn": "npm run assets:check && remotion render HandDrawnLongForm out/handdrawn-long-form.mp4",
-    "build:all": "npm run typecheck && npm run build:production && npm run build:shot && npm run build",
+    "build:all": "npm run typecheck && npm run build:handdrawn",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
     "upgrade": "remotion upgrade"
