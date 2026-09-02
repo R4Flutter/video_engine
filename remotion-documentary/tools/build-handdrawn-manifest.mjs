@@ -14,9 +14,11 @@
  * chooses a "best" image for these shots and never substitutes another asset.
  */
 import {existsSync, mkdirSync, readdirSync, writeFileSync, statSync} from "node:fs";
-import {extname, join, relative, resolve} from "node:path";
+import {extname, fileURLToPath} from "node:path";
+import {dirname, join, relative, resolve} from "node:path";
 
-const root = resolve(new URL("..", import.meta.url).pathname, "..");
+const toolDir = dirname(fileURLToPath(import.meta.url));
+const root = resolve(toolDir, "..");
 const publicDir = join(root, "public", "handdrawn");
 const outputDir = join(root, "src", "handdrawn");
 const outputFile = join(outputDir, "handdrawn-manifest.json");
@@ -35,7 +37,7 @@ function walk(dir) {
 
 if (!existsSync(publicDir)) {
   mkdirSync(publicDir, {recursive: true});
-  throw new Error(`Missing asset folder contents: ${publicDir}. Copy the 01_..., 02_... hand-drawn stills into public/handdrawn first.`);
+  throw new Error(`Missing asset folder contents: ${publicDir}. Copy the 01_..., 02_..., ... hand-drawn stills into public/handdrawn first.`);
 }
 
 const candidates = walk(publicDir)
