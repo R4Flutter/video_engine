@@ -14,7 +14,8 @@
  * chooses a "best" image for these shots and never substitutes another asset.
  */
 import {existsSync, mkdirSync, readdirSync, writeFileSync, statSync} from "node:fs";
-import {extname, fileURLToPath} from "node:path";
+import {extname} from "node:path";
+import {fileURLToPath} from "node:url";
 import {dirname, join, relative, resolve} from "node:path";
 
 const toolDir = dirname(fileURLToPath(import.meta.url));
