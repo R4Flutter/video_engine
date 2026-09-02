@@ -16,8 +16,7 @@ const assets = manifest as HandDrawnAsset[];
 const FPS = 30;
 const WIDTH = 1080;
 const HEIGHT = 1920;
-const HOLD_SECONDS = 5;
-const HOLD_FRAMES = FPS * HOLD_SECONDS;
+const HOLD_FRAMES = FPS * 5;
 
 const intents: ShotIntent[] = [
   "establish",
@@ -30,8 +29,6 @@ const intents: ShotIntent[] = [
 ];
 
 const focalPointFor = (index: number) => {
-  // Keep a stable, deterministic focal point. The composition stays centered
-  // unless a later planner revision explicitly adds per-image metadata.
   const cycle = index % 5;
   return [
     {x: 0.50, y: 0.48},
@@ -43,50 +40,53 @@ const focalPointFor = (index: number) => {
 };
 
 /**
- * The editorial contract is deliberately positional:
+ * Positional editorial contract:
  * asset 01 -> shot 01, asset 02 -> shot 02, etc.
- * There is no semantic fallback and no random selection.
+ * There is no semantic fallback, random selection, or generated placeholder.
  */
-export const buildHandDrawnSpec = (): DocumentaryEpisodeSpec => {
-  if (assets.length === 0) {
-    throw new Error(
-      "[HandDrawnLongForm] No numbered assets are available. Run `npm run assets:prepare` after copying 01_..., 02_..., ... stills into public/handdrawn.",
-    );
-  }
-
-  for (const [index, asset] of assets.entries()) {
-    const expected = index + 1;
-    if (asset.order !== expected) {
-      throw new Error(
-        `[HandDrawnLongForm] Asset sequence mismatch at index ${expected}: found order ${asset.order}. Run npm run assets:prepare and fix numbering.`,
-      );
-    }
-  }
-
-  return {
-    fps: FPS,
-    width: WIDTH,
-    height: HEIGHT,
-    shots: planEpisode(
-      assets.map((asset, index) => ({
-        id: `handdrawn-${String(asset.order).padStart(2, "0")}`,
-        image: staticFile(asset.file),
-        durationInFrames: HOLD_FRAMES,
-        intent: intents[index % intents.length],
-        focalPoint: focalPointFor(index),
-      })),
-    ),
-  };
-};
+export const buildHandDrawnSpec = (): DocumentaryEpisodeSpec => ({
+  fps: FPS,
+  width: WIDTH,
+  height: HEIGHT,
+  shots: planEpisode(
+    assets.map((asset, index) => ({
+      id: `handdrawn-${String(asset.order).padStart(2, "0")}`,
+      image: staticFile(asset.file),
+      durationInFrames: HOLD_FRAMES,
+      intent: intents[index % intents.length],
+      focalPoint: focalPointFor(index),
+    })),
+  ),
+});
 
 export const HAND_DRAWN_LONG_FORM_SPEC = buildHandDrawnSpec();
-export const HAND_DRAWN_LONG_FORM_DURATION = HAND_DRAWN_LONG_FORM_SPEC.shots.reduce(
-  (sum, shot) => sum + shot.durationInFrames,
-  0,
+export const HAND_DRAWN_LONG_FORM_DURATION = Math.max(
+  1,
+  HAND_DRAWN_LONG_FORM_SPEC.shots.reduce((sum, shot) => sum + shot.durationInFrames, 0),
 );
 
-export const HandDrawnLongForm: React.FC = () => (
-  <AbsoluteFill style={{backgroundColor: "#080808"}}>
-    <DocumentaryEpisode spec={HAND_DRAWN_LONG_FORM_SPEC} />
-  </AbsoluteFill>
-);
+const validateAssetSequence = () => {
+  if (assets.length === 0) {
+    return "No numbered hand-drawn assets found. Copy 01_..., 02_..., ... into public/handdrawn and run npm run assets:prepare.";
+  }
+  const mismatch = assets.find((asset, index) => asset.order !== index + 1);
+  return mismatch
+    ? `Asset sequence is invalid at ${String(mismatch.order).padStart(2, "0")}. Run npm run assets:prepare and fix numbering.`
+    : null;
+};
+
+export const HandDrawnLongForm: React.FC = () => {
+  const error = validateAssetSequence();
+  if (error) {
+    return (
+      <AbsoluteFill style={{backgroundColor: "#080808", color: "#f4f1ea", alignItems: "center", justifyContent: "center", padding: 80, fontFamily: "Arial"}}>
+        <div style={{maxWidth: 840, textAlign: "center", fontSize: 40, lineHeight: 1.35}}>{error}</div>
+      </AbsoluteFill>
+    );
+  }
+  return (
+    <AbsoluteFill style={{backgroundColor: "#080808"}}>
+      <DocumentaryEpisode spec={HAND_DRAWN_LONG_FORM_SPEC} />
+    </AbsoluteFill>
+  );
+};
