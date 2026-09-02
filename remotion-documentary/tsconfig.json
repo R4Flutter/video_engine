@@ -4,6 +4,7 @@
     "jsx": "react-jsx",
     "target": "es2022",
     "moduleResolution": "bundler",
+    "resolveJsonModule": true,
     "baseUrl": "src",
     "paths": {
       "/*": ["/*"]
