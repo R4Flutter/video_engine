@@ -5,6 +5,7 @@ import {Showcase} from "./compositions/Showcase";
 import {DocumentaryShot} from "./compositions/DocumentaryShot";
 import {ProductionDocumentary, PRODUCTION_DOCUMENTARY_SPEC} from "./compositions/ProductionDocumentary";
 import {DEFAULT_SCRIPT_EPISODE, ScriptEpisodeComposition} from "./compositions/ScriptEpisodeComposition";
+import {HandDrawnLongForm, HAND_DRAWN_LONG_FORM_DURATION, HAND_DRAWN_LONG_FORM_SPEC} from "./compositions/HandDrawnLongForm";
 
 export const RemotionRoot: React.FC = () => {
   const productionDuration = PRODUCTION_DOCUMENTARY_SPEC.shots.reduce((sum, shot) => sum + shot.durationInFrames, 0);
@@ -33,6 +34,14 @@ export const RemotionRoot: React.FC = () => {
         width={DEFAULT_SCRIPT_EPISODE.width ?? 1920}
         height={DEFAULT_SCRIPT_EPISODE.height ?? 1080}
         defaultProps={{script: DEFAULT_SCRIPT_EPISODE}}
+      />
+      <Composition
+        id="HandDrawnLongForm"
+        component={HandDrawnLongForm}
+        durationInFrames={HAND_DRAWN_LONG_FORM_DURATION}
+        fps={HAND_DRAWN_LONG_FORM_SPEC.fps}
+        width={HAND_DRAWN_LONG_FORM_SPEC.width}
+        height={HAND_DRAWN_LONG_FORM_SPEC.height}
       />
     </>
   );
